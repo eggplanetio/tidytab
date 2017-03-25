@@ -1,0 +1,57 @@
+@import "../../node_modules/normalize-scss/sass/normalize/import-now";
+@import url('https://fonts.googleapis.com/css?family=Muli:300,400,600');
+@import "settings";
+
+body {
+  font-family: "Muli";
+  font-weight: 300;
+  color: $color-font;
+  font-size: $font-size;
+  letter-spacing: 1px;
+  padding: $size-unit;
+  line-height: 1.7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-size: $font-size;
+  font-weight: 300;
+}
+
+button {
+  font-size: 80%;
+  background: none;
+  border: 1px solid rgba($color-primary, 0.5);
+  padding: $size-unit/3 $size-unit;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  color: $color-font;
+  letter-spacing: 1px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+ul {
+  list-style-type: none;
+  padding-left: $size-unit;
+
+  li {
+
+  }
+}
+
+a, a:hover, a:active, a:visited {
+  color: $color-primary;
+  text-decoration: none;
+  border-bottom: $size-unit/6 solid rgba($color-primary, 0.1);
+  font-weight: 300;
+}

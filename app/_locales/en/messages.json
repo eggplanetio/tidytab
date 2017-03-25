@@ -1,0 +1,18 @@
+{
+  "appName": {
+    "message": "vue chrome extension example",
+    "description": "The name of the application"
+  },
+  "appShortName": {
+    "message": "vue_chrome_extension",
+    "description": "The short_name (maximum of 12 characters recommended) is a short version of the app's name."
+  },
+  "appDescription": {
+    "message": "n",
+    "description": "The description of the application"
+  },
+  "browserActionTitle": {
+    "message": "vue chrome extension example",
+    "description": "The title of the browser action button"
+  }
+}
