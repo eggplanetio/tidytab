@@ -1,4 +1,12 @@
-# vue chrome extension example
+# TidyTab
+
+---
+
+# Installation
+
+Open Chrome then go to `Window -> Extensions` -> `Load Unpacked Extension` -> point at `path-to-folder/dist/chrome`
+
+# Developing
 
 develop chrome extension with vue
 
