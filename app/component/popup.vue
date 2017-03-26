@@ -10,26 +10,56 @@
 export default {
 
   methods: {
-    closeTabs () {
-      chrome.storage.sync.set({'foo': { name: 'bar' }});
-      chrome.storage.sync.set({'baz': { name: 'bar' }});
-      chrome.storage.sync.get(null, function(items) {
-        const allKeys = Object.keys(items);
+    saveTabData (tabs){
+      chrome.windows.getCurrent(null, window => {
+        chrome.tabs.query({}, tabs => {
+          let data = {};
+
+          tabs.forEach(t => {
+            if (t.windowId === window.id) {
+              data[t.url] = {
+                'url': t.url,
+                'icon': t.favIconUrl,
+                'title': t.title,
+              }
+            }
+          })
+
+          chrome.storage.sync.get('tidy_storage', function(items) {
+            let tabData = items['tidy_storage'] || {};
+
+            const timeStamp = Date.now();
+
+            tabData[timeStamp] = data;
+
+            chrome.extension.getBackgroundPage().console.log(tabData);
+
+            chrome.storage.sync.set({'tidy_storage': tabData});
+
+          });          
+        });
       });
+    },
+    closeTabs () {
+      this.saveTabData()
 
       chrome.windows.getCurrent(null, window => {
         chrome.tabs.query({}, tabs => {
-          tabs.forEach(t => {
-            if (t.windowId === window.id) {
-              console.log(`Closing tab with url of ${t.url}`);
-              chrome.tabs.remove(t.id)
+
+          let windowTabs = tabs.filter(t => t.windowId === window.id);
+          
+          let tabsClosed = 0
+
+          windowTabs.forEach(t => {
+            tabsClosed++;
+            if(tabsClosed == windowTabs.length){
+              const dashboardURL = chrome.extension.getURL('pages/dashboard.html')
+              chrome.tabs.create({ url: dashboardURL });
             }
+            chrome.tabs.remove(t.id);
           })
         });
       });
-
-      const dashboardURL = chrome.extension.getURL('pages/dashboard.html')
-      chrome.tabs.create({ url: dashboardURL });
     }
   }
 }
