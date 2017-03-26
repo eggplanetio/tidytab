@@ -10,6 +10,7 @@ body {
   letter-spacing: 1px;
   padding: $size-unit;
   line-height: 1.7;
+  background: linear-gradient(to left, #41295a , #2F0743); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 * {
@@ -43,7 +44,7 @@ button {
 
 ul {
   list-style-type: none;
-  padding-left: $size-unit;
+  padding-left: 0;
 
   li {
 

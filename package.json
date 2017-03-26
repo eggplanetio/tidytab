@@ -48,7 +48,10 @@
     "gulp-util": "3.x.x",
     "gulp-vueify": "0.0.3",
     "gulp-zip": "^4.0.0",
+    "milligram": "^1.3.0",
+    "normalize-scss": "^6.0.0",
     "require-dir": "0.x.x",
+    "sass-loader": "^6.0.3",
     "vinyl-named": "1.x.x",
     "vue": "^2.2.1",
     "vue-loader": "^11.3.2",
@@ -56,9 +59,9 @@
     "vueify-insert-css": "^1.0.0",
     "webpack": "^2.2.1",
     "webpack-stream": "3.x.x",
-    "yargs": "^7.0.2",
-    "milligram": "^1.3.0",
-    "normalize-scss": "^6.0.0",
-    "sass-loader": "^6.0.3"
+    "yargs": "^7.0.2"
+  },
+  "dependencies": {
+    "vuex": "^2.2.1"
   }
 }

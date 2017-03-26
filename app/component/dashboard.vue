@@ -1,15 +1,9 @@
 <template lang="html">
   <div>
 
-  <title>
     <h1>
-      TidyTab
+      🚿
     </h1>
-
-    <h2>
-      23 windows
-    </h2>
-  </title>
 
     <TabGroup v-for="n in 23"></TabGroup>
     <AdUnit></AdUnit>
@@ -36,11 +30,8 @@ title {
 }
 
 h1 {
-  font-size: 250%;
-  font-style: italic;
-}
-
-h1, h2 {
   text-align: center;
+  font-size: 400%;
+  font-style: italic;
 }
 </style>

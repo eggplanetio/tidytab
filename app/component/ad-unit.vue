@@ -20,8 +20,8 @@ div {
   height: 80px;
   padding: 3px;
   font-weight: bold;
-  background: $color-primary;
-  color: white;
+  background: white;
   text-align: center;
+  border: 3px solid $color-primary + 30;
 }
 </style>

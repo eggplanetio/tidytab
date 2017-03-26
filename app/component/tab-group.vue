@@ -2,7 +2,11 @@
   <section>
     <h2>
       Apr. {{ count }} / {{ count }} tabs
-      <a href="#" class="restore">Restore</a>
+      <span class="actions">
+        <a href="#">Restore</a>
+        <a href="#">Delete</a>
+        <a href="#">Share</a>
+      </span>
     </h2>
 
     <ul>
@@ -32,14 +36,11 @@ section {
   border-radius: 2px;
   padding: $size-unit * 2;
   box-shadow: 0 3px 3px rgba(black, 0.2);
-
-  background: #673AB7; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #673AB7 , #512DA8); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #673AB7 , #512DA8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to left, $color-primary , $color-primary - 20);
 
   &:hover {
     h2, h3, li, a {
-      color: white;
+      color: rgba(white, 1);
     }
   }
 }
@@ -53,7 +54,8 @@ h2, h3, li, a {
   transition: all 250ms ease;
 }
 
-a.restore {
+.actions {
   float: right;
+  font-size: 80%;
 }
 </style>
