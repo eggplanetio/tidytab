@@ -67,6 +67,7 @@ export default {
       this.collapsed = !this.collapsed;
     }
   }
+  
 }
 </script>
 
