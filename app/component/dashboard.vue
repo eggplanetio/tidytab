@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <TabGroup v-for="group in groups" :group="group"></TabGroup>
+    <TabGroup v-for="(group, timestamp) in groups" :group="group" :timestamp="timestamp"></TabGroup>
     <AdUnit></AdUnit>
   </div>
 </template>
@@ -14,17 +14,24 @@ export default {
     AdUnit,
     TabGroup
   },
+
+  methods: {
+    fetchData () {
+      chrome.storage.sync.get('tidy_storage', (items) => {
+        let data = items['tidy_storage'];
+        this.groups = data
+      })
+    }
+  },
+
+  created () {
+    this.fetchData();
+  },
+
   data () {
-
-    let x = {groups: [{'x':3},{'x':4},{'x':5}]}
-
-    // chrome.storage.sync.get('tidy_storage', function(items) {
-    //   x = {groups: items['tidy_storage']};
-    //   this.$set('groups', x)
-    //   vm.$forceUpdate();
-    // });
-
-    return x;
+    return {
+      groups: []
+    }
   }
 
 }

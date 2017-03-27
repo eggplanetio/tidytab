@@ -1,10 +1,10 @@
 <template>
   <section>
-    <h2># {{group['x']}} tabs / April 3, 2016</h2>
+    <h2># {{tabCount}} tabs / {{displayDate}}</h2>
 
     <ul>
-      <li v-for="n in ">
-        <a href="#">Link {{ n }}</a>
+      <li v-for="n in tabs">
+        <img v-bind:src="n.icon"><a v-bind:href="n.url">{{n.title}}</a>
       </li>
     </ul>
 
@@ -16,12 +16,19 @@
 
 <script>
 export default {
-  props: ['group'],
-  // data () {
-  //   return {
-  //     count: Math.round(Math.random() * 10),
-  //   }
-  // }
+  props: ['group', 'timestamp'],
+  computed: {
+    tabCount () {
+      return this.group["data"].length
+    },
+    tabs () {
+      return this.group["data"]
+    },
+    displayDate () {
+      return new Date(parseInt(this.timestamp)).toString()
+    }
+  }
+  
 }
 </script>
 
@@ -34,5 +41,9 @@ section {
 
 h2 {
   font-weight: 600;
+}
+li img {
+  height: 20px;
+  width: 20px;
 }
 </style>

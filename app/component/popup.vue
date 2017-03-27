@@ -11,31 +11,30 @@ export default {
 
   methods: {
     saveTabData (tabs){
+      const timeStamp = Date.now();
+
       chrome.windows.getCurrent(null, window => {
         chrome.tabs.query({}, tabs => {
-          let data = {};
+          let data = [];
 
           tabs.forEach(t => {
             if (t.windowId === window.id) {
-              data[t.url] = {
-                'url': t.url,
-                'icon': t.favIconUrl,
-                'title': t.title,
-              }
+              data.push({
+                url: t.url,
+                icon: t.favIconUrl,
+                title: t.title
+              })
             }
           })
 
           chrome.storage.sync.get('tidy_storage', function(items) {
             let tabData = items['tidy_storage'] || {};
 
-            const timeStamp = Date.now();
+            chrome.extension.getBackgroundPage().console.log(data)
 
-            tabData[timeStamp] = data;
-
-            chrome.extension.getBackgroundPage().console.log(tabData);
+            tabData[timeStamp] = {data: data};
 
             chrome.storage.sync.set({'tidy_storage': tabData});
-
           });          
         });
       });
@@ -56,7 +55,7 @@ export default {
               const dashboardURL = chrome.extension.getURL('pages/dashboard.html')
               chrome.tabs.create({ url: dashboardURL });
             }
-            chrome.tabs.remove(t.id);
+            // chrome.tabs.remove(t.id);
           })
         });
       });
