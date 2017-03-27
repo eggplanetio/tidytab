@@ -1,18 +1,20 @@
 <template>
   <section :class="{ collapsed }">
     <header>
-      <h2>
-        {{ tabGroup.tabs.length }} tabs
-      </h2>
-      <date>
-        April 3, 2016 at 5:13PM
-      </date>
+      <a @click="toggleCollapse">
+        <h2>
+          {{ tabGroup.tabs.length }} tabs
+        </h2>
+        <date>
+          {{ displayDate }}
+        </date>
 
-      <span class="fav-group">
-        <span class="fav-wrapper" v-for="tab in tabGroup.tabs">
-          <Favicon url="tab.url"></Favicon>
+        <span class="fav-group">
+          <span class="fav-wrapper" v-for="tab in tabGroup.tabs">
+            <Favicon :icon="tab.icon"></Favicon>
+          </span>
         </span>
-      </span>
+      </a>
 
       <div class="button-group actions">
         <a href="#">Restore</a>
@@ -26,10 +28,10 @@
 
     <ul>
       <li v-for="tab in tabGroup.tabs">
-        <Favicon url="tab.url"></Favicon>
+        <Favicon :icon="tab.icon"></Favicon>
         {{ tab.title }}
         <span class="tab-actions">
-          <a href="#">open</a> <a href="#">remove</a> <a href="#">view screenshot</a>
+          <a :href="tab.url">open</a> <a href="#">remove</a> <a href="#">view screenshot</a>
         </span>
       </li>
     </ul>
@@ -44,15 +46,17 @@ export default {
     Favicon
   },
   props: [
-    'tabGroup'
+    'tabGroup',
   ],
   data () {
     return {
       collapsed: true,
-      count: Math.round(Math.random() * 3) + 3,
     }
   },
   computed: {
+    displayDate () {
+      return new Date(parseInt(this.tabGroup.timeStamp)).toString()
+    },
     isCollapsed () {
       if (this.tabGroup.isCollapsed) return true;
       return this.collapsed;

@@ -30,9 +30,21 @@ export default {
     TabGroup,
   },
 
+  methods: {
+    fetchData () {
+      chrome.storage.sync.get('tidyStorage', (items) => {
+        let data = items['tidyStorage'];
+        this.tabGroups = data
+      })
+    }
+  },
+  created () {
+    this.fetchData();
+  },
+
   data () {
     return {
-      tabGroups: store.state.tabGroups // antipattern, for debugging
+      tabGroups: []
     }
   },
 
