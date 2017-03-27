@@ -10,7 +10,6 @@ body {
   letter-spacing: 1px;
   padding: $size-unit;
   line-height: 1.7;
-  background: linear-gradient(to left, #41295a , #2F0743); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 * {
@@ -24,36 +23,68 @@ h4 {
   margin: 0;
   font-size: $font-size;
   font-weight: 300;
+  margin-bottom: $size-unit;
 }
 
 button {
   font-size: 80%;
   background: none;
-  border: 1px solid rgba($color-primary, 0.5);
-  padding: $size-unit/3 $size-unit;
+  border: none;
+  padding: $size-unit/2 $size-unit;
   border-radius: 3px;
   outline: none;
   cursor: pointer;
   color: $color-font;
   letter-spacing: 1px;
-
-  &:hover {
-    opacity: 0.8;
-  }
+  transition: all 250ms ease;
 }
 
 ul {
   list-style-type: none;
   padding-left: 0;
-
-  li {
-
-  }
+  margin: 0;
 }
 
 a, a:hover, a:active, a:visited {
-  color: $color-primary;
+  color: $color-font;
   text-decoration: none;
   border-bottom: $size-unit/6 solid rgba($color-primary, 0.1);
   font-weight: 300;
+}
+
+.button-group {
+  letter-spacing: -1px;
+  opacity: 0.5;
+  transition: all 250ms ease;
+
+  &:hover {
+    opacity: 1;
+
+    a:hover {
+      color: white;
+    }
+  }
+
+  a, a:hover, a:visited, a:active {
+    background: none; //$color-secondary + 20;
+    display: inline-block;
+    border: 1px solid rgba(white, 0.2);
+    margin-left: -3px;
+    padding: $size-unit/4 $size-unit/1.5;
+    font-size: $font-size-small;
+    font-weight: 400;
+    letter-spacing: 1px;
+    transition: all 250ms ease;
+    color: rgba(white, 0.5);
+  }
+
+  a:first-child {
+    border-right: none;
+    border-radius: 3px 0 0 3px;
+  }
+
+  a:last-child  {
+    border-left: none;
+    border-radius: 0 3px 3px 0;
+  }
 }

@@ -23,5 +23,6 @@ div {
   background: white;
   text-align: center;
   border: 3px solid $color-primary + 30;
+  display: none;
 }
 </style>

@@ -35,8 +35,11 @@ export default {
 }
 </script>
 
-<style scoped="true">
+<style scoped="true" lang="sass">
+@import '../styles/settings';
 button {
   width: 100px;
+  background: $color-primary;
+  color: white;
 }
 </style>
