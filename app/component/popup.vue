@@ -21,20 +21,18 @@ export default {
             if (t.windowId === window.id) {
               data.push({
                 url: t.url,
+                title: t.title,
                 icon: t.favIconUrl,
-                title: t.title
               })
             }
           })
 
-          chrome.storage.sync.get('tidy_storage', function(items) {
-            let tabData = items['tidy_storage'] || {};
+          chrome.storage.sync.get('tidyStorage', function(items) {
+            let tabData = items['tidyStorage'] || [];
 
-            chrome.extension.getBackgroundPage().console.log(data)
+            tabData.push({timeStamp: timeStamp, tabs: data});
 
-            tabData[timeStamp] = {data: data};
-
-            chrome.storage.sync.set({'tidy_storage': tabData});
+            chrome.storage.sync.set({'tidyStorage': tabData});
           });          
         });
       });
@@ -55,7 +53,7 @@ export default {
               const dashboardURL = chrome.extension.getURL('pages/dashboard.html')
               chrome.tabs.create({ url: dashboardURL });
             }
-            // chrome.tabs.remove(t.id);
+            chrome.tabs.remove(t.id);
           })
         });
       });
