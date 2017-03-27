@@ -3,15 +3,15 @@
 
     <header>
       <h2>
-        {{ count }} tabs
+        {{ tabGroup.tabs.length }} tabs
       </h2>
       <date>
         April 3, 2016 at 5:13PM
       </date>
 
       <span class="fav-group">
-        <span class="fav-wrapper" v-for="n in count">
-          <img src="https://www.google.com/s2/favicons?domain=github.com" alt="favicon">
+        <span class="fav-wrapper" v-for="tab in tabGroup.tabs">
+          <Favicon url="tab.url"></Favicon>
         </span>
       </span>
 
@@ -26,9 +26,9 @@
     </header>
 
     <ul>
-      <li v-for="n in count">
-        <img src="https://www.google.com/s2/favicons?domain=github.com" alt="favicon" class="favicon">
-        espn.com
+      <li v-for="tab in tabGroup.tabs">
+        <Favicon url="tab.url"></Favicon>
+        {{ tab.title }}
         <span class="tab-actions">
           <a href="#">open</a> <a href="#">remove</a> <a href="#">view screenshot</a>
         </span>
@@ -39,7 +39,14 @@
 </template>
 
 <script>
+import Favicon from './favicon.vue';
 export default {
+  components: {
+    Favicon
+  },
+  props: [
+    'tabGroup'
+  ],
   data () {
     return {
       collapsed: true,
@@ -48,7 +55,7 @@ export default {
   },
   computed: {
     isCollapsed () {
-      // if (this.props.isCollapsed) return true;
+      if (this.tabGroup.isCollapsed) return true;
       return this.collapsed;
     },
     toggleText () {
@@ -103,12 +110,6 @@ date {
 
 ul {
   li {
-    .favicon {
-      height: $size-unit/1.5;
-      vertical-align: middle;
-      margin-right: $size-unit/3;
-    }
-
     .tab-actions {
       opacity: 0;
       a {

@@ -5,16 +5,19 @@
         <span class="icon">🚿</span> TidyTab
       </h1>
 
-      <DashboardStats></DashboardStats>
+      <DashboardStats :tabGroups="tabGroups"></DashboardStats>
     </header>
 
-    <TabGroup v-for="n in 23"></TabGroup>
-    <AdUnit></AdUnit>
+    <span v-for="tabGroup in tabGroups">
+      <TabGroup :tabGroup="tabGroup"></TabGroup>
+    </span>
 
+    <AdUnit></AdUnit>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import store from '../store/index.js';
 import TabGroup from './tab-group.vue';
 import AdUnit from './ad-unit.vue';
@@ -25,7 +28,17 @@ export default {
     AdUnit,
     DashboardStats,
     TabGroup,
-  }
+  },
+
+  data () {
+    return {
+      tabGroups: store.state.tabGroups // antipattern, for debugging
+    }
+  },
+
+  computed: mapState({
+    /* tabGroups: 'tabGroups' */ // should work
+  })
 }
 </script>
 

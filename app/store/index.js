@@ -13,6 +13,13 @@ const store = new Vuex.Store({
           { url: "https://espn.com/kobe", title: 'ESPN – Kobe Bryant' },
           { url: "https://google.com/kobe", title: 'Google Search - kobe' },
         ]
+      },
+      {
+        createdAt: new Date().toString(),
+        tabs: [
+          { url: "https://espn.com/kobe", title: 'ESPN – Kobe Bryant' },
+          { url: "https://google.com/kobe", title: 'Google Search - kobe' },
+        ]
       }
     ]
   },

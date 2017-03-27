@@ -1,6 +1,6 @@
 <template>
   <span class="stats">
-    23 windows tidied
+    {{ tabGroups.length }} windows tidied
   </span>
 </template>
 
