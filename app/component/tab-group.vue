@@ -1,9 +1,9 @@
 <template>
   <section>
-    <h2># {{count}} tabs / April 3, 2016</h2>
+    <h2># {{group['x']}} tabs / April 3, 2016</h2>
 
     <ul>
-      <li v-for="n in count">
+      <li v-for="n in ">
         <a href="#">Link {{ n }}</a>
       </li>
     </ul>
@@ -16,11 +16,12 @@
 
 <script>
 export default {
-  data () {
-    return {
-      count: Math.round(Math.random() * 10),
-    }
-  }
+  props: ['group'],
+  // data () {
+  //   return {
+  //     count: Math.round(Math.random() * 10),
+  //   }
+  // }
 }
 </script>
 
