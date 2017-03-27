@@ -57,11 +57,13 @@
     "vue-loader": "^11.3.2",
     "vue-template-compiler": "^2.2.1",
     "vueify-insert-css": "^1.0.0",
+    "vuex": "^2.2.1",
     "webpack": "^2.2.1",
     "webpack-stream": "3.x.x",
     "yargs": "^7.0.2"
   },
   "dependencies": {
-    "vuex": "^2.2.1"
+    "babel-plugin-transform-async-functions": "^6.22.0",
+    "babel-plugin-transform-async-to-generator": "^6.22.0"
   }
 }

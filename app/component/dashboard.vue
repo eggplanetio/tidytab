@@ -5,9 +5,7 @@
         <span class="icon">🚿</span> TidyTab
       </h1>
 
-      <span class="stats">
-        23 windows tidied
-      </span>
+      <DashboardStats></DashboardStats>
     </header>
 
     <TabGroup v-for="n in 23"></TabGroup>
@@ -17,13 +15,16 @@
 </template>
 
 <script>
+import store from '../store/index.js';
 import TabGroup from './tab-group.vue';
 import AdUnit from './ad-unit.vue';
+import DashboardStats from './dashboard-stats.vue';
 
 export default {
   components: {
     AdUnit,
-    TabGroup
+    DashboardStats,
+    TabGroup,
   }
 }
 </script>
@@ -45,9 +46,7 @@ header {
   }
 
   .stats {
-    float: right;
-    color: $color-secondary;
-    font-weight: 300;
+    float: right
   }
 }
 </style>
