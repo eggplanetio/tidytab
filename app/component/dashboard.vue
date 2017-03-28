@@ -2,7 +2,7 @@
   <div>
     <header class="app-header">
       <h1>
-        <span class="icon">🚿</span> TidyTab
+        <img class="icon" src="/images/logo.png" alt="icon"> TidyTab
       </h1>
 
       <DashboardStats :tabGroups="tabGroups"></DashboardStats>
@@ -13,6 +13,10 @@
     </span>
 
     <AdUnit></AdUnit>
+
+    <footer>
+      made with love by <a href="https://eggplanet.io" target="_blank">eggplanet</a> | v{{ version }}
+    </footer>
   </div>
 </template>
 
@@ -20,6 +24,7 @@
 import TabGroup from './tab-group.vue';
 import AdUnit from './ad-unit.vue';
 import DashboardStats from './dashboard-stats.vue';
+import { mapState } from 'vuex';
 
 export default {
   components: {
@@ -31,6 +36,10 @@ export default {
   props: [
     'tabGroups'
   ],
+
+  computed: {
+    ...mapState(['version'])
+  }
 }
 </script>
 
@@ -47,11 +56,23 @@ header {
 
     .icon {
       vertical-align: middle;
+      height: $size-unit * 2;
+      margin-right: $size-unit/2;
     }
   }
 
   .stats {
     float: right
+  }
+}
+
+footer {
+  color: $color-primary - 10;
+  text-align: center;
+  font-size: $font-size-super-small;
+
+  a {
+    opacity: 0.2;
   }
 }
 </style>

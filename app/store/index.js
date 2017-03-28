@@ -6,12 +6,12 @@ import ChromePromise from 'chrome-promise';
 const chromep = new ChromePromise()
 
 import packageJson from '../../package.json';
-const stateVersion = packageJson.version.split('.')[0]; // v1.0.2 => state version 1
 
 const store = new Vuex.Store({
 
   state: {
-    version: stateVersion,
+    version: packageJson.version,
+    stateVersion: packageJson.version.split('.')[0],
     data: {
       tabGroups: []
     }
@@ -24,6 +24,7 @@ const store = new Vuex.Store({
       const filtered = tabs.filter(tab => !tab.title.startsWith(packageJson.name))
       const tabGroup = {
         createdAt: new Date().toString(),
+        collapsed: true,
         tabs: filtered
       };
       if (filtered.length < 1) return tabGroup;
@@ -43,12 +44,24 @@ const store = new Vuex.Store({
     async DELETE_TAB_GROUP ({ commit, dispatch }, { createdAt }) {
       commit('DELETE_TAB_GROUP', createdAt);
       dispatch('PERSIST_STATE');
-    }
+    },
+    async TOGGLE_COLLAPSED_STATE_FOR_TAB_GROUP ({ commit, dispatch }, { createdAt }) {
+      commit('TOGGLE_COLLAPSED_STATE_FOR_TAB_GROUP', createdAt);
+      dispatch('PERSIST_STATE');
+    },
   },
 
   mutations: {
     SET_DATA (state, data) {
       state.data = data;
+    },
+    TOGGLE_COLLAPSED_STATE_FOR_TAB_GROUP (state, createdAt) {
+      const tabGroups = state.data.tabGroups;
+      const tabGroup = tabGroups.find(t => t.createdAt === createdAt);
+      const otherTabGroups = tabGroups.filter(t => t.createdAt !== createdAt);
+
+      tabGroup.collapsed = !tabGroup.collapsed;
+      state.data.tabGroups = otherTabGroups.concat([ tabGroup ]);
     },
     CREATE_TAB_GROUP (state, tabGroup) {
       state.data.tabGroups = state.data.tabGroups.concat([ tabGroup ])

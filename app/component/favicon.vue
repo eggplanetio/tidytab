@@ -1,12 +1,15 @@
 <template>
   <span>
-    <img :src="url">
+    <img :src="url" :title="title">
   </span>
 </template>
 
 <script>
 export default {
-  props: [ 'url' ],
+  props: [
+    'url',
+    'title',
+  ],
 }
 </script>
 

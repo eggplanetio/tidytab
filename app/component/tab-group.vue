@@ -1,12 +1,13 @@
 <template>
   <section :class="{ collapsed }">
     <header>
-      <a @click="toggleCollapse">
+      <a href="#" @click="toggleCollapsedState">
         <h2>
           {{ tabGroup.tabs.length }} tabs
         </h2>
         <date>
-          {{ tabGroup.createdAt }}
+          {{ tabGroup.createdAt | moment('ddd MM/D') }} at
+          {{ tabGroup.createdAt | moment('h:m:sa') }}
         </date>
 
         <span class="fav-group">
@@ -16,14 +17,7 @@
         </span>
       </a>
 
-      <div class="button-group actions">
-        <a href="#">Restore</a>
-        <a href="#" @click="remove">Remove</a>
-
-        <a href="#" @click="toggleCollapse">
-          {{ toggleText }}
-        </a>
-      </div>
+      <TabGroupActions :tabGroup="tabGroup"></TabGroupActions>
     </header>
 
     <ul>
@@ -31,7 +25,7 @@
         <Favicon :url="tab.favIconUrl"></Favicon>
         {{ tab.title }}
         <span class="tab-actions">
-          <a :href="tab.url">open</a> <a href="#">remove</a>
+          <a :href="tab.url" target="_blank">open</a> <a href="#">remove</a>
         </span>
       </li>
     </ul>
@@ -42,36 +36,26 @@
 <script>
 import store from '../store/index.js';
 import Favicon from './favicon.vue';
+import TabGroupActions from './tab-group-actions.vue';
+
 export default {
   components: {
-    Favicon
+    Favicon,
+    TabGroupActions
   },
   props: [
     'tabGroup',
   ],
-  data () {
-    return {
-      collapsed: false,
-    }
+  methods: {
+    toggleCollapsedState() {
+      store.dispatch('TOGGLE_COLLAPSED_STATE_FOR_TAB_GROUP', { createdAt: this.tabGroup.createdAt })
+    },
   },
   computed: {
-    isCollapsed () {
-      if (this.tabGroup.isCollapsed) return true;
-      return this.collapsed;
-    },
-    toggleText () {
-      return this.collapsed ? 'Expand' : 'Collapse';
-    }
-  },
-  methods: {
-    toggleCollapse() {
-      this.collapsed = !this.collapsed;
-    },
-    remove() {
-      store.dispatch('DELETE_TAB_GROUP', { createdAt: this.tabGroup.createdAt });
+    collapsed () {
+      return this.tabGroup.collapsed;
     }
   }
-
 }
 </script>
 
@@ -134,10 +118,6 @@ ul {
       .tab-actions { opacity: 1; }
     }
   }
-}
-
-.actions {
-  float: right;
 }
 
 .fav-group {
