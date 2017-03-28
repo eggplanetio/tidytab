@@ -18,8 +18,8 @@
       </a>
 
       <div class="button-group actions">
-        <a href="#">Restore</a>
-        <a href="#">Delete</a>
+        <a href="#" @click="openAll">Restore</a>
+        <a href="#" @click="deleteGroup(tabGroup)">Delete</a>
 
         <a href="#" @click="toggleCollapse">
           {{ toggleText }}
@@ -32,7 +32,9 @@
         <Favicon :icon="tab.icon"></Favicon>
         {{ tab.title }}
         <span class="tab-actions">
-          <a :href="tab.url">open</a> <a href="#">remove</a> <a href="#">view screenshot</a>
+          <a :href="tab.url" target="_blank">open</a> 
+          <a href="#" @click="deleteTab(tab)">remove</a> 
+          <!-- <a href="#">view screenshot</a> -->
         </span>
       </li>
     </ul>
@@ -51,7 +53,7 @@ export default {
   ],
   data () {
     return {
-      collapsed: true,
+      collapsed: false,
     }
   },
   computed: {
@@ -69,6 +71,22 @@ export default {
   methods: {
     toggleCollapse() {
       this.collapsed = !this.collapsed;
+    },
+
+    openAll() {
+      this.tabGroup.tabs.forEach(t => {
+        chrome.tabs.create({ url: t.url });
+      })
+    },
+
+    deleteTab(tab) {
+      console.log(tab);
+      // actions up
+    },
+
+    deleteGroup(group) {
+      console.log(group);
+      // actions up
     }
   }
   
