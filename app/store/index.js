@@ -43,6 +43,10 @@ const store = new Vuex.Store({
     async DELETE_TAB_GROUP ({ commit, dispatch }, { createdAt }) {
       commit('DELETE_TAB_GROUP', createdAt);
       dispatch('PERSIST_STATE');
+    },
+    async DELETE_TAB ({ commit, dispatch }, { tab, createdAt }) {
+      commit('REMOVE_TAB_FROM_GROUP', {tab, createdAt});
+      dispatch('PERSIST_STATE');
     }
   },
 
@@ -58,7 +62,14 @@ const store = new Vuex.Store({
       const newTabGroups = tabGroups.filter(t => t.createdAt !== createdAt);
       state.data.tabGroups = newTabGroups;
     },
-    REMOVE_TAB_FROM_GROUP (state, data) {
+    REMOVE_TAB_FROM_GROUP (state, {tab, createdAt}) {
+      const tabGroups = state.data.tabGroups;
+      let tabIndex = tabGroups.findIndex(t => t.createdAt === createdAt)
+      let newTabGroups = tabGroups
+      newTabGroups[tabIndex].tabs = newTabGroups[tabIndex].tabs.filter(t => t.url !== tab.url);
+      if (newTabGroups[tabIndex].tabs.length < 1) newTabGroups.splice(tabIndex, 1);
+      
+      state.data.tabGroups = newTabGroups;
     },
   },
 

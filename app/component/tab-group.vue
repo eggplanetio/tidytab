@@ -17,7 +17,7 @@
       </a>
 
       <div class="button-group actions">
-        <a href="#">Restore</a>
+        <a href="#" @click="restore">Restore</a>
         <a href="#" @click="remove">Remove</a>
 
         <a href="#" @click="toggleCollapse">
@@ -31,7 +31,7 @@
         <Favicon :url="tab.favIconUrl"></Favicon>
         {{ tab.title }}
         <span class="tab-actions">
-          <a :href="tab.url">open</a> <a href="#">remove</a>
+          <a :href="tab.url">open</a> <a href="#" @click="removeTab(tab)">remove</a>
         </span>
       </li>
     </ul>
@@ -67,9 +67,18 @@ export default {
     toggleCollapse() {
       this.collapsed = !this.collapsed;
     },
+    restore() {
+      this.tabGroup.tabs.forEach(t => {
+        chrome.tabs.create({ url: t.url });
+      })
+    },
     remove() {
       store.dispatch('DELETE_TAB_GROUP', { createdAt: this.tabGroup.createdAt });
+    },
+    removeTab(tab) {
+      store.dispatch('DELETE_TAB', { tab: tab, createdAt: this.tabGroup.createdAt });
     }
+
   }
 
 }
