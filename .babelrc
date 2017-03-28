@@ -1,8 +1,13 @@
 {
   "presets": [
-    "es2015"
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions"]
+      }
+    }]
   ],
   "plugins": [
-    "transform-async-to-generator"
+    "transform-vue-jsx",
+    "transform-object-rest-spread"
   ]
 }

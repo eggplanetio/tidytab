@@ -1,7 +1,21 @@
+import 'babel-polyfill';
+
 import Vue from 'vue';
+import store from '../store/index.js';
+import { mapGetters } from 'vuex';
+
 import Dashboard from '../component/dashboard.vue';
 
-var app = new Vue({
+const app = new Vue({
   el:'#app',
-  render: h => h(Dashboard)
+  store,
+  render (h) {
+    return (
+      <Dashboard tabGroups={ this.sortedTabGroups }>
+      </Dashboard>
+    )
+  },
+  computed: {
+    ...mapGetters([ 'sortedTabGroups' ]),
+  }
 })

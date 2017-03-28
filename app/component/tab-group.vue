@@ -6,19 +6,19 @@
           {{ tabGroup.tabs.length }} tabs
         </h2>
         <date>
-          {{ displayDate }}
+          {{ tabGroup.createdAt }}
         </date>
 
         <span class="fav-group">
           <span class="fav-wrapper" v-for="tab in tabGroup.tabs">
-            <Favicon :icon="tab.icon"></Favicon>
+            <Favicon :url="tab.favIconUrl"></Favicon>
           </span>
         </span>
       </a>
 
       <div class="button-group actions">
         <a href="#">Restore</a>
-        <a href="#">Delete</a>
+        <a href="#" @click="remove">Remove</a>
 
         <a href="#" @click="toggleCollapse">
           {{ toggleText }}
@@ -28,10 +28,10 @@
 
     <ul>
       <li v-for="tab in tabGroup.tabs">
-        <Favicon :icon="tab.icon"></Favicon>
+        <Favicon :url="tab.favIconUrl"></Favicon>
         {{ tab.title }}
         <span class="tab-actions">
-          <a :href="tab.url">open</a> <a href="#">remove</a> <a href="#">view screenshot</a>
+          <a :href="tab.url">open</a> <a href="#">remove</a>
         </span>
       </li>
     </ul>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import store from '../store/index.js';
 import Favicon from './favicon.vue';
 export default {
   components: {
@@ -50,13 +51,10 @@ export default {
   ],
   data () {
     return {
-      collapsed: true,
+      collapsed: false,
     }
   },
   computed: {
-    displayDate () {
-      return new Date(parseInt(this.tabGroup.timeStamp)).toString()
-    },
     isCollapsed () {
       if (this.tabGroup.isCollapsed) return true;
       return this.collapsed;
@@ -68,9 +66,12 @@ export default {
   methods: {
     toggleCollapse() {
       this.collapsed = !this.collapsed;
+    },
+    remove() {
+      store.dispatch('DELETE_TAB_GROUP', { createdAt: this.tabGroup.createdAt });
     }
   }
-  
+
 }
 </script>
 
@@ -114,12 +115,17 @@ date {
 
 ul {
   li {
+    font-size: $font-size-small;
+    margin-bottom: $size-unit/2;
+
     .tab-actions {
       opacity: 0;
       a {
         font-size: $font-size-small;
         opacity: 0.5;
         margin-left: $size-unit/2;
+        color: $color-secondary;
+
         &:hover { opacity: 1; }
       }
     }

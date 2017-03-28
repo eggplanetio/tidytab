@@ -38,19 +38,26 @@ gulp.task('scripts', (cb) => {
           loader: 'eslint-loader',
           exclude: /node_modules/
         }],
-        loaders: [{
-          test: /\.js$/,
-          loader: 'babel'
-        },{
-          test: /\.vue$/,
-          loader: 'vue-loader',
-          options : {
-            loaders: {
-              'scss': 'vue-style-loader!css-loader!sass-loader',
-              'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+        loaders: [
+          {
+            test: /\.js$/,
+            loader: 'babel'
+          },
+          {
+            test: /\.json$/,
+            loader: 'json-loader'
+          },
+          {
+            test: /\.vue$/,
+            loader: 'vue-loader',
+            options : {
+              loaders: {
+                'scss': 'vue-style-loader!css-loader!sass-loader',
+                'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+              }
             }
           }
-        }]
+        ]
       },
       resolve: {
         alias: {

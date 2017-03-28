@@ -17,8 +17,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import store from '../store/index.js';
 import TabGroup from './tab-group.vue';
 import AdUnit from './ad-unit.vue';
 import DashboardStats from './dashboard-stats.vue';
@@ -30,27 +28,9 @@ export default {
     TabGroup,
   },
 
-  methods: {
-    fetchData () {
-      chrome.storage.sync.get('tidyStorage', (items) => {
-        let data = items['tidyStorage'];
-        this.tabGroups = data
-      })
-    }
-  },
-  created () {
-    this.fetchData();
-  },
-
-  data () {
-    return {
-      tabGroups: []
-    }
-  },
-
-  computed: mapState({
-    /* tabGroups: 'tabGroups' */ // should work
-  })
+  props: [
+    'tabGroups'
+  ],
 }
 </script>
 

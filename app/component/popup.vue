@@ -1,62 +1,42 @@
 <template lang="html">
-  <div>
-   <button @click="closeTabs">
-    Tidy
-   </button>
-  </div>
+  <section>
+    <button @click="tidy">
+      Tidy
+    </button>
+
+    <a :href="dashboardURL" target="_blank">
+      Open Dashboard
+    </a>
+  </section>
 </template>
 
 <script>
+import store from '../store/index.js';
+import ChromePromise from 'chrome-promise';
+const chromep = new ChromePromise();
+
 export default {
 
   methods: {
-    saveTabData (tabs){
-      const timeStamp = Date.now();
+    async tidy () {
+      const tabGroup = await store.dispatch('SAVE_TAB_GROUP');
+      if (tabGroup.tabs.length < 1) return;
+      await chromep.tabs.remove(tabGroup.tabs.map(tab => tab.id));
 
-      chrome.windows.getCurrent(null, window => {
-        chrome.tabs.query({}, tabs => {
-          let data = [];
+      const currentWindow = await chromep.windows.getCurrent({});
+      const tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
+      const isShowingDashboard = tabs[0].title === "TidyTab – Dashboard";
+      if (isShowingDashboard) {
+        chrome.tabs.highlight({ tabs: [0] });
+      } else {
+        await chromep.tabs.create({ url: this.dashboardURL, pinned: true });
+      }
+    }
+  },
 
-          tabs.forEach(t => {
-            if (t.windowId === window.id) {
-              data.push({
-                url: t.url,
-                title: t.title,
-                icon: t.favIconUrl,
-              })
-            }
-          })
-
-          chrome.storage.sync.get('tidyStorage', function(items) {
-            let tabData = items['tidyStorage'] || [];
-
-            tabData.push({timeStamp: timeStamp, tabs: data});
-
-            chrome.storage.sync.set({'tidyStorage': tabData});
-          });          
-        });
-      });
-    },
-    closeTabs () {
-      this.saveTabData()
-
-      chrome.windows.getCurrent(null, window => {
-        chrome.tabs.query({}, tabs => {
-
-          let windowTabs = tabs.filter(t => t.windowId === window.id);
-          
-          let tabsClosed = 0
-
-          windowTabs.forEach(t => {
-            tabsClosed++;
-            if(tabsClosed == windowTabs.length){
-              const dashboardURL = chrome.extension.getURL('pages/dashboard.html')
-              chrome.tabs.create({ url: dashboardURL });
-            }
-            chrome.tabs.remove(t.id);
-          })
-        });
-      });
+  data () {
+    return {
+      dashboardURL: chrome.extension.getURL('pages/dashboard.html')
     }
   }
 }
@@ -64,9 +44,27 @@ export default {
 
 <style scoped="true" lang="sass">
 @import '../styles/settings';
+section {
+  text-align: center;
+  width: 150px;
+}
+
+button, a {
+  width: 100%;
+}
+
 button {
-  width: 100px;
   background: $color-primary;
   color: white;
+  display: block;
+  margin-bottom: $size-unit/2;
+}
+
+a, a:visited, a:hover, a:active {
+  color: $color-primary;
+  font-size: $font-size-super-small;
+  display: block;
+  text-align: center;
+  border: none;
 }
 </style>
