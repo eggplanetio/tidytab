@@ -68,14 +68,14 @@ a, a:hover, a:active, a:visited {
   a, a:hover, a:visited, a:active {
     background: none; //$color-secondary + 20;
     display: inline-block;
-    border: 1px solid rgba(white, 0.2);
+    border: 2px solid $color-primary + 30;
     margin-left: -3px;
     padding: $size-unit/4 $size-unit/1.5;
     font-size: $font-size-small;
     font-weight: 400;
     letter-spacing: 1px;
     transition: all 250ms ease;
-    color: rgba(white, 0.5);
+    color: $color-primary + 50;
   }
 
   a:first-child {

@@ -1,6 +1,5 @@
 <template>
   <section :class="{ collapsed }">
-
     <header>
       <h2>
         {{ tabGroup.tabs.length }} tabs
