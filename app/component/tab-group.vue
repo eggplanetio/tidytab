@@ -25,7 +25,7 @@
         <Favicon :url="tab.favIconUrl"></Favicon>
         {{ tab.title }}
         <span class="tab-actions">
-          <a :href="tab.url" target="_blank">open</a> <a href="#">remove</a>
+          <a :href="tab.url" target="_blank">open</a> <a href="#" @click="removeTab(tab)">remove</a>
         </span>
       </li>
     </ul>
@@ -50,12 +50,11 @@ export default {
     toggleCollapsedState() {
       store.dispatch('TOGGLE_COLLAPSED_STATE_FOR_TAB_GROUP', { createdAt: this.tabGroup.createdAt })
     },
-  },
-  computed: {
-    collapsed () {
-      return this.tabGroup.collapsed;
+    removeTab(tab) {
+      store.dispatch('DELETE_TAB', { tab: tab, createdAt: this.tabGroup.createdAt });
     }
-  }
+  },
+
 }
 </script>
 
