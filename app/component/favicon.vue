@@ -1,20 +1,22 @@
 <template>
   <span>
-    <img :src="imgSrc" alt="favicon">
+    <object :data="imgSrc" type="image/jpg" class="favicon">
+      <img src="https://www.google.com/s2/favicons?domain=test">
+    </object>
   </span>
 </template>
 
 <script>
 export default {
   props: [
-    'url'
+    'icon'
   ],
   computed: {
-    host () {
-      return this.url;
-    },
     imgSrc () {
-      return `https://www.google.com/s2/favicons?domain=${this.host}`
+      if(this.icon === ""){
+        return 'https://www.google.com/s2/favicons?domain=this.tab'
+      }
+      return this.icon;
     }
   }
 }
