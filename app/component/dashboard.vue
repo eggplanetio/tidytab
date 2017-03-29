@@ -15,7 +15,7 @@
     <AdUnit></AdUnit>
 
     <footer>
-      made with love by <a href="https://eggplanet.io" target="_blank">eggplanet</a> | v{{ version }}
+      useful software by <a href="https://eggplanet.io" target="_blank">eggplanet</a> | v{{ version }}
     </footer>
   </div>
 </template>

@@ -21,16 +21,15 @@ export default {
     async tidy () {
       const tabGroup = await store.dispatch('SAVE_TAB_GROUP');
       if (tabGroup.tabs.length < 1) return;
-      await chromep.tabs.remove(tabGroup.tabs.map(tab => tab.id));
 
       const currentWindow = await chromep.windows.getCurrent({});
       const tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
       const isShowingDashboard = tabs[0].title === "TidyTab – Dashboard";
-      if (isShowingDashboard) {
-        chrome.tabs.highlight({ tabs: [0] });
-      } else {
-        await chromep.tabs.create({ url: this.dashboardURL, pinned: true });
+      if (!isShowingDashboard) {
+        await chromep.tabs.create({ url: this.dashboardURL, pinned: true, index: 0 });
       }
+      chrome.tabs.highlight({ tabs: [0] });
+      await chromep.tabs.remove(tabGroup.tabs.map(tab => tab.id));
     }
   },
 
