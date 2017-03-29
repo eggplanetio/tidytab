@@ -25,7 +25,7 @@ const store = new Vuex.Store({
       const tabGroup = {
         createdAt: new Date().toString(),
         collapsed: true,
-        tabs: filtered
+        tabs: filtered,
       };
       if (filtered.length < 1) return tabGroup;
       commit('CREATE_TAB_GROUP', tabGroup);
@@ -91,7 +91,7 @@ const store = new Vuex.Store({
       return state.data.tabGroups.sort((a, b) =>
         Date.parse(a.createdAt) < Date.parse(b.createdAt)
       )
-    }
+    },
   }
 
 });
@@ -100,6 +100,6 @@ store.dispatch('HYDRATE_STATE');
 
 chrome.storage.onChanged.addListener(() => {
   store.dispatch('HYDRATE_STATE');
-})
+});
 
 export default store

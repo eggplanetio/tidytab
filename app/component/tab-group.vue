@@ -23,7 +23,9 @@
     <ul>
       <li v-for="tab in tabGroup.tabs">
         <Favicon :url="tab.favIconUrl"></Favicon>
-        {{ tab.title }}
+        <a :href="tab.url" target="_blank" :title="tab.title">
+          {{ tab.title }}
+        </a>
         <span class="tab-actions">
           <a :href="tab.url" target="_blank">open</a> <a href="#" @click="removeTab(tab)">remove</a>
         </span>
