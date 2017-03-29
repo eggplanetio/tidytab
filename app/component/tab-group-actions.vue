@@ -26,7 +26,7 @@ export default {
     },
     restore() {
       this.tabGroup.tabs.forEach(t => {
-        chrome.tabs.create({ url: t.url });
+        chrome.tabs.create({ url: t.url, selected: false});
       })
     },
     newWindow() {
