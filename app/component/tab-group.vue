@@ -23,11 +23,11 @@
     <ul>
       <li v-for="tab in tabGroup.tabs">
         <Favicon :url="tab.favIconUrl"></Favicon>
-        <a :href="tab.url" target="_blank" :title="tab.title">
+        <a href="#" @click="openTab(tab.url)" :title="tab.title">
           {{ tab.title }}
         </a>
         <span class="tab-actions">
-          <a :href="tab.url" target="_blank">open</a> <a href="#" @click="removeTab(tab)">remove</a>
+          <a href="#" @click="removeTab(tab)">remove</a>
         </span>
       </li>
     </ul>
@@ -54,6 +54,9 @@ export default {
     },
     removeTab(tab) {
       store.dispatch('DELETE_TAB', { tab: tab, createdAt: this.tabGroup.createdAt });
+    },
+    openTab(url) {
+      chrome.tabs.create({url: url, selected: false});
     }
   },
 
