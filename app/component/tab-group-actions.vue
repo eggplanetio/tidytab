@@ -1,6 +1,6 @@
 <template>
   <div class="button-group actions">
-    <a href="#">Restore</a>
+    <a href="#" @click="restore">Restore</a>
     <a href="#">Restore in new</a>
     <a href="#" @click="remove" class="remove">Remove</a>
 
@@ -23,7 +23,12 @@ export default {
     },
     remove() {
       store.dispatch('DELETE_TAB_GROUP', { createdAt: this.tabGroup.createdAt });
-    }
+    },
+    restore() {
+      this.tabGroup.tabs.forEach(t => {
+        chrome.tabs.create({ url: t.url });
+      })
+    },
   }
 
 }

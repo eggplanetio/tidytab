@@ -27,7 +27,7 @@
           {{ tab.title }}
         </a>
         <span class="tab-actions">
-          <a href="#">remove</a>
+          <a :href="tab.url" target="_blank">open</a> <a href="#" @click="removeTab(tab)">remove</a>
         </span>
       </li>
     </ul>
@@ -52,12 +52,17 @@ export default {
     toggleCollapsedState() {
       store.dispatch('TOGGLE_COLLAPSED_STATE_FOR_TAB_GROUP', { createdAt: this.tabGroup.createdAt })
     },
+    removeTab(tab) {
+      store.dispatch('DELETE_TAB', { tab: tab, createdAt: this.tabGroup.createdAt });
+    }
   },
+
   computed: {
     collapsed () {
       return this.tabGroup.collapsed;
     }
   }
+
 }
 </script>
 
