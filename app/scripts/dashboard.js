@@ -1,7 +1,10 @@
 import 'babel-polyfill';
 
 import Vue from 'vue';
+import Vue2Filters from 'vue2-filters'
+
 Vue.use(require('vue-moment'));
+Vue.use(Vue2Filters)
 
 import store from '../store/index.js';
 import { mapGetters } from 'vuex';

@@ -6760,6 +6760,10 @@ vue-template-validator@^1.0.1:
   dependencies:
     chalk "^1.1.1"
 
+vue2-filters@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/vue2-filters/-/vue2-filters-0.1.7.tgz#af966d30391603e837c15edc077ee0271e7a2265"
+
 vue@^2.2.1:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.2.5.tgz#528eba68447d7eff99f86767b31176aa656c6963"

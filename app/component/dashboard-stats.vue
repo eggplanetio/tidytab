@@ -1,6 +1,6 @@
 <template>
   <span class="stats">
-    {{ tabGroups.length }} windows tidied
+    {{ tabGroups.length }} {{ tabGroups.length  | pluralize("window") }} tidied
   </span>
 </template>
 
