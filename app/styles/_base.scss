@@ -50,6 +50,7 @@ a, a:hover, a:active, a:visited {
   text-decoration: none;
   border-bottom: $size-unit/6 solid rgba($color-primary, 0.1);
   font-weight: 300;
+  cursor: pointer;
 }
 
 .button-group {

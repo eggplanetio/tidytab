@@ -23,11 +23,11 @@
     <ul>
       <li v-for="tab in tabGroup.tabs">
         <Favicon :url="tab.favIconUrl"></Favicon>
-        <a href="#" @click="openTab(tab.url)" :title="tab.title">
+        <a @click="openTab(tab.url)" :title="tab.title">
           {{ tab.title }}
         </a>
         <span class="tab-actions">
-          <a href="#" @click="removeTab(tab)">remove</a>
+          <a @click="removeTab(tab)">remove</a>
         </span>
       </li>
     </ul>
