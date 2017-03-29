@@ -55,6 +55,12 @@ export default {
     }
   },
 
+  computed: {
+    collapsed () {
+      return this.tabGroup.collapsed;
+    }
+  }
+
 }
 </script>
 
