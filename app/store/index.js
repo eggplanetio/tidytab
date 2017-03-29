@@ -24,7 +24,7 @@ const store = new Vuex.Store({
       const filtered = tabs.filter(tab => !tab.title.startsWith(packageJson.name))
       const tabGroup = {
         createdAt: new Date().toString(),
-        collapsed: true,
+        collapsed: false,
         tabs: filtered,
       };
       if (filtered.length < 1) return tabGroup;
