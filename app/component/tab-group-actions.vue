@@ -1,7 +1,7 @@
 <template>
   <div class="button-group actions">
     <a href="#" @click="restore">Restore</a>
-    <a href="#">Restore in new</a>
+    <a href="#" @click="newWindow">Restore in new</a>
     <a href="#" @click="remove" class="remove">Remove</a>
 
     <a href="#" @click="toggleCollapsedState">
@@ -28,6 +28,10 @@ export default {
       this.tabGroup.tabs.forEach(t => {
         chrome.tabs.create({ url: t.url });
       })
+    },
+    newWindow() {
+      let urls = this.tabGroup.tabs.map(t => t.url);
+      chrome.windows.create({ url: urls })
     },
   }
 
