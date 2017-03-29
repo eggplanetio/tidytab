@@ -1,6 +1,6 @@
 <template>
   <span>
-    <img :src="url" :title="title">
+    <img :src="faviconUrl" :title="title">
   </span>
 </template>
 
@@ -10,6 +10,11 @@ export default {
     'url',
     'title',
   ],
+  computed: {
+    faviconUrl () {
+      return this.url || 'https://www.google.com/s2/favicons?domain=test';
+    }
+  }
 }
 </script>
 
