@@ -1,7 +1,8 @@
 <template lang="html">
   <section>
     <button @click="tidy">
-      Tidy
+      <span v-if="tabCount">Tidy {{ tabCount }} {{ tabCount | pluralize('tab') }}</span>
+      <span v-else>Nothing to tidy!</span>
     </button>
 
     <a @click='viewDashboard'>
@@ -39,7 +40,17 @@ export default {
     return {
       dashboardURL: chrome.extension.getURL('pages/dashboard.html')
     }
+  },
+
+  asyncComputed: {
+    async tabCount () {
+      const currentWindow = await chromep.windows.getCurrent({});
+      let tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
+      tabs = tabs.filter(t => !t.title.startsWith('TidyTab'));
+      return tabs.length;
+    }
   }
+
 }
 </script>
 

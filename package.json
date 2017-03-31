@@ -63,6 +63,7 @@
     "sass-loader": "^6.0.3",
     "vinyl-named": "1.x.x",
     "vue": "^2.2.1",
+    "vue-async-computed": "^3.0.1",
     "vue-loader": "^11.3.2",
     "vue-moment": "^2.0.2",
     "vue-template-compiler": "^2.2.1",

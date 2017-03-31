@@ -3,7 +3,7 @@
     <header>
       <a href="#" @click="toggleCollapsedState">
         <h2>
-          {{ tabGroup.tabs.length }} tabs
+          {{ tabGroup.tabs.length }} {{ tabGroup.tabs.length | pluralize('tab') }}
         </h2>
         <date>
           {{ tabGroup.createdAt | moment('ddd MM/D') }} at
