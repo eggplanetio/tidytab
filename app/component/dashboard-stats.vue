@@ -1,6 +1,6 @@
 <template>
   <span class="stats">
-    {{ tabGroups.length }} {{ tabGroups.length  | pluralize("window") }} tidied
+    {{ tabGroups.length }} {{ tabGroups.length  | pluralize("window") }}
   </span>
 </template>
 
@@ -14,9 +14,4 @@ export default {
 
 <style lang="sass" scoped="true">
 @import "../styles/settings";
-
-.stats {
-  color: $color-secondary;
-  font-weight: 300;
-}
 </style>

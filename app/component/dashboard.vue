@@ -3,33 +3,41 @@
     <header class="app-header">
       <h1>
         <img class="icon" src="/images/logo.png" alt="icon"> TidyTab
+        <span class="sep">/</span>
+        <DashboardStats :tabGroups="tabGroups"></DashboardStats>
       </h1>
 
-      <DashboardStats :tabGroups="tabGroups"></DashboardStats>
+      <span class="actions-and-stats">
+        <Export></Export>
+        <span class="sep">/</span>
+        <Import></Import>
+      </span>
     </header>
 
     <span v-for="tabGroup in tabGroups">
       <TabGroup :tabGroup="tabGroup"></TabGroup>
     </span>
 
-    <AdUnit></AdUnit>
-
     <footer>
-      useful software by <a href="https://eggplanet.io" target="_blank">eggplanet</a> | v{{ version }}
+      useful software by <a href="http://www.eggplanet.io/" target="_blank">eggplanet</a> |
+      <a href="https://github.com/eggplanetio/tidytab/issues" target="_blank">file a bug</a> |
+      v{{ version }}
     </footer>
   </div>
 </template>
 
 <script>
 import TabGroup from './tab-group.vue';
-import AdUnit from './ad-unit.vue';
+import Export from './export.vue';
+import Import from './import.vue';
 import DashboardStats from './dashboard-stats.vue';
 import { mapState } from 'vuex';
 
 export default {
   components: {
-    AdUnit,
     DashboardStats,
+    Export,
+    Import,
     TabGroup,
   },
 
@@ -49,6 +57,11 @@ export default {
 header {
   margin-bottom: $size-unit;
 
+  .sep {
+    font-weight: 300;
+    opacity: 0.2;
+  }
+
   h1 {
     display: inline-block;
     margin-bottom: 0;
@@ -61,8 +74,13 @@ header {
     }
   }
 
-  .stats {
-    float: right
+  .actions-and-stats {
+    float: right;
+
+    label, a {
+      color: $color-secondary;
+      font-weight: 300;
+    }
   }
 }
 
