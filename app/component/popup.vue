@@ -4,8 +4,8 @@
       Tidy
     </button>
 
-    <a :href="dashboardURL" target="_blank">
-      Open Dashboard
+    <a @click='viewDashboard'>
+      View Dashboard
     </a>
   </section>
 </template>
@@ -16,12 +16,15 @@ import ChromePromise from 'chrome-promise';
 const chromep = new ChromePromise();
 
 export default {
-
   methods: {
     async tidy () {
       const tabGroup = await store.dispatch('SAVE_TAB_GROUP');
       if (tabGroup.tabs.length < 1) return;
+      await this.viewDashboard();
+      await chromep.tabs.remove(tabGroup.tabs.map(tab => tab.id));
+    },
 
+    async viewDashboard() {
       const currentWindow = await chromep.windows.getCurrent({});
       const tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
       const isShowingDashboard = tabs[0].title === "TidyTab – Dashboard";
@@ -29,7 +32,6 @@ export default {
         await chromep.tabs.create({ url: this.dashboardURL, pinned: true, index: 0 });
       }
       chrome.tabs.highlight({ tabs: [0] });
-      await chromep.tabs.remove(tabGroup.tabs.map(tab => tab.id));
     }
   },
 

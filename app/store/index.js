@@ -3,7 +3,9 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 import ChromePromise from 'chrome-promise';
-const chromep = new ChromePromise()
+const chromep = new ChromePromise();
+
+import merge from 'deepmerge';
 
 import packageJson from '../../package.json';
 
@@ -53,9 +55,17 @@ const store = new Vuex.Store({
       commit('TOGGLE_COLLAPSED_STATE_FOR_TAB_GROUP', createdAt);
       dispatch('PERSIST_STATE');
     },
+    async IMPORT_DATA ({ commit, dispatch }, { version, data }) {
+      commit('MERGE_DATA', data);
+      dispatch('PERSIST_STATE');
+    }
   },
 
   mutations: {
+    MERGE_DATA (state, data) {
+      const newData = merge(state.data, data);
+      state.data = newData;
+    },
     SET_DATA (state, data) {
       state.data = data;
     },
@@ -81,7 +91,7 @@ const store = new Vuex.Store({
       let newTabGroups = tabGroups
       newTabGroups[tabIndex].tabs = newTabGroups[tabIndex].tabs.filter(t => t.url !== tab.url);
       if (newTabGroups[tabIndex].tabs.length < 1) newTabGroups.splice(tabIndex, 1);
-      
+
       state.data.tabGroups = newTabGroups;
     },
   },
