@@ -1,28 +1,20 @@
 <template>
-  <section :class="{ collapsed }">
+  <section>
     <header>
-      <a href="#" @click="toggleCollapsedState">
-        <h2>
-          {{ tabGroup.tabs.length }} {{ tabGroup.tabs.length | pluralize('tab') }}
-        </h2>
-        <date>
-          {{ tabGroup.createdAt | moment('ddd MM/D') }} at
-          {{ tabGroup.createdAt | moment('h:m:sa') }}
-        </date>
-
-        <span class="fav-group">
-          <span class="fav-wrapper" v-for="tab in tabGroup.tabs">
-            <Favicon :url="tab.favIconUrl"></Favicon>
-          </span>
-        </span>
-      </a>
+      <h2>
+        {{ tabGroup.tabs.length }} {{ tabGroup.tabs.length | pluralize('tab') }}
+      </h2>
+      <date>
+        {{ tabGroup.dateAdded | moment('ddd MM/D') }} at
+        {{ tabGroup.dateAdded | moment('h:m:sa') }}
+      </date>
 
       <TabGroupActions :tabGroup="tabGroup"></TabGroupActions>
     </header>
 
     <ul>
       <li v-for="tab in tabGroup.tabs">
-        <Favicon :url="tab.favIconUrl"></Favicon>
+        <Favicon :url="tab.url"></Favicon>
         <a @click="openTab(tab.url)" :title="tab.title">
           {{ tab.title }}
         </a>
@@ -49,11 +41,8 @@ export default {
     'tabGroup',
   ],
   methods: {
-    toggleCollapsedState() {
-      store.dispatch('TOGGLE_COLLAPSED_STATE_FOR_TAB_GROUP', { createdAt: this.tabGroup.createdAt })
-    },
     removeTab(tab) {
-      store.dispatch('DELETE_TAB', { tab: tab, createdAt: this.tabGroup.createdAt });
+      store.dispatch('DELETE_TAB', { tabGroup: this.tabGroup, dateAdded: tab.dateAdded });
     },
     openTab(url) {
       chrome.tabs.create({url: url, selected: false});
@@ -74,18 +63,12 @@ export default {
 
 section {
   margin-bottom: $size-unit;
-  border-radius: 1px;
+  border-radius: 3px;
   padding: $size-unit * 1.5;
   box-shadow: 0 3px 3px rgba(black, 0.1);
   background: linear-gradient(to left, desaturate($color-primary, 15%), desaturate($color-primary, 10%));
 
   * { transition: all 250ms ease; }
-}
-
-section.collapsed {
-  ul { display: none; }
-  header { margin-bottom: 0; }
-  .fav-group { display: inline-block; }
 }
 
 header {

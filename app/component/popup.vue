@@ -19,10 +19,10 @@ const chromep = new ChromePromise();
 export default {
   methods: {
     async tidy () {
-      const tabGroup = await store.dispatch('SAVE_TAB_GROUP');
-      if (tabGroup.tabs.length < 1) return;
+      const tabs = await store.dispatch('SAVE_TAB_GROUP');
+      if (tabs.length < 1) return;
       await this.viewDashboard();
-      await chromep.tabs.remove(tabGroup.tabs.map(tab => tab.id));
+      await chromep.tabs.remove(tabs.map(tab => tab.id));
     },
 
     async viewDashboard() {
