@@ -19,8 +19,8 @@ export default {
       const reader = new FileReader();
       reader.onload = readFile => {
         try {
-          const result = JSON.parse(readFile.target.result);
-          store.dispatch('IMPORT_DATA', result);
+          const raw = JSON.parse(readFile.target.result);
+          store.dispatch('IMPORT_DATA', raw);
         } catch (e) {
           alert("Import failed.")
         }

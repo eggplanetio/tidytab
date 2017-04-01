@@ -12,7 +12,9 @@ export default {
   ],
   computed: {
     faviconUrl () {
-      return this.url || 'https://www.google.com/s2/favicons?domain=test';
+      const parser = document.createElement('a');
+      parser.href = this.url;
+      return `https://www.google.com/s2/favicons?domain=${parser.host}`;
     }
   }
 }

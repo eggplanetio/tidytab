@@ -33,6 +33,9 @@ import Import from './import.vue';
 import DashboardStats from './dashboard-stats.vue';
 import { mapState } from 'vuex';
 
+import ChromePromise from 'chrome-promise';
+const chromep = new ChromePromise()
+
 export default {
   components: {
     DashboardStats,
