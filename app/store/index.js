@@ -96,4 +96,6 @@ const bindListeners = async () => {
 
 bindListeners();
 
+window.tidyStore = store;
+
 export default store
