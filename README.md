@@ -14,7 +14,6 @@ Build for development by running:
 npm run dev
 ```
 
-
 ## Installing
 
 Extensions - Load unpacked extensions - Navigate to dist folder
@@ -24,6 +23,10 @@ Extensions - Load unpacked extensions - Navigate to dist folder
 ```
 npm run build:chrome
 ```
+
+## Demo
+
+<img alt="demo" width="800" src="https://cloud.githubusercontent.com/assets/659829/24588155/b0ce5284-1777-11e7-8c67-89ce8086f167.gif"/>
 
 ## Credits
 
