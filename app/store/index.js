@@ -21,15 +21,18 @@ const store = new Vuex.Store({
   },
 
   actions: {
-    async SAVE_TAB_GROUP ({ commit, dispatch }) {
+    async SAVE_TAB_GROUP ({ commit, dispatch }, { filter } = { filter: () => true }) {
       const currentWindow = await chromep.windows.getCurrent({});
       let tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
-      tabs = tabs.filter(tab => !tab.title.startsWith(packageJson.name));
-      if (tabs.length < 1) return tabGroup;
+      tabs = tabs
+        .filter(tab => !tab.title.startsWith(packageJson.name))
+        .filter(filter);
+
+      if (tabs.length < 1) return tabs;
 
       const tidyParent = await BookmarkManager.getTidyParent();
       const tabGroupParent = await chromep.bookmarks.create({
-        title: new Date().toString(),
+        title: BookmarkManager.newId(),
         parentId: tidyParent.id
       });
 
@@ -44,6 +47,7 @@ const store = new Vuex.Store({
       return tabs;
       dispatch('HYDRATE_STATE');
     },
+
     async DELETE_TAB_GROUP ({ commit, dispatch }, dateAdded) {
      await BookmarkManager.removeTabGroup(dateAdded)
       dispatch('HYDRATE_STATE');
@@ -53,7 +57,7 @@ const store = new Vuex.Store({
       dispatch('HYDRATE_STATE');
     },
     async IMPORT_DATA ({ dispatch, commit }, raw) {
-      const tabGroups = await BookmarkManager.import(raw);
+      await BookmarkManager.import(raw);
       dispatch('HYDRATE_STATE');
     },
     async HYDRATE_STATE ({ commit }) {
@@ -70,10 +74,12 @@ const store = new Vuex.Store({
 
   getters: {
     sortedTabGroups: state => {
-      return state.data.tabGroups.sort((a, b) =>
-        a.dateAdded < b.dateAdded
-      )
+      const groups = state.data.tabGroups
       .filter(t => t.tabs.length > 0)
+      .sort((a, b) => a.dateAdded < b.dateAdded)
+      .reverse();
+
+      return groups;
     },
   }
 
