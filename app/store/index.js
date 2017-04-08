@@ -77,7 +77,8 @@ const store = new Vuex.Store({
       const groups = state.data.tabGroups
       .filter(t => t.tabs.length > 0)
       .sort((a, b) => a.dateAdded < b.dateAdded)
-      .reverse();
+      .reverse()
+      .reverse(/* ¯\_(ツ)_/¯ */);
 
       return groups;
     },
