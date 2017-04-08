@@ -26,7 +26,7 @@ npm run build:chrome
 
 ## Demo
 
-<img alt="demo" width="800" src="https://cloud.githubusercontent.com/assets/659829/24588155/b0ce5284-1777-11e7-8c67-89ce8086f167.gif"/>
+<img alt="demo" align="center" width="800" src="https://cloud.githubusercontent.com/assets/659829/24588155/b0ce5284-1777-11e7-8c67-89ce8086f167.gif"/>
 
 ## Credits
 

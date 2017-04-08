@@ -6,7 +6,7 @@
       </h2>
       <date>
         {{ tabGroup.dateAdded | moment('ddd MM/D') }} at
-        {{ tabGroup.dateAdded | moment('h:m:sa') }}
+        {{ tabGroup.dateAdded | moment('h:mm:ssa') }}
       </date>
 
       <TabGroupActions :tabGroup="tabGroup"></TabGroupActions>
@@ -66,8 +66,7 @@ section {
   border-radius: 3px;
   padding: $size-unit * 1.5;
   box-shadow: 0 3px 3px rgba(black, 0.1);
-  background: linear-gradient(to left, desaturate($color-primary, 15%), desaturate($color-primary, 10%));
-
+  background: white;
   * { transition: all 250ms ease; }
 }
 
@@ -101,7 +100,7 @@ ul {
         font-size: $font-size-small;
         opacity: 0.5;
         margin-left: $size-unit/2;
-        color: $color-secondary;
+        color: $color-danger;
 
         &:hover { opacity: 1; }
       }

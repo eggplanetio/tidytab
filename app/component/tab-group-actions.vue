@@ -40,8 +40,4 @@ export default {
   font-size: $font-size-small;
 }
 
-a.remove:hover {
-  color: $color-danger;
-}
-
 </style>

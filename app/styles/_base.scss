@@ -48,35 +48,38 @@ ul {
 a, a:hover, a:active, a:visited {
   color: $color-font;
   text-decoration: none;
-  border-bottom: $size-unit/6 solid rgba($color-primary, 0.1);
+  border-bottom: $size-unit/6 solid rgba($color-primary + 40, 0.15);
   font-weight: 300;
   cursor: pointer;
 }
 
 .button-group {
   letter-spacing: -1px;
-  opacity: 0.5;
+  opacity: 0.75;
   transition: all 250ms ease;
 
-  &:hover {
+  section:hover & {
     opacity: 1;
 
     a:hover {
-      color: white;
+      color: $color-primary;
     }
+    a.remove:hover { color: $color-danger; }
   }
 
   a, a:hover, a:visited, a:active {
-    background: none; //$color-secondary + 20;
+    background: none;
     display: inline-block;
-    border: 2px solid $color-primary + 30;
-    margin-left: -3px;
+    border: 1px solid rgba($color-primary, 0.1);
     padding: $size-unit/4 $size-unit/1.5;
+    margin-left: -4px;
     font-size: $font-size-small;
     font-weight: 400;
     letter-spacing: 1px;
     transition: all 250ms ease;
     color: $color-primary + 50;
+
+    &:nth-child(1) { margin-left: 0; }
   }
 
   a:first-child {

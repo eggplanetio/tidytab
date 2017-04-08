@@ -61,6 +61,7 @@ header {
   margin-bottom: $size-unit;
 
   .sep {
+    color: $color-primary + 40;
     font-weight: 300;
     opacity: 0.2;
   }
@@ -69,6 +70,7 @@ header {
     display: inline-block;
     margin-bottom: 0;
     font-weight: 600;
+    color: $color-primary;
 
     .icon {
       vertical-align: middle;
@@ -83,6 +85,7 @@ header {
     label, a {
       color: $color-secondary;
       font-weight: 300;
+      border: none;
     }
   }
 }
@@ -93,7 +96,7 @@ footer {
   font-size: $font-size-super-small;
 
   a {
-    opacity: 0.2;
+    color: rgba($color-primary, 0.9);
   }
 }
 </style>
