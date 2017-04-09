@@ -70,10 +70,10 @@ export default {
     async tidyCurrent () {
       const currentWindow = await chromep.windows.getCurrent({});
       const currentTab = await chromep.tabs.getSelected(currentWindow.id);
-      const filter = (tab) => tab.index < currentTab.index;
+      const filter = (tab) => tab.index === currentTab.index;
 
       const tabs = await store.dispatch('SAVE_TAB_GROUP', { filter });
-      this.removeTabs(tabs, false);
+      this.removeTabs(tabs, true);
     },
 
     async tidyAllButCurrent () {
