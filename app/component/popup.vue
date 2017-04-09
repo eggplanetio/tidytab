@@ -5,16 +5,18 @@
       <span v-else>Nothing to tidy!</span>
     </button>
 
-    <div class="button-group actions">
-      <a href="#" @click="tidyLeft">← Tidy</a>
-      <a href="#" @click="tidyRight">Tidy →</a>
-      <a href="#" @click="tidyAllButCurrent">← Tidy →</a>
-      <a href="#" @click="clear" class="remove">Clear</a>
+    <div class="button-group actions" @mouseleave="setDefaultMessage">
+      <a href="#" @mouseover="setMessage('Tidy to the left of current')" title="Tidy to the left of current" @click="tidyLeft">← □</a>
+      <a href="#" @mouseover="setMessage('Tidy to the right of current')" title="Tidy to the right of current" @click="tidyRight" >□ →</a>
+      <a href="#" @mouseover="setMessage('Tidy all but current')" title="Tidy all but current" @click="tidyAllButCurrent">← □ →</a>
+      <a href="#" @mouseover="setMessage('Tidy current tab')" title="Tidy current tab" @click="tidyCurrent" >→ □ ←</a>
+      <a href="#" @mouseover="setMessage(`Clear all tabs – don't tidy`)" @click="clear" class="remove">Clear</a>
     </div>
 
     <a @click='viewDashboard' class="dashboard">
-      View Dashboard
+      {{ hoverMessage }}
     </a>
+
   </section>
 </template>
 
@@ -25,7 +27,23 @@ const chromep = new ChromePromise();
 import packageJson from '../../package.json';
 
 export default {
+
+  data () {
+    return {
+      hoverMessage: 'View Dashboard'
+    }
+  },
+
   methods: {
+    setMessage(msg) {
+      console.log(arguments);
+      this.hoverMessage = msg;
+    },
+
+    setDefaultMessage(msg) {
+      this.hoverMessage = 'View Dashboard';
+    },
+
     async tidy () {
       const tabs = await store.dispatch('SAVE_TAB_GROUP');
       this.removeTabs(tabs);
@@ -41,6 +59,15 @@ export default {
     },
 
     async tidyLeft () {
+      const currentWindow = await chromep.windows.getCurrent({});
+      const currentTab = await chromep.tabs.getSelected(currentWindow.id);
+      const filter = (tab) => tab.index < currentTab.index;
+
+      const tabs = await store.dispatch('SAVE_TAB_GROUP', { filter });
+      this.removeTabs(tabs, false);
+    },
+
+    async tidyCurrent () {
       const currentWindow = await chromep.windows.getCurrent({});
       const currentTab = await chromep.tabs.getSelected(currentWindow.id);
       const filter = (tab) => tab.index < currentTab.index;
@@ -84,6 +111,7 @@ export default {
 
   data () {
     return {
+      hoverMessage: 'View Dashboard',
       dashboardURL: chrome.extension.getURL('pages/dashboard.html')
     }
   },
@@ -102,7 +130,7 @@ export default {
 
 <style scoped="true" lang="sass">
 @import '../styles/settings';
-$width: 245px;
+$width: 250px;
 
 section {
   text-align: center;
