@@ -24,9 +24,12 @@ const store = new Vuex.Store({
     async SAVE_TAB_GROUP ({ commit, dispatch }, { filter } = { filter: () => true }) {
       const currentWindow = await chromep.windows.getCurrent({});
       let tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
+      console.log(tabs);
       tabs = tabs
-        .filter(tab => !tab.title.startsWith(packageJson.name))
+        .filter(tab => !(tab.url.startsWith('chrome-extension') && tab.title.startsWith('TidyTab')))
         .filter(filter);
+
+      console.log(tabs);
 
       if (tabs.length < 1) return tabs;
 

@@ -6,9 +6,9 @@
     </button>
 
     <div class="button-group actions" @mouseleave="setDefaultMessage">
-      <a href="#" @mouseover="setMessage('Tidy to the left of current')" title="Tidy to the left of current" @click="tidyLeft">← □</a>
-      <a href="#" @mouseover="setMessage('Tidy to the right of current')" title="Tidy to the right of current" @click="tidyRight" >□ →</a>
-      <a href="#" @mouseover="setMessage('Tidy all but current')" title="Tidy all but current" @click="tidyAllButCurrent">← □ →</a>
+      <a href="#" @mouseover="setMessage('Tidy to the left of current tab')" title="Tidy to the left of current tab" @click="tidyLeft">← □</a>
+      <a href="#" @mouseover="setMessage('Tidy to the right of current tab')" title="Tidy to the right of current tab" @click="tidyRight" >□ →</a>
+      <a href="#" @mouseover="setMessage('Tidy all but current tab')" title="Tidy all but current tab" @click="tidyAllButCurrent">← □ →</a>
       <a href="#" @mouseover="setMessage('Tidy current tab')" title="Tidy current tab" @click="tidyCurrent" >→ □ ←</a>
       <a href="#" @mouseover="setMessage(`Clear all tabs – don't tidy`)" @click="clear" class="remove">Clear</a>
     </div>
@@ -36,7 +36,6 @@ export default {
 
   methods: {
     setMessage(msg) {
-      console.log(arguments);
       this.hoverMessage = msg;
     },
 
@@ -130,17 +129,17 @@ export default {
 
 <style scoped="true" lang="sass">
 @import '../styles/settings';
-$width: 250px;
 
 section {
   text-align: center;
+  width: 260px;
 }
 
 button {
-  width: $width;
   background: $color-primary;
   margin-bottom: $size-unit/2;
   color: white;
+  width: 250px;
 }
 
 a, a:visited, a:hover, a:active {
