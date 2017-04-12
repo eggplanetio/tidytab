@@ -26,7 +26,7 @@ const store = new Vuex.Store({
       const currentWindow = await chromep.windows.getCurrent({});
       let tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
       tabs = tabs
-        .filter(tab => !tidyHelpers.isTidyExtensionTab(tab))
+        .filter(tab => !tidyHelpers.shouldTidy(tab))
         .filter(filter);
 
       if (tabs.length < 1) return tabs;
@@ -75,13 +75,9 @@ const store = new Vuex.Store({
 
   getters: {
     sortedTabGroups: state => {
-      const groups = state.data.tabGroups
+      return state.data.tabGroups
       .filter(t => t.tabs.length > 0)
-      .sort((a, b) => a.dateAdded < b.dateAdded)
-      .reverse()
-      .reverse(/* ¯\_(ツ)_/¯ */);
-
-      return groups;
+      .sort((a, b) => b.dateAdded - a.dateAdded)
     },
   }
 

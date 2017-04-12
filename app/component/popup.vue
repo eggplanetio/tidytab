@@ -87,7 +87,7 @@ export default {
     async clear () {
       const currentWindow = await chromep.windows.getCurrent({});
       let tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
-      tabs = tabs.filter(tab => !tidyHelpers.isTidyExtensionTab(tab));
+      tabs = tabs.filter(tab => !tidyHelpers.shouldTidy(tab));
       this.removeTabs(tabs);
     },
 
@@ -129,7 +129,7 @@ export default {
     async tabCount () {
       const currentWindow = await chromep.windows.getCurrent({});
       let tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
-      tabs = tabs.filter(t => !t.title.startsWith('TidyTab'));
+      tabs = tabs.filter(tab => !tidyHelpers.shouldTidy(tab));
       return tabs.length;
     }
   }
