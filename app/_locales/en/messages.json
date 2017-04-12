@@ -5,11 +5,11 @@
   },
   "appShortName": {
     "message": "tidy_tab",
-    "description": "Tidy all your tabs in a single click."
+    "description": "Tidy and restore all your tabs in a single click."
   },
   "appDescription": {
-    "message": "Tidy all your tabs in a single click.",
-    "description": "Tidy all your tabs in a single click."
+    "message": "Tidy and restore all your tabs in a single click.",
+    "description": "Tidy and restore all your tabs in a single click."
   },
   "browserActionTitle": {
     "message": "TidyTab",
