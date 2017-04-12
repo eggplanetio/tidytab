@@ -6,10 +6,10 @@
     </button>
 
     <div class="button-group actions" @mouseleave="setDefaultMessage">
-      <a href="#" @mouseover="setMessage('Tidy to the left of current tab')" title="Tidy to the left of current tab" @click="tidyLeft">← □</a>
-      <a href="#" @mouseover="setMessage('Tidy to the right of current tab')" title="Tidy to the right of current tab" @click="tidyRight" >□ →</a>
-      <a href="#" @mouseover="setMessage('Tidy all but current tab')" title="Tidy all but current tab" @click="tidyAllButCurrent">← □ →</a>
-      <a href="#" @mouseover="setMessage('Tidy current tab')" title="Tidy current tab" @click="tidyCurrent" >→ □ ←</a>
+      <a href="#" @mouseover="setMessage('Tidy to the left of current tab')" title="Tidy to the left of current tab" @click="tidyLeft">← ○</a>
+      <a href="#" @mouseover="setMessage('Tidy to the right of current tab')" title="Tidy to the right of current tab" @click="tidyRight" >○ →</a>
+      <a href="#" @mouseover="setMessage('Tidy all but current tab')" title="Tidy all but current tab" @click="tidyAllButCurrent">← ○ →</a>
+      <a href="#" @mouseover="setMessage('Tidy current tab')" title="Tidy current tab" @click="tidyCurrent" >→ ○ ←</a>
       <a href="#" @mouseover="setMessage(`Clear all tabs – don't tidy`)" @click="clear" class="remove">Clear</a>
     </div>
 
@@ -24,7 +24,7 @@
 import store from '../store/index.js';
 import ChromePromise from 'chrome-promise';
 const chromep = new ChromePromise();
-import packageJson from '../../package.json';
+import tidyHelpers from '../../lib/helpers.js';
 
 export default {
 
@@ -87,7 +87,7 @@ export default {
     async clear () {
       const currentWindow = await chromep.windows.getCurrent({});
       let tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
-      tabs = tabs.filter(tab => !tab.title.startsWith(packageJson.name));
+      tabs = tabs.filter(tab => !tidyHelpers.isTidyExtensionTab(tab));
       this.removeTabs(tabs);
     },
 
@@ -103,8 +103,18 @@ export default {
 
     async removeTabs (tabs, viewDashboard = true) {
       if (tabs.length < 1) return;
-      if (viewDashboard) await this.viewDashboard();
-      await chromep.tabs.remove(tabs.map(tab => tab.id));
+      /*
+        An issue with Windows requires us to close tabs then open Dashboard.
+        This is likely due to the fact the popup has closed while tabs are being removed.
+        */
+      const isWindows = navigator.platform.toLowerCase().includes('win');
+      if (isWindows) {
+        await chromep.tabs.remove(tabs.map(tab => tab.id));
+        if (viewDashboard) await this.viewDashboard();
+      } else {
+        if (viewDashboard) await this.viewDashboard();
+        await chromep.tabs.remove(tabs.map(tab => tab.id));
+      }
     }
   },
 
