@@ -15,9 +15,15 @@
     <ul>
       <li v-for="tab in tabGroup.tabs">
         <Favicon :url="tab.url"></Favicon>
-        <a @click="openTab(tab)" @contextmenu="openAndRemoveTab($event, tab)" :title="tab.title">
-          {{ tab.title }}
+        <a @click="openTab($event, tab)" @contextmenu="openAndRemoveTab($event, tab)" :title="tab.url" :href="tab.url">
+          <span class="title">
+            {{ tab.title | truncate(60) }}
+          </span>
+          <span class="url">
+            {{ tab.url | host }}
+          </span>
         </a>
+
         <span class="tab-actions">
           <a @click="removeTab(tab)">remove</a>
         </span>
@@ -44,7 +50,8 @@ export default {
     removeTab(tab) {
       store.dispatch('DELETE_TAB', { tabGroup: this.tabGroup, dateAdded: tab.dateAdded });
     },
-    openTab(tab) {
+    openTab(event, tab) {
+      event.preventDefault();
       chrome.tabs.create({url: tab.url, selected: false});
     },
     openAndRemoveTab (e, tab) {
@@ -98,6 +105,14 @@ ul {
   li {
     font-size: $font-size-small;
     margin-bottom: $size-unit/2;
+
+    a {
+
+      .url {
+        opacity: 0.5;
+        font-size: $font-size-small;
+      }
+    }
 
     .tab-actions {
       opacity: 0;

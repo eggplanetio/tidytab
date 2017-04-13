@@ -48,7 +48,6 @@ ul {
 a, a:hover, a:active, a:visited {
   color: $color-font;
   text-decoration: none;
-  border-bottom: $size-unit/6 solid rgba($color-primary + 40, 0.15);
   font-weight: 300;
   cursor: pointer;
 }

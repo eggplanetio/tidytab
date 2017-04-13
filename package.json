@@ -1,7 +1,7 @@
 {
   "name": "TidyTab",
   "private": true,
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Tidy those tabs!",
   "scripts": {
     "start": "npm run dev:chrome",
@@ -67,6 +67,7 @@
     "vue-loader": "^11.3.2",
     "vue-moment": "^2.0.2",
     "vue-template-compiler": "^2.2.1",
+    "vue-truncate-filter": "^1.1.6",
     "vue2-filters": "^0.1.7",
     "vueify-insert-css": "^1.0.0",
     "vuex": "^2.2.1",
