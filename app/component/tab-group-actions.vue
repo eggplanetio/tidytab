@@ -1,8 +1,8 @@
 <template>
   <div class="button-group actions">
-    <a href="#" @click="restore">Restore</a>
-    <a href="#" @click="newWindow">Restore in new</a>
-    <a href="#" @click="remove" class="remove">Remove</a>
+    <a @click="restore">Restore</a>
+    <a @click="newWindow">Restore in new</a>
+    <a @click="remove" class="remove">Remove</a>
   </div>
 </template>
 
