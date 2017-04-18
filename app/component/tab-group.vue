@@ -48,7 +48,10 @@ export default {
   ],
   methods: {
     removeTab(tab) {
-      store.dispatch('DELETE_TAB', { tabGroup: this.tabGroup, dateAdded: tab.dateAdded });
+      store.dispatch('DELETE_TAB', {
+        tabGroup: this.tabGroup,
+        url: tab.url,
+      });
     },
     openTab(event, tab) {
       event.preventDefault();
