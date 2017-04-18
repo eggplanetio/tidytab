@@ -14,15 +14,19 @@ Build for development by running:
 npm run dev
 ```
 
-## Installing
+## Installing for development
 
-Extensions - Load unpacked extensions - Navigate to dist folder
+Extensions → Load unpacked extensions → Navigate to dist folder
 
 ## Releasing
+
+Increment version in `manifest.json` and `package.json`, taking care to honor semver, then:
 
 ```
 npm run build:chrome
 ```
+
+Upload artifact in `./packages`
 
 ## Demo
 
