@@ -25,7 +25,8 @@
     <footer>
       useful software by <a href="http://www.eggplanet.io/" target="_blank">eggplanet</a> |
       <a href="https://github.com/eggplanetio/tidytab/issues" target="_blank">file a bug</a> |
-      v{{ version }}
+      v{{ version }} |
+      {{ theme }} theme
     </footer>
   </div>
 </template>
@@ -58,8 +59,9 @@ export default {
 
   computed: {
     ...mapState([
+      'searchQuery',
+      'theme',
       'version',
-      'searchQuery'
     ]),
   }
 }
