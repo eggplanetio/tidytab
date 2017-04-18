@@ -109,7 +109,6 @@ const store = new Vuex.Store({
           return doesMatch;
         });
 
-        tabGroup.dateAdded = tabGroup.dateAdded + 1;
         return tabGroup;
       });
 

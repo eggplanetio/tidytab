@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style scoped lang="sass">
-@import "../styles/colors";
+@import "../styles/colors-light";
 @import "../styles/settings";
 
 section {
