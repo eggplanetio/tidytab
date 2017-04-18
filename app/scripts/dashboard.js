@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 
 import Vue from 'vue';
+
 import Vue2Filters from 'vue2-filters';
 Vue.use(Vue2Filters);
 
@@ -10,7 +11,10 @@ Vue.use(VueTruncate);
 import HostFilter from '../../lib/host-filter.js';
 Vue.use(HostFilter);
 
+import VueHead from 'vue-head';
+
 Vue.use(require('vue-moment'));
+Vue.use(VueHead);
 
 import store from '../store/index.js';
 import { mapGetters } from 'vuex';
@@ -22,11 +26,11 @@ const app = new Vue({
   store,
   render (h) {
     return (
-      <Dashboard tabGroups={ this.sortedTabGroups }>
+      <Dashboard tabGroups={ this.sortedAndFilteredTabGroups }>
       </Dashboard>
     )
   },
   computed: {
-    ...mapGetters([ 'sortedTabGroups' ]),
+    ...mapGetters([ 'sortedAndFilteredTabGroups' ]),
   }
 })

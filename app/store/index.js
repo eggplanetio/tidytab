@@ -18,7 +18,9 @@ const store = new Vuex.Store({
     stateVersion: packageJson.version.split('.')[0],
     data: {
       tabGroups: []
-    }
+    },
+    searchQuery: '',
+    theme: '',
   },
 
   actions: {
@@ -64,6 +66,9 @@ const store = new Vuex.Store({
     async HYDRATE_STATE ({ commit }) {
       const tabGroups = await BookmarkManager.tabGroupsFromBookmarks();
       commit('SET_DATA', { tabGroups });
+
+      const items = await chromep.storage.local.get('theme');
+      commit('SET_THEME', items.theme || 'light');
     },
   },
 
@@ -71,13 +76,43 @@ const store = new Vuex.Store({
     SET_DATA (state, data) {
       state.data = data;
     },
+
+    SET_THEME (state, theme) {
+      state.theme = theme;
+      chromep.storage.local.set({ theme });
+    },
+
+    SET_SEARCH_QUERY (state, query) {
+      state.searchQuery = query;
+    },
   },
 
   getters: {
-    sortedTabGroups: state => {
-      return state.data.tabGroups
+    sortedAndFilteredTabGroups: state => {
+      const q = state.searchQuery.toLowerCase();
+
+      const tabGroups = state.data.tabGroups
       .filter(t => t.tabs.length > 0)
+      .filter(tabGroup => {
+        if (!q.length) return true;
+
+        const hasQuery = tabGroup.tabs.find(tab =>
+          tab.title.toLowerCase().includes(q) || tab.url.toLowerCase().includes(q)
+        );
+        return !!(hasQuery);
+      })
       .sort((a, b) => b.dateAdded - a.dateAdded)
+      .map(tabGroup => {
+        if (!q) return tabGroup;
+        tabGroup.tabs = tabGroup.tabs.filter(tab => {
+          const doesMatch = tab.title.toLowerCase().includes(q) || tab.url.toLowerCase().includes(q);
+          return doesMatch;
+        });
+
+        return tabGroup;
+      });
+
+      return tabGroups || [];
     },
   }
 

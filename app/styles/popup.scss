@@ -1,5 +1,7 @@
+@import 'settings';
+@import 'colors-light';
 @import 'base';
 
 body {
-  padding: $size-unit/2;
+  padding: $size-unit $size-unit/2 $size-unit/3;
 }

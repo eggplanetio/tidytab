@@ -34,6 +34,7 @@ export default {
 
 <style scoped lang="sass">
 @import "../styles/settings";
+@import "../styles/colors";
 
 .import {
 	width: 0.1px;

@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="tab-group">
     <header>
       <h2>
         {{ tabGroup.tabs.length }} {{ tabGroup.tabs.length | pluralize('tab') }}
@@ -71,15 +71,17 @@ export default {
 </script>
 
 <style scoped lang="sass">
+@import "../styles/colors";
 @import "../styles/settings";
 
 section {
+  opacity: 0.8;
   margin-bottom: $size-unit;
   border-radius: 3px;
   padding: $size-unit * 1.5;
   box-shadow: 0 3px 3px rgba(black, 0.1);
-  background: white;
-  * { transition: all 250ms ease; }
+  & { transition: all 250ms ease; }
+  &:hover { opacity: 1 }
 }
 
 header {

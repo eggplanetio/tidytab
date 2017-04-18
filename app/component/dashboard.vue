@@ -5,12 +5,16 @@
         <img class="icon" src="/images/logo.png" alt="icon"> TidyTab
         <span class="sep">/</span>
         <DashboardStats :tabGroups="tabGroups"></DashboardStats>
+        <span class="sep">/</span>
+        <Search :query='searchQuery'/>
       </h1>
 
       <span class="actions-and-stats">
-        <Export></Export>
+        <Export/>
         <span class="sep">/</span>
-        <Import></Import>
+        <Import/>
+        <span class="sep">/</span>
+        <ToggleTheme/>
       </span>
     </header>
 
@@ -27,10 +31,12 @@
 </template>
 
 <script>
-import TabGroup from './tab-group.vue';
+import DashboardStats from './dashboard-stats.vue';
 import Export from './export.vue';
 import Import from './import.vue';
-import DashboardStats from './dashboard-stats.vue';
+import Search from './search.vue';
+import ToggleTheme from './toggle-theme.vue';
+import TabGroup from './tab-group.vue';
 import { mapState } from 'vuex';
 
 import ChromePromise from 'chrome-promise';
@@ -41,7 +47,9 @@ export default {
     DashboardStats,
     Export,
     Import,
+    Search,
     TabGroup,
+    ToggleTheme,
   },
 
   props: [
@@ -49,12 +57,16 @@ export default {
   ],
 
   computed: {
-    ...mapState(['version'])
+    ...mapState([
+      'version',
+      'searchQuery'
+    ]),
   }
 }
 </script>
 
 <style scoped="true" lang="sass">
+@import "../styles/colors";
 @import "../styles/settings";
 
 header {

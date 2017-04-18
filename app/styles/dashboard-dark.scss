@@ -1,0 +1,17 @@
+@import 'colors';
+@import 'colors-dark';
+@import 'settings';
+@import 'base';
+
+body {
+  background: $color-body-background;
+}
+
+section.tab-group {
+  background: $color-tab-group-background;
+}
+
+.search,
+.search::placeholder  {
+  color: $color-font;
+}
