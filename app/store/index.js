@@ -73,6 +73,10 @@ const store = new Vuex.Store({
       const items = await chromep.storage.local.get('theme');
       commit('SET_THEME', items.theme || 'light');
     },
+
+    async PRUNE_EMPTY_TAB_GROUPS ({ commit }) {
+      await BookmarkManager.pruneEmptyTabGroups();
+    },
   },
 
   mutations: {
@@ -121,7 +125,11 @@ const store = new Vuex.Store({
 
 });
 
-store.dispatch('HYDRATE_STATE');
+const hydrateAndPrune = async () => {
+  await store.dispatch('PRUNE_EMPTY_TAB_GROUPS');
+  await store.dispatch('HYDRATE_STATE');
+}
+hydrateAndPrune();
 
 const bindListeners = async () => {
   const currentTab = await chromep.tabs.getCurrent()
@@ -138,4 +146,4 @@ const bindListeners = async () => {
 
 bindListeners();
 
-export default store
+export default store;
