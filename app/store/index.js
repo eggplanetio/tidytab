@@ -18,7 +18,8 @@ const store = new Vuex.Store({
     stateVersion: packageJson.version.split('.')[0],
     data: {
       tabGroups: []
-    }
+    },
+    searchQuery: '',
   },
 
   actions: {
@@ -71,13 +72,39 @@ const store = new Vuex.Store({
     SET_DATA (state, data) {
       state.data = data;
     },
+
+    SET_SEARCH_QUERY (state, query) {
+      state.searchQuery = query;
+    },
   },
 
   getters: {
-    sortedTabGroups: state => {
-      return state.data.tabGroups
+    sortedAndFilteredTabGroups: state => {
+      const q = state.searchQuery.toLowerCase();
+
+      const tabGroups = state.data.tabGroups
       .filter(t => t.tabs.length > 0)
+      .filter(tabGroup => {
+        if (!q.length) return true;
+
+        const hasQuery = tabGroup.tabs.find(tab =>
+          tab.title.toLowerCase().includes(q) || tab.url.toLowerCase().includes(q)
+        );
+        return !!(hasQuery);
+      })
       .sort((a, b) => b.dateAdded - a.dateAdded)
+      .map(tabGroup => {
+        if (!q) return tabGroup;
+        tabGroup.tabs = tabGroup.tabs.filter(tab => {
+          const doesMatch = tab.title.toLowerCase().includes(q) || tab.url.toLowerCase().includes(q);
+          return doesMatch;
+        });
+
+        tabGroup.dateAdded = tabGroup.dateAdded + 1;
+        return tabGroup;
+      });
+
+      return tabGroups || [];
     },
   }
 

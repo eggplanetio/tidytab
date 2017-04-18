@@ -1,4 +1,4 @@
-@import 'colors';
+@import 'colors-dark';
 @import 'settings';
 @import 'base';
 
@@ -8,4 +8,9 @@ body {
 
 section.tab-group {
   background: $color-tab-group-background;
+}
+
+.search,
+.search::placeholder  {
+  color: $color-font;
 }

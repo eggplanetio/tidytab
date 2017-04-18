@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 
 import Vue from 'vue';
+
 import Vue2Filters from 'vue2-filters';
 Vue.use(Vue2Filters);
 
@@ -22,11 +23,11 @@ const app = new Vue({
   store,
   render (h) {
     return (
-      <Dashboard tabGroups={ this.sortedTabGroups }>
+      <Dashboard tabGroups={ this.sortedAndFilteredTabGroups }>
       </Dashboard>
     )
   },
   computed: {
-    ...mapGetters([ 'sortedTabGroups' ]),
+    ...mapGetters([ 'sortedAndFilteredTabGroups' ]),
   }
 })
