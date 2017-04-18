@@ -55,8 +55,8 @@ const store = new Vuex.Store({
      await BookmarkManager.removeTabGroup(dateAdded)
       dispatch('HYDRATE_STATE');
     },
-    async DELETE_TAB ({ commit, dispatch }, { tabGroup, dateAdded }) {
-     await BookmarkManager.removeTabFromTabGroup(tabGroup, dateAdded)
+    async DELETE_TAB ({ commit, dispatch }, { tabGroup, url }) {
+      await BookmarkManager.removeTabFromTabGroup(tabGroup, url)
       dispatch('HYDRATE_STATE');
     },
     async IMPORT_DATA ({ dispatch, commit }, raw) {
