@@ -52,23 +52,30 @@ const store = new Vuex.Store({
     },
 
     async DELETE_TAB_GROUP ({ commit, dispatch }, dateAdded) {
-     await BookmarkManager.removeTabGroup(dateAdded)
+      await BookmarkManager.removeTabGroup(dateAdded)
       dispatch('HYDRATE_STATE');
     },
+
     async DELETE_TAB ({ commit, dispatch }, { tabGroup, url }) {
       await BookmarkManager.removeTabFromTabGroup(tabGroup, url)
       dispatch('HYDRATE_STATE');
     },
+
     async IMPORT_DATA ({ dispatch, commit }, raw) {
       await BookmarkManager.import(raw);
       dispatch('HYDRATE_STATE');
     },
+
     async HYDRATE_STATE ({ commit }) {
       const tabGroups = await BookmarkManager.tabGroupsFromBookmarks();
       commit('SET_DATA', { tabGroups });
 
       const items = await chromep.storage.local.get('theme');
       commit('SET_THEME', items.theme || 'light');
+    },
+
+    async PRUNE_EMPTY_TAB_GROUPS ({ commit }) {
+      await BookmarkManager.pruneEmptyTabGroups();
     },
   },
 
@@ -118,7 +125,11 @@ const store = new Vuex.Store({
 
 });
 
-store.dispatch('HYDRATE_STATE');
+const hydrateAndPrune = async () => {
+  await store.dispatch('PRUNE_EMPTY_TAB_GROUPS');
+  await store.dispatch('HYDRATE_STATE');
+}
+hydrateAndPrune();
 
 const bindListeners = async () => {
   const currentTab = await chromep.tabs.getCurrent()
@@ -135,4 +146,4 @@ const bindListeners = async () => {
 
 bindListeners();
 
-export default store
+export default store;

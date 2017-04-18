@@ -1,6 +1,6 @@
 <template>
   <a title="Toggle mode" @click="toggleTheme" href="#">
-    {{ otherTheme }} Theme
+    {{ nextTheme }}
   </a>
 </template>
 
@@ -8,10 +8,16 @@
 import store from '../store/index.js';
 import { mapState } from 'vuex';
 
+const THEMES = [
+  'dark',
+  'light',
+  'night'
+];
+
 export default {
   methods: {
     toggleTheme() {
-      store.commit('SET_THEME', this.otherTheme);
+      store.commit('SET_THEME', this.nextTheme);
     }
   },
 
@@ -36,9 +42,12 @@ export default {
       'theme'
     ]),
 
-    otherTheme() {
-      const other = this.theme === 'dark' ? 'light' : 'dark';
-      return other;
+    nextTheme() {
+      const themeIndex = THEMES.indexOf(this.theme);
+      let nextIndex = themeIndex + 1;
+      if (nextIndex + 1 > THEMES.length) nextIndex = 0;
+      const next = THEMES[nextIndex];
+      return next;
     }
   }
 }
