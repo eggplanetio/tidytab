@@ -20,6 +20,7 @@ const store = new Vuex.Store({
       tabGroups: []
     },
     searchQuery: '',
+    theme: '',
   },
 
   actions: {
@@ -65,12 +66,20 @@ const store = new Vuex.Store({
     async HYDRATE_STATE ({ commit }) {
       const tabGroups = await BookmarkManager.tabGroupsFromBookmarks();
       commit('SET_DATA', { tabGroups });
+
+      const items = await chromep.storage.local.get('theme');
+      commit('SET_THEME', items.theme || 'light');
     },
   },
 
   mutations: {
     SET_DATA (state, data) {
       state.data = data;
+    },
+
+    SET_THEME (state, theme) {
+      state.theme = theme;
+      chromep.storage.local.set({ theme });
     },
 
     SET_SEARCH_QUERY (state, query) {

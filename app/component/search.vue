@@ -25,6 +25,8 @@ export default {
       this.$el.focus();
     },
     setQuery(e) {
+      const isEsc = e.keyCode === 27;
+      if (isEsc) this.query = '';
       store.commit('SET_SEARCH_QUERY', this.query);
       store.dispatch('HYDRATE_STATE');
     }

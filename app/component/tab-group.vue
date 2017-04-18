@@ -80,7 +80,7 @@ section {
   border-radius: 3px;
   padding: $size-unit * 1.5;
   box-shadow: 0 3px 3px rgba(black, 0.1);
-  &, * { transition: all 250ms ease; }
+  & { transition: all 250ms ease; }
   &:hover { opacity: 1 }
 }
 
