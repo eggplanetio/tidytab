@@ -2,7 +2,7 @@
   "name": "__MSG_appName__",
   "short_name": "__MSG_appShortName__",
   "description": "__MSG_appDescription__",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "manifest_version": 2,
   "default_locale": "en",
   "icons": {
@@ -48,17 +48,9 @@
   },
   "permissions": [
     "bookmarks",
-    "commands",
-    "contentSettings",
     "contextMenus",
-    "declarativeContent",
-    "downloads",
-    "management",
-    "pageCapture",
     "storage",
-    "tabCapture",
-    "tabs",
-    "<all_urls>"
+    "tabs"
   ],
   "web_accessible_resources": [
     "pages/*",
