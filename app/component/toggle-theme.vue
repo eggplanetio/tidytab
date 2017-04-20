@@ -29,7 +29,7 @@ export default {
 
   head: {
     link() {
-      const theme = this.theme;
+      const theme = this.theme || 'light';
       const href = `../styles/dashboard-${theme}.css`;
       return [
         { rel: 'stylesheet', type: 'text/css', href, id: 'theme' },
