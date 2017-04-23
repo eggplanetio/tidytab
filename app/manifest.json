@@ -2,7 +2,7 @@
   "name": "__MSG_appName__",
   "short_name": "__MSG_appShortName__",
   "description": "__MSG_appDescription__",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "manifest_version": 2,
   "default_locale": "en",
   "icons": {
@@ -49,6 +49,7 @@
   "permissions": [
     "bookmarks",
     "contextMenus",
+    "downloads",
     "storage",
     "tabs"
   ],
