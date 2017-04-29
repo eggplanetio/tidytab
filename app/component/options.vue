@@ -9,9 +9,9 @@
         <p>
           Choose a dashboard theme.
         </p>
-        <select id="theme" v-model="theme" @change="onThemeSelect">
-          <option v-for="theme in THEMES" :value="theme">{{ theme }}</option>
-        </select>
+        <p>
+          <ThemeSelector/>
+        </p>
       </li>
 
       <li>
@@ -23,9 +23,9 @@
           By default TidyTab stores all data inside of <code>Other Bookmarks -> TidyTab</code>.
         </p>
         <p>
-          <bookmark-indicator/>
+          <BookmarkIndicator/>
         </p>
-        <bookmark-selector/>
+        <BookmarkSelector/>
       </li>
 
 
@@ -51,40 +51,20 @@
 </template>
 
 <script>
-import tidyHelpers from '../../lib/helpers.js';
+import ThemeSelector from './theme-selector.vue';
 import BookmarkSelector from './bookmark-selector.js';
 import BookmarkIndicator from './bookmark-indicator.vue';
-
-import store from '../store/index.js';
-import { THEMES } from '../store/index.js';
-import ChromePromise from 'chrome-promise';
-const chromep = new ChromePromise();
-import { mapState } from 'vuex';
-
 
 export default {
 
   data: () => ({
     enableTabSavingStrategy: false,
-    THEMES
   }),
 
   components: {
-    BookmarkIndicator
+    ThemeSelector,
+    BookmarkIndicator,
   },
-
-  methods: {
-    onThemeSelect(e) {
-      store.commit('SET_THEME', e.target.value);
-    },
-  },
-
-  computed: {
-    ...mapState([
-      'theme',
-    ]),
-  },
-
 }
 </script>
 

@@ -52,7 +52,7 @@ const createComponent = (bookmarks) => {
   }
 }
 
-Vue.component('bookmark-selector', async (resolve, reject) => {
+Vue.component('BookmarkSelector', async (resolve, reject) => {
   const bookmarks = await BookmarkManager.getBookmarks();
   resolve(createComponent(bookmarks));
 });
