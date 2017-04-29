@@ -26,6 +26,8 @@ const createComponent = (bookmarks) => {
             max-height={150}
             onSelect={this.onSelect}>
           </multiselect>
+
+          <a onClick={this.reset} style="cursor: pointer; margin-top: 5px; display: inline-block;">Reset to default</a>
         </span>
       )
     },
@@ -38,6 +40,9 @@ const createComponent = (bookmarks) => {
       onSelect(selection) {
         store.commit('SET_BOOKMARK_FOLDER_ID', selection.value);
       },
+      reset() {
+        store.commit('SET_BOOKMARK_FOLDER_ID', null);
+      },
     },
 
     computed: {
@@ -46,8 +51,10 @@ const createComponent = (bookmarks) => {
       ]),
     },
 
-    data: () => {
-      return { bookmarks }
+    data() {
+      return {
+        bookmarks
+      }
     },
   }
 }

@@ -108,6 +108,7 @@ const store = new Vuex.Store({
   },
 
   getters: {
+
     sortedAndFilteredTabGroups: state => {
       const q = state.searchQuery.toLowerCase();
 

@@ -20,14 +20,14 @@
         </h2>
         <p>
           TidyTab uses your bookmarks to store each individual group after you tidy.
-          By default TidyTab stores all data inside of <code>Other Bookmarks -> TidyTab</code>.
         </p>
         <p>
           <BookmarkIndicator/>
         </p>
-        <BookmarkSelector/>
+        <p>
+          <BookmarkSelector/>
+        </p>
       </li>
-
 
       <div v-if="enableTabSavingStrategy">
         <li>
