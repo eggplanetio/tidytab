@@ -11,6 +11,12 @@ const chromep = new ChromePromise();
 import merge from 'deepmerge';
 import packageJson from '../../package.json';
 
+export const THEMES = [
+  'dark',
+  'light',
+  'night'
+];
+
 const store = new Vuex.Store({
 
   state: {
@@ -21,6 +27,7 @@ const store = new Vuex.Store({
     },
     searchQuery: '',
     theme: '',
+    bookmarkFolderId: null,
   },
 
   actions: {
@@ -33,15 +40,15 @@ const store = new Vuex.Store({
 
       if (tabs.length < 1) return tabs;
 
-      const tidyParent = await BookmarkManager.getTidyParent();
-      const tabGroupParent = await chromep.bookmarks.create({
+      const tidyParent = await BookmarkManager.getTidyFolder();
+      const newFolder = await chromep.bookmarks.create({
         title: BookmarkManager.newId(),
         parentId: tidyParent.id
       });
 
       tabs.forEach(async (tab) => {
         await chromep.bookmarks.create({
-          parentId: tabGroupParent.id,
+          parentId: newFolder.id,
           title: tab.title,
           url: tab.url
         });
@@ -70,8 +77,9 @@ const store = new Vuex.Store({
       const tabGroups = await BookmarkManager.tabGroupsFromBookmarks();
       commit('SET_DATA', { tabGroups });
 
-      const items = await chromep.storage.local.get('theme');
+      const items = await chromep.storage.local.get([ 'theme', 'bookmarkFolderId' ]);
       commit('SET_THEME', items.theme || 'light');
+      commit('SET_BOOKMARK_FOLDER_ID', items.bookmarkFolderId);
     },
 
     async PRUNE_EMPTY_TAB_GROUPS ({ commit }) {
@@ -87,6 +95,11 @@ const store = new Vuex.Store({
     SET_THEME (state, theme) {
       state.theme = theme;
       chromep.storage.local.set({ theme });
+    },
+
+    SET_BOOKMARK_FOLDER_ID (state, id) {
+      state.bookmarkFolderId = id;
+      chromep.storage.local.set({ bookmarkFolderId: id })
     },
 
     SET_SEARCH_QUERY (state, query) {
@@ -140,6 +153,10 @@ const bindListeners = async () => {
   });
 
   window.addEventListener('focus', () => {
+    store.dispatch('HYDRATE_STATE');
+  });
+
+  chrome.storage.onChanged.addListener(() => {
     store.dispatch('HYDRATE_STATE');
   });
 }

@@ -56,5 +56,9 @@
   "web_accessible_resources": [
     "pages/*",
     "scripts/*"
-  ]
+  ],
+   "options_ui": {
+    "page": "pages/options.html",
+    "chrome_style": true
+  }
 }

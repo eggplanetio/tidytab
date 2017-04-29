@@ -14,7 +14,7 @@
         <span class="sep">/</span>
         <Import/>
         <span class="sep">/</span>
-        <ToggleTheme/>
+        <SettingsLauncher/>
       </span>
     </header>
 
@@ -24,7 +24,7 @@
 
     <footer>
       useful software by <a href="http://www.eggplanet.io/" target="_blank">eggplanet</a> |
-      <a href="https://github.com/eggplanetio/tidytab/issues" target="_blank">file a bug</a> |
+      <a href="https://github.com/eggplanetio/tidytab/issues" target="_blank">file a bug or request a feature</a> |
       v{{ version }} |
       {{ theme }} theme
     </footer>
@@ -36,7 +36,7 @@ import DashboardStats from './dashboard-stats.vue';
 import Export from './export.vue';
 import Import from './import.vue';
 import Search from './search.vue';
-import ToggleTheme from './toggle-theme.vue';
+import SettingsLauncher from './settings-launcher.vue';
 import TabGroup from './tab-group.vue';
 import { mapState } from 'vuex';
 
@@ -49,8 +49,25 @@ export default {
     Export,
     Import,
     Search,
+    SettingsLauncher,
     TabGroup,
-    ToggleTheme,
+  },
+
+  head: {
+    link() {
+      const theme = this.theme;
+      if (!theme) return;
+      const href = `../styles/dashboard-${theme}.css`;
+      return [
+        { rel: 'stylesheet', type: 'text/css', href, id: 'theme' },
+      ];
+    },
+  },
+
+  watch: {
+    theme() {
+      this.$emit('updateHead');
+    }
   },
 
   props: [
@@ -111,6 +128,7 @@ footer {
 
   a {
     color: rgba($color-primary, 0.9);
+    text-decoration: underline;
   }
 }
 </style>
