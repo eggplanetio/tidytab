@@ -1,6 +1,6 @@
 <template>
   <span v-if="bookmarkFolder">
-    Currently your tabs are stored in the "{{ bookmarkFolder.title }}" folder with an ID of {{ bookmarkFolder.id }}.
+    Currently your tabs are stored in: <strong>{{ bookmarkFolder.title }} ({{ bookmarkFolder.id }}</strong>).
   </span>
 </template>
 
