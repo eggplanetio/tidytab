@@ -60,6 +60,6 @@ const createComponent = (bookmarks) => {
 }
 
 Vue.component('BookmarkSelector', async (resolve, reject) => {
-  const bookmarks = await BookmarkManager.getBookmarks();
+  const bookmarks = await BookmarkManager.getBookmarkFolders();
   resolve(createComponent(bookmarks));
 });
