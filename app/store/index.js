@@ -81,10 +81,6 @@ const store = new Vuex.Store({
       commit('SET_THEME', items.theme || 'light');
       commit('SET_BOOKMARK_FOLDER_ID', items.bookmarkFolderId);
     },
-
-    async PRUNE_EMPTY_TAB_GROUPS ({ commit }) {
-      await BookmarkManager.pruneEmptyTabGroups();
-    },
   },
 
   mutations: {
@@ -139,11 +135,10 @@ const store = new Vuex.Store({
 
 });
 
-const hydrateAndPrune = async () => {
-  await store.dispatch('PRUNE_EMPTY_TAB_GROUPS');
+const hydrate = async () => {
   await store.dispatch('HYDRATE_STATE');
 }
-hydrateAndPrune();
+hydrate();
 
 const bindListeners = async () => {
   const currentTab = await chromep.tabs.getCurrent()
