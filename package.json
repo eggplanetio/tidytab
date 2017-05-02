@@ -62,6 +62,7 @@
     "milligram": "^1.3.0",
     "normalize-scss": "^6.0.0",
     "require-dir": "0.x.x",
+    "rxjs": "^5.3.1",
     "sass-loader": "^6.0.3",
     "vinyl-named": "1.x.x",
     "vue": "2.3.0",
