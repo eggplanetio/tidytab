@@ -28,13 +28,8 @@ import tidyHelpers from '../../lib/helpers.js';
 
 export default {
 
-  data () {
-    return {
-      hoverMessage: 'View Dashboard'
-    }
-  },
-
   methods: {
+
     setMessage(msg) {
       this.hoverMessage = msg;
     },
@@ -91,37 +86,25 @@ export default {
       this.removeTabs(tabs);
     },
 
-    async viewDashboard() {
-      const currentWindow = await chromep.windows.getCurrent({});
-      const tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
-      const isShowingDashboard = tabs[0].title === "TidyTab – Dashboard";
-      if (!isShowingDashboard) {
-        await chromep.tabs.create({ url: this.dashboardURL, pinned: true, index: 0 });
-      }
-      chrome.tabs.highlight({ tabs: [0] });
+    async viewDashboard () {
+      chrome.runtime.sendMessage({ message: 'viewDashboard' })
     },
 
     async removeTabs (tabs, viewDashboard = true) {
       if (tabs.length < 1) return;
-      /*
-        An issue with Windows requires us to close tabs then open Dashboard.
-        This is likely due to the fact the popup has closed while tabs are being removed.
-        */
-      const isWindows = navigator.platform.toLowerCase().includes('win');
-      if (isWindows) {
-        await chromep.tabs.remove(tabs.map(tab => tab.id));
-        if (viewDashboard) await this.viewDashboard();
-      } else {
-        if (viewDashboard) await this.viewDashboard();
-        await chromep.tabs.remove(tabs.map(tab => tab.id));
-      }
+      chrome.runtime.sendMessage({
+        message: 'removeTabs',
+        data: {
+          tabIds: tabs.map(tab => tab.id),
+          viewDashboard
+        }
+      });
     }
   },
 
   data () {
     return {
-      hoverMessage: 'View Dashboard',
-      dashboardURL: chrome.extension.getURL('pages/dashboard.html')
+      hoverMessage: 'View Dashboard'
     }
   },
 
