@@ -2,15 +2,47 @@
 // import 'chromereload/devonly';
 
 import 'babel-polyfill';
-import ChromePromise from 'chrome-promise';
-const chromep = new ChromePromise()
 
-chrome.runtime.onInstalled.addListener(function (details) {
-  console.log('previousVersion', details.previousVersion);
+import {
+  tidyAllButCurrent,
+  tidyCurrent,
+  tidyLeft,
+  tidyRight,
+  tidy,
+  viewDashboard,
+} from '../../lib/helpers.js'
+
+chrome.runtime.onMessage.addListener(async ({ message = '',  data = {} }) => {
+  console.log('Message received!', message, data);
+
+  if (message === 'tidy' && data.which === 'right') {
+    await tidyRight();
+    return;
+  }
+
+  if (message === 'tidy' && data.which === 'left') {
+    await tidyLeft();
+    return;
+  }
+
+  if (message === 'tidy' && data.which === 'allButCurrent') {
+    await tidyAllButCurrent();
+    return;
+  }
+
+  if (message === 'tidy' && data.which === 'current') {
+    await tidyCurrent();
+    return;
+  }
+
+  if (message === 'tidy') {
+    await tidy();
+    return;
+  }
+
+  if (message === 'viewDashboard') {
+    await viewDashboard();
+    return;
+  }
 });
 
-chrome.browserAction.setBadgeText({text: ''});
-
-chrome.commands.onCommand.addListener(function(command) {
-  console.log('Command:', command);
-});
