@@ -2,30 +2,47 @@
 // import 'chromereload/devonly';
 
 import 'babel-polyfill';
-import ChromePromise from 'chrome-promise';
-const chromep = new ChromePromise()
 
-const viewDashboard = async () => {
-  const currentWindow = await chromep.windows.getCurrent({});
-  const tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
-  const isShowingDashboard = tabs[0].title === "TidyTab – Dashboard";
-  const url = chrome.extension.getURL('pages/dashboard.html');
-  if (!isShowingDashboard) {
-    await chromep.tabs.create({ url, pinned: true, index: 0 });
+import {
+  tidyAllButCurrent,
+  tidyCurrent,
+  tidyLeft,
+  tidyRight,
+  tidy,
+  viewDashboard,
+} from '../../lib/helpers.js'
+
+chrome.runtime.onMessage.addListener(async ({ message = '',  data = {} }) => {
+  console.log('Message received!', message, data);
+
+  if (message === 'tidy' && data.which === 'right') {
+    await tidyRight();
+    return;
   }
-  chrome.tabs.highlight({ tabs: [0] });
-};
 
-chrome.runtime.onMessage.addListener(async event => {
-  console.log('Message received!', event);
+  if (message === 'tidy' && data.which === 'left') {
+    await tidyLeft();
+    return;
+  }
 
-  if (event.message === 'viewDashboard') {
+  if (message === 'tidy' && data.which === 'allButCurrent') {
+    await tidyAllButCurrent();
+    return;
+  }
+
+  if (message === 'tidy' && data.which === 'current') {
+    await tidyCurrent();
+    return;
+  }
+
+  if (message === 'tidy') {
+    await tidy();
+    return;
+  }
+
+  if (message === 'viewDashboard') {
     await viewDashboard();
-  }
-
-  if (event.message === 'removeTabs') {
-    if (event.data.viewDashboard) await viewDashboard();
-    await chromep.tabs.remove(event.data.tabIds);
+    return;
   }
 });
 

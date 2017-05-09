@@ -3,11 +3,10 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 import BookmarkManager from '../../lib/bookmark-manager.js';
-import tidyHelpers from '../../lib/helpers.js'
+import { shouldTidy } from '../../lib/helpers.js'
 
 import ChromePromise from 'chrome-promise';
 const chromep = new ChromePromise();
-
 import merge from 'deepmerge';
 import packageJson from '../../package.json';
 
@@ -35,7 +34,7 @@ const store = new Vuex.Store({
       const currentWindow = await chromep.windows.getCurrent({});
       let tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
       tabs = tabs
-        .filter(tab => !tidyHelpers.shouldTidy(tab))
+        .filter(tab => !shouldTidy(tab))
         .filter(filter);
 
       if (tabs.length < 1) return tabs;
@@ -143,7 +142,7 @@ hydrate();
 const bindListeners = async () => {
   const currentTab = await chromep.tabs.getCurrent()
 
-  chrome.tabs.onHighlighted.addListener(changedWindow => {
+  chrome.tabs && chrome.tabs.onHighlighted.addListener(changedWindow => {
     if (changedWindow.tabIds[0] !== currentTab.id) return;
     store.dispatch('HYDRATE_STATE');
   });

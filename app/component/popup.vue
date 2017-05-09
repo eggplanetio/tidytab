@@ -6,10 +6,10 @@
     </button>
 
     <div class="button-group actions" @mouseleave="setDefaultMessage">
-      <a href="#" @mouseover="setMessage('Tidy to the left of current tab')" title="Tidy to the left of current tab" @click="tidyLeft">← ○</a>
-      <a href="#" @mouseover="setMessage('Tidy to the right of current tab')" title="Tidy to the right of current tab" @click="tidyRight" >○ →</a>
-      <a href="#" @mouseover="setMessage('Tidy all but current tab')" title="Tidy all but current tab" @click="tidyAllButCurrent">← ○ →</a>
-      <a href="#" @mouseover="setMessage('Tidy current tab')" title="Tidy current tab" @click="tidyCurrent" >→ ○ ←</a>
+      <a href="#" @mouseover="setMessage('Tidy to the left of current tab')" title="Tidy to the left of current tab" @click="tidy('left')">← ○</a>
+      <a href="#" @mouseover="setMessage('Tidy to the right of current tab')" title="Tidy to the right of current tab" @click="tidy('right')" >○ →</a>
+      <a href="#" @mouseover="setMessage('Tidy all but current tab')" title="Tidy all but current tab" @click="tidy('allButCurrent')">← ○ →</a>
+      <a href="#" @mouseover="setMessage('Tidy current tab')" title="Tidy current tab" @click="tidy('current')" >→ ○ ←</a>
       <a href="#" @mouseover="setMessage(`Clear all tabs – don't tidy`)" @click="clear" class="remove">Clear</a>
     </div>
 
@@ -24,11 +24,22 @@
 import store from '../store/index.js';
 import ChromePromise from 'chrome-promise';
 const chromep = new ChromePromise();
-import tidyHelpers from '../../lib/helpers.js';
+import { shouldTidy } from '../../lib/helpers.js';
 
 export default {
 
   methods: {
+
+    tidy(which) {
+      chrome.runtime.sendMessage({
+        message: 'tidy',
+        data: { which }
+      });
+    },
+
+    clear() {
+      chrome.runtime.sendMessage({ message: 'clear' });
+    },
 
     setMessage(msg) {
       this.hoverMessage = msg;
@@ -38,68 +49,9 @@ export default {
       this.hoverMessage = 'View Dashboard';
     },
 
-    async tidy () {
-      const tabs = await store.dispatch('SAVE_TAB_GROUP');
-      this.removeTabs(tabs);
-    },
-
-    async tidyRight () {
-      const currentWindow = await chromep.windows.getCurrent({});
-      const currentTab = await chromep.tabs.getSelected(currentWindow.id);
-      const filter = (tab) => tab.index > currentTab.index;
-
-      const tabs = await store.dispatch('SAVE_TAB_GROUP', { filter: filter });
-      this.removeTabs(tabs, false);
-    },
-
-    async tidyLeft () {
-      const currentWindow = await chromep.windows.getCurrent({});
-      const currentTab = await chromep.tabs.getSelected(currentWindow.id);
-      const filter = (tab) => tab.index < currentTab.index;
-
-      const tabs = await store.dispatch('SAVE_TAB_GROUP', { filter });
-      this.removeTabs(tabs, false);
-    },
-
-    async tidyCurrent () {
-      const currentWindow = await chromep.windows.getCurrent({});
-      const currentTab = await chromep.tabs.getSelected(currentWindow.id);
-      const filter = (tab) => tab.index === currentTab.index;
-
-      const tabs = await store.dispatch('SAVE_TAB_GROUP', { filter });
-      this.removeTabs(tabs, true);
-    },
-
-    async tidyAllButCurrent () {
-      const currentWindow = await chromep.windows.getCurrent({});
-      const currentTab = await chromep.tabs.getSelected(currentWindow.id);
-      const filter = (tab) => (tab.index < currentTab.index) || (tab.index > currentTab.index);
-
-      const tabs = await store.dispatch('SAVE_TAB_GROUP', { filter });
-      this.removeTabs(tabs, false);
-    },
-
-    async clear () {
-      const currentWindow = await chromep.windows.getCurrent({});
-      let tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
-      tabs = tabs.filter(tab => !tidyHelpers.shouldTidy(tab));
-      this.removeTabs(tabs);
-    },
-
     async viewDashboard () {
       chrome.runtime.sendMessage({ message: 'viewDashboard' })
     },
-
-    async removeTabs (tabs, viewDashboard = true) {
-      if (tabs.length < 1) return;
-      chrome.runtime.sendMessage({
-        message: 'removeTabs',
-        data: {
-          tabIds: tabs.map(tab => tab.id),
-          viewDashboard
-        }
-      });
-    }
   },
 
   data () {
@@ -112,7 +64,7 @@ export default {
     async tabCount () {
       const currentWindow = await chromep.windows.getCurrent({});
       let tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
-      tabs = tabs.filter(tab => !tidyHelpers.shouldTidy(tab));
+      tabs = tabs.filter(tab => !shouldTidy(tab));
       return tabs.length;
     }
   }
