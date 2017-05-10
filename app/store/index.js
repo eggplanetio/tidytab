@@ -27,6 +27,7 @@ const store = new Vuex.Store({
     searchQuery: '',
     theme: '',
     bookmarkFolderId: null,
+    postTidyBehavior: null,
   },
 
   actions: {
@@ -53,8 +54,8 @@ const store = new Vuex.Store({
         });
       });
 
-      return tabs;
       dispatch('HYDRATE_STATE');
+      return tabs;
     },
 
     async DELETE_TAB_GROUP ({ commit, dispatch }, dateAdded) {
@@ -76,9 +77,10 @@ const store = new Vuex.Store({
       const tabGroups = await BookmarkManager.tabGroupsFromBookmarks();
       commit('SET_DATA', { tabGroups });
 
-      const items = await chromep.storage.local.get([ 'theme', 'bookmarkFolderId' ]);
+      const items = await chromep.storage.local.get([ 'theme', 'bookmarkFolderId', 'postTidyBehavior' ]);
       commit('SET_THEME', items.theme || 'light');
       commit('SET_BOOKMARK_FOLDER_ID', items.bookmarkFolderId);
+      commit('SET_POST_TIDY_BEHAVIOR', items.postTidyBehavior);
     },
   },
 
@@ -95,6 +97,11 @@ const store = new Vuex.Store({
     SET_BOOKMARK_FOLDER_ID (state, id) {
       state.bookmarkFolderId = id;
       chromep.storage.local.set({ bookmarkFolderId: id })
+    },
+
+    SET_POST_TIDY_BEHAVIOR (state, value) {
+      state.postTidyBehavior = value;
+      chromep.storage.local.set({ postTidyBehavior: value })
     },
 
     SET_SEARCH_QUERY (state, query) {

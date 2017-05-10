@@ -29,10 +29,23 @@
         </p>
       </li>
 
+      <li>
+        <h2>
+          Post-Tidy Behavior
+        </h2>
+        <p>
+          By default, TidyTab opens a dashboard of all of your tabs after you tidy.
+          You can change this below.
+        </p>
+        <p>
+          <OptionPostTidyBehavior/>
+        </p>
+      </li>
+
       <div v-if="enableTabSavingStrategy">
         <li>
           <h2>
-            Tab-Saving Strategy
+            Tab-Saving Behavior
           </h2>
           <p>
             By default, TidyTab will create a unique group for each tidy. This can get cumbersome
@@ -54,6 +67,7 @@
 import ThemeSelector from './theme-selector.vue';
 import BookmarkSelector from './bookmark-selector.js';
 import BookmarkIndicator from './bookmark-indicator.vue';
+import OptionPostTidyBehavior from './option-post-tidy-behavior.vue';
 
 export default {
 
@@ -64,6 +78,7 @@ export default {
   components: {
     ThemeSelector,
     BookmarkIndicator,
+    OptionPostTidyBehavior,
   },
 }
 </script>
@@ -133,7 +148,6 @@ img.toolbar-icon {
 @import "../styles/settings";
 
 .bookmark-selector {
-
   .multiselect {
     font-size: 13px;
   }
