@@ -101,7 +101,6 @@ header {
     display: inline-block;
     margin-bottom: 0;
     font-weight: 600;
-    color: $color-primary;
 
     .icon {
       vertical-align: middle;
@@ -114,7 +113,6 @@ header {
     float: right;
 
     label, a {
-      color: $color-secondary;
       font-weight: 300;
       border: none;
     }

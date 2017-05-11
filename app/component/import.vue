@@ -47,7 +47,6 @@ export default {
 
 label {
   cursor: pointer;
-  color: $color-secondary;
 }
 
 </style>

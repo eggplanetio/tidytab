@@ -1,6 +1,7 @@
 @import 'colors';
 
 // Colors.
-$color-font: white;
-$color-body-background: $color-primary - 80;
-$color-tab-group-background: $color-primary - 20;
+$color-primary: white;
+$color-secondary: black;
+$color-font: $color-primary;
+$color-body-background: $color-secondary;
