@@ -13,7 +13,6 @@ import packageJson from '../../package.json';
 export const THEMES = [
   'dark',
   'light',
-  'night'
 ];
 
 const store = new Vuex.Store({
