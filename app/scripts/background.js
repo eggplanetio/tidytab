@@ -1,6 +1,11 @@
 // Enable chromereload by uncommenting this line:
 // import 'chromereload/devonly';
 
+const isDevMode = () => !('update_url' in chrome.runtime.getManifest());
+if (isDevMode) {
+  chrome.browserAction.setBadgeText({ text: 'dev' });
+}
+
 import 'babel-polyfill';
 
 import {
