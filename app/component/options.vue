@@ -3,6 +3,13 @@
     <ul>
 
       <li>
+        <h2>Key Board Shortcuts</h2>
+        <p>
+          Tidy: <kbd>Alt + t</kbd> <kbd>Alt + t</kbd> (double keypress)
+        </p>
+      </li>
+
+      <li>
         <h2>
           Dashboard Theme
         </h2>
@@ -161,6 +168,22 @@ img.toolbar-icon {
     border: none;
   }
 }
+
+kbd {
+  padding:0.1em 0.6em;
+  border:1px solid #ccc;
+  font-size:11px;
+  font-family: Arial,Helvetica,sans-serif;
+  background-color:#f7f7f7;
+  color:#333;
+  box-shadow:0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  border-radius:3px;
+  display:inline-block;
+  margin:0 0.1em;
+  text-shadow:0 1px 0 #fff;
+  white-space:nowrap;
+}
+
 </style>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
