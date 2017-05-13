@@ -14,7 +14,9 @@ const app = new Vue({
   store,
   render () {
     return (
-      <Popup></Popup>
+      <div data-theme="light">
+        <Popup></Popup>
+      </div>
     )
   }
 })

@@ -18,9 +18,11 @@
       </span>
     </header>
 
-    <span v-for="tabGroup in tabGroups">
-      <TabGroup :tabGroup="tabGroup"></TabGroup>
-    </span>
+    <div class="tab-groups">
+      <span v-for="tabGroup in tabGroups">
+        <TabGroup :tabGroup="tabGroup"></TabGroup>
+      </span>
+    </div>
 
     <footer>
       useful software by <a href="http://www.eggplanet.io/" target="_blank">eggplanet</a> |
@@ -53,23 +55,6 @@ export default {
     TabGroup,
   },
 
-  head: {
-    link() {
-      const theme = this.theme;
-      if (!theme) return;
-      const href = `../styles/dashboard-${theme}.css`;
-      return [
-        { rel: 'stylesheet', type: 'text/css', href, id: 'theme' },
-      ];
-    },
-  },
-
-  watch: {
-    theme() {
-      this.$emit('updateHead');
-    }
-  },
-
   props: [
     'tabGroups'
   ],
@@ -89,12 +74,12 @@ export default {
 @import "../styles/settings";
 
 header {
-  margin-bottom: $size-unit;
+  margin-bottom: $size-unit * 2;
 
   .sep {
-    color: $color-primary + 40;
+    color: $color-light-gray;
     font-weight: 300;
-    opacity: 0.2;
+    opacity: 0.5;
   }
 
   h1 {
@@ -119,13 +104,18 @@ header {
   }
 }
 
+.tab-groups {
+  padding-left: $size-unit/2;
+  flex: 1;
+}
+
 footer {
-  color: $color-primary - 10;
+  opacity: 0.5;
   text-align: center;
   font-size: $font-size-super-small;
 
   a {
-    color: rgba($color-primary, 0.9);
+    color: $color-light-gray;
     text-decoration: underline;
   }
 }
