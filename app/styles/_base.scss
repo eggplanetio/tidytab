@@ -1,15 +1,28 @@
 @import "../../node_modules/normalize-scss/sass/normalize/import-now";
-@import url('https://fonts.googleapis.com/css?family=Muli:300,400,600');
+// @import url('https://fonts.googleapis.com/css?family=Muli:300,400,600');
 
 body {
   font-family: "Muli";
   font-weight: 300;
-  color: $color-font;
   font-size: $font-size;
   letter-spacing: 1px;
-  padding: $size-unit;
   line-height: 1.7;
 }
+
+.app {
+  padding: $size-unit * 2;
+
+  &[data-theme="dark"] {
+    background: $color-primary-dark;
+    color: $color-secondary-dark;
+  }
+
+  &[data-theme="light"] {
+    background: $color-primary-light;
+    color: $color-secondary-light;
+  }
+}
+
 
 * {
   box-sizing: border-box;
@@ -33,9 +46,17 @@ button {
   border-radius: 3px;
   outline: none;
   cursor: pointer;
-  color: $color-font;
   letter-spacing: 1px;
   transition: all 250ms ease;
+
+  [data-theme="dark"] & {
+    color: $color-secondary-dark;
+  }
+
+  [data-theme="light"] & {
+    color: $color-secondary-light;
+  }
+
 }
 
 ul {
@@ -45,48 +66,68 @@ ul {
 }
 
 a, a:hover, a:active, a:visited {
-  color: $color-font;
   text-decoration: none;
   font-weight: 300;
   cursor: pointer;
+
+  [data-theme="dark"] & {
+    color: $color-secondary-dark;
+  }
+
+  [data-theme="light"] & {
+    color: $color-secondary-light;
+  }
 }
 
 .button-group {
   letter-spacing: -1px;
-  opacity: 0.5;
   transition: all 250ms ease;
 
   section:hover & {
-    opacity: 1;
 
     a:hover {
-      color: $color-primary;
+      [data-theme="dark"] & {
+        color: $color-secondary-dark;
+      }
+
+      [data-theme="light"] & {
+        color: $color-secondary-light;
+      }
     }
+
     a.remove:hover { color: $color-danger; }
   }
 
   a, a:hover, a:visited, a:active {
     background: none;
     display: inline-block;
-    border: 1px solid rgba($color-primary, 0.1);
-    padding: $size-unit/4 $size-unit/1.5;
+    padding: $size-unit/4 $size-unit/2;
     margin-left: -4px;
     font-size: $font-size-small;
     font-weight: 400;
     letter-spacing: 1px;
     transition: all 250ms ease;
-    color: $color-primary + 50;
+
+    [data-theme="dark"] & {
+      border: 1px solid $color-dark-gray;
+      color: $color-secondary-dark;
+    }
+
+    [data-theme="light"] & {
+      border: 1px solid $color-light-gray;
+      color: $color-secondary-light;
+    }
 
     &:nth-child(1) { margin-left: 0; }
   }
 
   a:first-child {
     border-right: none;
-    border-radius: 1px 0 0 1px;
+    border-radius: 2px 0 0 2px;
   }
 
   a:last-child  {
     border-left: none;
-    // border-radius: 0 1px 1px 0;
+    border-radius: 0 2px 2px 0;
   }
 }

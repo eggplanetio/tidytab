@@ -17,7 +17,7 @@ Vue.use(require('vue-moment'));
 Vue.use(VueHead);
 
 import store from '../store/index.js';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 import Dashboard from '../component/dashboard.vue';
 
@@ -26,11 +26,14 @@ const app = new Vue({
   store,
   render (h) {
     return (
-      <Dashboard tabGroups={ this.sortedAndFilteredTabGroups }>
-      </Dashboard>
+      <div class="app" data-theme={ this.theme }>
+        <Dashboard tabGroups={ this.sortedAndFilteredTabGroups }>
+        </Dashboard>
+      </div>
     )
   },
   computed: {
     ...mapGetters([ 'sortedAndFilteredTabGroups' ]),
+    ...mapState([ 'theme' ])
   }
 })

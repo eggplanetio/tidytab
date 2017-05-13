@@ -69,7 +69,6 @@ export default {
       return this.tabGroup.collapsed;
     }
   }
-
 }
 </script>
 
@@ -78,18 +77,29 @@ export default {
 @import "../styles/settings";
 
 section {
-  padding: $size-unit;
+  margin-bottom: $size-unit * 2.5;
   & { transition: all 250ms ease; }
   &:hover { opacity: 1 }
 }
 
 header {
   margin-bottom: $size-unit;
+  padding-bottom: $size-unit;
+
+  [data-theme="dark"] & {
+    border-bottom: 1px solid $color-dark-gray;
+  }
+
+  [data-theme="light"] & {
+    border-bottom: 1px solid $color-light-gray;
+    color: $color-secondary-light;
+  }
 }
 
 h2 {
   display: inline;
   font-weight: 600;
+  margin-right: $size-unit;
 }
 
 date {

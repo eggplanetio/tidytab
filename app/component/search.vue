@@ -35,13 +35,16 @@ export default {
 </script>
 
 <style scoped lang="sass">
+@import '../styles/colors';
+@import '../styles/settings';
+
 input,
 input::placeholder {
   background: transparent;
   outline: none;
   border: none;
   font-family: "Muli";
-  opacity: 0.5;
   letter-spacing: 1px;
+  color: $color-light-gray;
 }
 </style>
