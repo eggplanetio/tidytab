@@ -93,15 +93,6 @@ header {
       margin-right: $size-unit/2;
     }
   }
-
-  .actions-and-stats {
-    float: right;
-
-    label, a {
-      font-weight: 300;
-      border: none;
-    }
-  }
 }
 
 .tab-groups {
@@ -117,6 +108,26 @@ footer {
   a {
     color: $color-light-gray;
     text-decoration: underline;
+  }
+}
+</style>
+
+<style lang="sass">
+
+@import "../styles/colors";
+@import "../styles/settings";
+
+.actions-and-stats {
+  float: right;
+
+  label, a {
+    font-size: $font-size-small;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 </style>
