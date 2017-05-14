@@ -78,14 +78,14 @@ export default {
 
 section {
   text-align: center;
-  width: 271px;
+  width: 280px;
 }
 
 button {
   background: $color-primary-dark;
   margin-bottom: $size-unit/2;
   color: white;
-  width: 271px;
+  width: 280px;
 }
 
 a, a:visited, a:hover, a:active {
