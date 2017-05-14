@@ -77,7 +77,6 @@ import BookmarkIndicator from './bookmark-indicator.vue';
 import OptionPostTidyBehavior from './option-post-tidy-behavior.vue';
 
 export default {
-
   data: () => ({
     enableTabSavingStrategy: false,
   }),

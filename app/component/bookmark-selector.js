@@ -1,14 +1,10 @@
-import Vue from 'vue';
-import store from '../store/index.js';
+import Vue from 'vue'
+import store from '../store/index.js'
 
 import Multiselect from 'vue-multiselect'
+import BookmarkManager from '../../lib/bookmark-manager.js'
 
-import ChromePromise from 'chrome-promise';
-const chromep = new ChromePromise();
-
-import BookmarkManager from '../../lib/bookmark-manager.js';
-
-import { mapState } from 'vuex';
+import { mapState } from 'vuex'
 
 const createComponent = (bookmarks) => {
   return {
@@ -19,10 +15,10 @@ const createComponent = (bookmarks) => {
             value={this.bookmarkFolderId}
             placeholder="Search for folder"
             options={bookmarks}
-            track-by={"value"}
+            track-by={'value'}
             label="label"
             option-height={50}
-            deselect-label={""}
+            deselect-label={''}
             max-height={150}
             onSelect={this.onSelect}>
           </multiselect>
@@ -37,29 +33,29 @@ const createComponent = (bookmarks) => {
     },
 
     methods: {
-      onSelect(selection) {
-        store.commit('SET_BOOKMARK_FOLDER_ID', selection.value);
+      onSelect (selection) {
+        store.commit('SET_BOOKMARK_FOLDER_ID', selection.value)
       },
-      reset() {
-        store.commit('SET_BOOKMARK_FOLDER_ID', null);
-      },
+      reset () {
+        store.commit('SET_BOOKMARK_FOLDER_ID', null)
+      }
     },
 
     computed: {
       ...mapState([
-        'bookmarkFolderId',
-      ]),
+        'bookmarkFolderId'
+      ])
     },
 
-    data() {
+    data () {
       return {
         bookmarks
       }
-    },
+    }
   }
 }
 
 Vue.component('BookmarkSelector', async (resolve, reject) => {
-  const bookmarks = await BookmarkManager.getBookmarkFolders();
-  resolve(createComponent(bookmarks));
-});
+  const bookmarks = await BookmarkManager.getBookmarkFolders()
+  resolve(createComponent(bookmarks))
+})

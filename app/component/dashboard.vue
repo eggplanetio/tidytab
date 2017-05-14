@@ -35,15 +35,12 @@
 
 <script>
 import DashboardStats from './dashboard-stats.vue';
-import Export from './export.vue';
-import Import from './import.vue';
-import Search from './search.vue';
-import SettingsLauncher from './settings-launcher.vue';
-import TabGroup from './tab-group.vue';
-import { mapState } from 'vuex';
-
-import ChromePromise from 'chrome-promise';
-const chromep = new ChromePromise()
+import Export from './export.vue'
+import Import from './import.vue'
+import Search from './search.vue'
+import SettingsLauncher from './settings-launcher.vue'
+import TabGroup from './tab-group.vue'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -52,7 +49,7 @@ export default {
     Import,
     Search,
     SettingsLauncher,
-    TabGroup,
+    TabGroup
   },
 
   props: [
@@ -63,8 +60,8 @@ export default {
     ...mapState([
       'searchQuery',
       'theme',
-      'version',
-    ]),
+      'version'
+    ])
   }
 }
 </script>

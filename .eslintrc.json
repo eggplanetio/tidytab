@@ -1,7 +1,11 @@
 {
+  "extends": "standard",
   "env": {
     "browser": true
   },
+  "plugins": [
+    "html"
+  ],
   "globals": {
     "chrome": true,
     "crypto": true
