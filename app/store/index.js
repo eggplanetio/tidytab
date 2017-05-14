@@ -133,6 +133,11 @@ const store = new Vuex.Store({
 
 });
 
+
+if (!THEMES.includes(store.state.theme)) {
+  store.commit('SET_THEME', 'light');
+};
+
 const hydrate = async () => {
   await store.dispatch('HYDRATE_STATE');
 }

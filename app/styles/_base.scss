@@ -1,5 +1,5 @@
 @import "../../node_modules/normalize-scss/sass/normalize/import-now";
-// @import url('https://fonts.googleapis.com/css?family=Muli:300,400,600');
+@import url('https://fonts.googleapis.com/css?family=Muli:300,400,600');
 
 body {
   font-family: "Muli";
@@ -84,18 +84,15 @@ a, a:hover, a:active, a:visited {
   transition: all 250ms ease;
 
   section:hover & {
+    a.remove:hover { color: $color-danger; }
 
-    a:hover {
-      [data-theme="dark"] & {
-        color: $color-secondary-dark;
-      }
-
-      [data-theme="light"] & {
-        color: $color-secondary-light;
-      }
+    a, a:visited, a:active {
+      opacity: 0.5;
     }
 
-    a.remove:hover { color: $color-danger; }
+    a:hover {
+      opacity: 1;
+    }
   }
 
   a, a:hover, a:visited, a:active {
@@ -104,17 +101,15 @@ a, a:hover, a:active, a:visited {
     padding: $size-unit/4 $size-unit/2;
     margin-left: -4px;
     font-size: $font-size-small;
-    font-weight: 400;
     letter-spacing: 1px;
     transition: all 250ms ease;
+    opacity: 0.2;
 
     [data-theme="dark"] & {
-      border: 1px solid $color-dark-gray;
       color: $color-secondary-dark;
     }
 
     [data-theme="light"] & {
-      border: 1px solid $color-light-gray;
       color: $color-secondary-light;
     }
 
