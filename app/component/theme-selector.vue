@@ -5,18 +5,12 @@
 </template>
 
 <script>
-import BookmarkSelector from './bookmark-selector.js';
-import BookmarkIndicator from './bookmark-indicator.vue';
-
 import store from '../store/index.js';
 import { THEMES } from '../store/index.js';
-import ChromePromise from 'chrome-promise';
-const chromep = new ChromePromise();
 import { mapState } from 'vuex';
 
 export default {
   data: () => ({
-    enableTabSavingStrategy: false,
     THEMES
   }),
 
@@ -27,9 +21,7 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      'theme',
-    ]),
+    ...mapState([ 'theme' ]),
   },
 }
 </script>
