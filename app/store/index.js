@@ -26,7 +26,7 @@ const store = new Vuex.Store({
   },
 
   actions: {
-    async SAVE_TAB_GROUP (
+    async SAVE_TAB_GROUP(
       { commit, dispatch },
       { filter } = { filter: () => true }
     ) {
@@ -54,22 +54,22 @@ const store = new Vuex.Store({
       return tabs
     },
 
-    async DELETE_TAB_GROUP ({ commit, dispatch }, dateAdded) {
+    async DELETE_TAB_GROUP({ commit, dispatch }, dateAdded) {
       await BookmarkManager.removeTabGroup(dateAdded)
       dispatch('HYDRATE_STATE')
     },
 
-    async DELETE_TAB ({ commit, dispatch }, { tabGroup, url }) {
+    async DELETE_TAB({ commit, dispatch }, { tabGroup, url }) {
       await BookmarkManager.removeTabFromTabGroup(tabGroup, url)
       dispatch('HYDRATE_STATE')
     },
 
-    async IMPORT_DATA ({ dispatch, commit }, raw) {
+    async IMPORT_DATA({ dispatch, commit }, raw) {
       await BookmarkManager.import(raw)
       dispatch('HYDRATE_STATE')
     },
 
-    async HYDRATE_STATE ({ commit }) {
+    async HYDRATE_STATE({ commit }) {
       const tabGroups = await BookmarkManager.tabGroupsFromBookmarks()
       commit('SET_DATA', { tabGroups })
 
@@ -81,26 +81,26 @@ const store = new Vuex.Store({
   },
 
   mutations: {
-    SET_DATA (state, data) {
+    SET_DATA(state, data) {
       state.data = data
     },
 
-    SET_THEME (state, theme) {
+    SET_THEME(state, theme) {
       state.theme = theme
       chromep.storage.local.set({ theme })
     },
 
-    SET_BOOKMARK_FOLDER_ID (state, id) {
+    SET_BOOKMARK_FOLDER_ID(state, id) {
       state.bookmarkFolderId = id
       chromep.storage.local.set({ bookmarkFolderId: id })
     },
 
-    SET_POST_TIDY_BEHAVIOR (state, value) {
+    SET_POST_TIDY_BEHAVIOR(state, value) {
       state.postTidyBehavior = value
       chromep.storage.local.set({ postTidyBehavior: value })
     },
 
-    SET_SEARCH_QUERY (state, query) {
+    SET_SEARCH_QUERY(state, query) {
       state.searchQuery = query
     }
   },
@@ -139,12 +139,12 @@ const store = new Vuex.Store({
   }
 })
 
-if (!THEMES.includes(store.state.theme)) {
-  store.commit('SET_THEME', 'light')
-}
-
 const hydrate = async () => {
   await store.dispatch('HYDRATE_STATE')
+
+  if (!THEMES.includes(store.state.theme)) {
+    store.commit('SET_THEME', 'light')
+  }
 }
 hydrate()
 

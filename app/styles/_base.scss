@@ -11,13 +11,16 @@ body {
 
 .app {
   padding: $size-unit * 2;
+  opacity: 0;
 
   &[data-theme="dark"] {
+    opacity: 1;
     background: $color-primary-dark;
     color: $color-secondary-dark;
   }
 
   &[data-theme="light"] {
+    opacity: 1;
     background: $color-primary-light;
     color: $color-secondary-light;
   }

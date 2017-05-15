@@ -87,7 +87,7 @@ header {
   padding-bottom: $size-unit;
 
   [data-theme="dark"] & {
-    border-bottom: 1px solid $color-dark-gray;
+    border-bottom: 1px solid $color-darker-gray;
   }
 
   [data-theme="light"] & {
