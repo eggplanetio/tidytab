@@ -18,9 +18,11 @@
       </span>
     </header>
 
-    <span v-for="tabGroup in tabGroups">
-      <TabGroup :tabGroup="tabGroup"></TabGroup>
-    </span>
+    <div class="tab-groups">
+      <span v-for="tabGroup in tabGroups">
+        <TabGroup :tabGroup="tabGroup"></TabGroup>
+      </span>
+    </div>
 
     <footer>
       useful software by <a href="http://www.eggplanet.io/" target="_blank">eggplanet</a> |
@@ -33,15 +35,12 @@
 
 <script>
 import DashboardStats from './dashboard-stats.vue';
-import Export from './export.vue';
-import Import from './import.vue';
-import Search from './search.vue';
-import SettingsLauncher from './settings-launcher.vue';
-import TabGroup from './tab-group.vue';
-import { mapState } from 'vuex';
-
-import ChromePromise from 'chrome-promise';
-const chromep = new ChromePromise()
+import Export from './export.vue'
+import Import from './import.vue'
+import Search from './search.vue'
+import SettingsLauncher from './settings-launcher.vue'
+import TabGroup from './tab-group.vue'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -50,24 +49,7 @@ export default {
     Import,
     Search,
     SettingsLauncher,
-    TabGroup,
-  },
-
-  head: {
-    link() {
-      const theme = this.theme;
-      if (!theme) return;
-      const href = `../styles/dashboard-${theme}.css`;
-      return [
-        { rel: 'stylesheet', type: 'text/css', href, id: 'theme' },
-      ];
-    },
-  },
-
-  watch: {
-    theme() {
-      this.$emit('updateHead');
-    }
+    TabGroup
   },
 
   props: [
@@ -78,8 +60,8 @@ export default {
     ...mapState([
       'searchQuery',
       'theme',
-      'version',
-    ]),
+      'version'
+    ])
   }
 }
 </script>
@@ -89,19 +71,18 @@ export default {
 @import "../styles/settings";
 
 header {
-  margin-bottom: $size-unit;
+  margin-bottom: $size-unit * 2;
 
   .sep {
-    color: $color-primary + 40;
+    color: $color-light-gray;
     font-weight: 300;
-    opacity: 0.2;
+    opacity: 0.5;
   }
 
   h1 {
     display: inline-block;
     margin-bottom: 0;
     font-weight: 600;
-    color: $color-primary;
 
     .icon {
       vertical-align: middle;
@@ -109,26 +90,41 @@ header {
       margin-right: $size-unit/2;
     }
   }
+}
 
-  .actions-and-stats {
-    float: right;
-
-    label, a {
-      color: $color-secondary;
-      font-weight: 300;
-      border: none;
-    }
-  }
+.tab-groups {
+  padding-left: $size-unit/2;
+  flex: 1;
 }
 
 footer {
-  color: $color-primary - 10;
+  opacity: 0.5;
   text-align: center;
   font-size: $font-size-super-small;
 
   a {
-    color: rgba($color-primary, 0.9);
+    color: $color-light-gray;
     text-decoration: underline;
+  }
+}
+</style>
+
+<style lang="sass">
+
+@import "../styles/colors";
+@import "../styles/settings";
+
+.actions-and-stats {
+  float: right;
+
+  label, a {
+    font-size: $font-size-small;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 </style>

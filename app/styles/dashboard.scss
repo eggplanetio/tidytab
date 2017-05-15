@@ -1,3 +1,9 @@
-@import 'colors-light';
 @import 'settings';
+@import 'colors';
 @import 'base';
+
+.app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}

@@ -69,7 +69,6 @@ export default {
       return this.tabGroup.collapsed;
     }
   }
-
 }
 </script>
 
@@ -78,22 +77,29 @@ export default {
 @import "../styles/settings";
 
 section {
-  opacity: 0.8;
-  margin-bottom: $size-unit;
-  border-radius: 3px;
-  padding: $size-unit * 1.5;
-  box-shadow: 0 3px 3px rgba(black, 0.1);
+  margin-bottom: $size-unit * 2.5;
   & { transition: all 250ms ease; }
   &:hover { opacity: 1 }
 }
 
 header {
   margin-bottom: $size-unit;
+  padding-bottom: $size-unit;
+
+  [data-theme="dark"] & {
+    border-bottom: 1px solid $color-darker-gray;
+  }
+
+  [data-theme="light"] & {
+    border-bottom: 1px solid $color-light-gray;
+    color: $color-secondary-light;
+  }
 }
 
 h2 {
   display: inline;
   font-weight: 600;
+  margin-right: $size-unit;
 }
 
 date {

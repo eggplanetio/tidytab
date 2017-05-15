@@ -1,12 +1,7 @@
 // Enable chromereload by uncommenting this line:
 // import 'chromereload/devonly';
 
-const isDevMode = () => !('update_url' in chrome.runtime.getManifest());
-if (isDevMode) {
-  chrome.browserAction.setBadgeText({ text: 'dev' });
-}
-
-import 'babel-polyfill';
+import 'babel-polyfill'
 
 import {
   tidyAllButCurrent,
@@ -14,40 +9,43 @@ import {
   tidyLeft,
   tidyRight,
   tidy,
-  viewDashboard,
+  viewDashboard
 } from '../../lib/helpers.js'
 
-chrome.runtime.onMessage.addListener(async ({ message = '',  data = {} }) => {
-  console.log('Message received!', message, data);
+const isDevMode = () => !('update_url' in chrome.runtime.getManifest())
+if (isDevMode) {
+  chrome.browserAction.setBadgeText({ text: 'dev' })
+}
+
+chrome.runtime.onMessage.addListener(async ({ message = '', data = {} }) => {
+  console.log('Message received!', message, data)
 
   if (message === 'tidy' && data.which === 'right') {
-    await tidyRight();
-    return;
+    await tidyRight()
+    return
   }
 
   if (message === 'tidy' && data.which === 'left') {
-    await tidyLeft();
-    return;
+    await tidyLeft()
+    return
   }
 
   if (message === 'tidy' && data.which === 'allButCurrent') {
-    await tidyAllButCurrent();
-    return;
+    await tidyAllButCurrent()
+    return
   }
 
   if (message === 'tidy' && data.which === 'current') {
-    await tidyCurrent();
-    return;
+    await tidyCurrent()
+    return
   }
 
   if (message === 'tidy') {
-    await tidy();
-    return;
+    await tidy()
+    return
   }
 
   if (message === 'viewDashboard') {
-    await viewDashboard();
-    return;
+    await viewDashboard()
   }
-});
-
+})
