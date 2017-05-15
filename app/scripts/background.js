@@ -13,7 +13,7 @@ import {
 } from '../../lib/helpers.js'
 
 const isDevMode = () => !('update_url' in chrome.runtime.getManifest())
-if (isDevMode) {
+if (isDevMode && false) {
   chrome.browserAction.setBadgeText({ text: 'dev' })
 }
 
