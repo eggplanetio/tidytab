@@ -5,13 +5,12 @@
         {{ tabGroup.tabs.length }} {{ tabGroup.tabs.length | pluralize('tab') }}
       </h2>
       <date>
-        {{ tabGroup.dateAdded | moment('ddd MM/D') }} at
-        {{ tabGroup.dateAdded | moment('h:mm:ssa') }}
+        {{ tabGroup.dateAdded | moment('ddd MM/D') }} at {{ tabGroup.dateAdded | moment('h:mm:ssa') }}
       </date>
-
+  
       <TabGroupActions :tabGroup="tabGroup"></TabGroupActions>
     </header>
-
+  
     <ul>
       <li v-for="tab in tabGroup.tabs">
         <Favicon :url="tab.url"></Favicon>
@@ -23,13 +22,13 @@
             {{ tab.url | host }}
           </span>
         </a>
-
+  
         <span class="tab-actions">
           <a @click="removeTab(tab)">remove</a>
         </span>
       </li>
     </ul>
-
+  
   </section>
 </template>
 
@@ -44,29 +43,29 @@ export default {
     TabGroupActions
   },
   props: [
-    'tabGroup',
+    'tabGroup'
   ],
   methods: {
     removeTab(tab) {
       store.dispatch('DELETE_TAB', {
         tabGroup: this.tabGroup,
-        url: tab.url,
-      });
+        url: tab.url
+      })
     },
     openTab(event, tab) {
       event.preventDefault();
-      chrome.tabs.create({url: tab.url, selected: false});
+      chrome.tabs.create({ url: tab.url, selected: false })
     },
-    openAndRemoveTab (e, tab) {
-      e.preventDefault();
+    openAndRemoveTab(e, tab) {
+      e.preventDefault()
       this.openTab(tab)
       this.removeTab(tab)
     }
   },
 
   computed: {
-    collapsed () {
-      return this.tabGroup.collapsed;
+    collapsed() {
+      return this.tabGroup.collapsed
     }
   }
 }
@@ -77,7 +76,9 @@ export default {
 @import "../styles/settings";
 
 section {
+  opacity: 0.65;
   margin-bottom: $size-unit * 2.5;
+
   & { transition: all 250ms ease; }
   &:hover { opacity: 1 }
 }
