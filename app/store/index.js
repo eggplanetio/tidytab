@@ -76,7 +76,7 @@ const store = new Vuex.Store({
       const items = await chromep.storage.local.get(['theme', 'bookmarkFolderId', 'postTidyBehavior'])
       commit('SET_THEME', items.theme || 'light')
       commit('SET_BOOKMARK_FOLDER_ID', items.bookmarkFolderId)
-      commit('SET_POST_TIDY_BEHAVIOR', items.postTidyBehavior)
+      commit('SET_POST_TIDY_BEHAVIOR', items.postTidyBehavior || 'dashboard')
     }
   },
 
