@@ -59,8 +59,8 @@ const store = new Vuex.Store({
       dispatch('HYDRATE_STATE')
     },
 
-    async DELETE_TAB ({ commit, dispatch }, { tabGroup, url }) {
-      await BookmarkManager.removeTabFromTabGroup(tabGroup, url)
+    async DELETE_TAB ({ commit, dispatch }, tab) {
+      await BookmarkManager.deleteTab(tab)
       dispatch('HYDRATE_STATE')
     },
 
@@ -139,6 +139,9 @@ const store = new Vuex.Store({
   }
 })
 
+//
+// Hydrate on app start.
+//
 const hydrate = async () => {
   await store.dispatch('HYDRATE_STATE')
 
@@ -148,14 +151,16 @@ const hydrate = async () => {
 }
 hydrate()
 
+//
+// Hydrate whenever chrome state changes or whenever we come back to the dashboard.
+//
 const bindListeners = async () => {
   const currentTab = await chromep.tabs.getCurrent()
 
-  chrome.tabs &&
-    chrome.tabs.onHighlighted.addListener(changedWindow => {
-      if (changedWindow.tabIds[0] !== currentTab.id) return
-      store.dispatch('HYDRATE_STATE')
-    })
+  chrome.tabs && chrome.tabs.onHighlighted.addListener(changedWindow => {
+    if (changedWindow.tabIds[0] !== currentTab.id) return
+    store.dispatch('HYDRATE_STATE')
+  })
 
   window.addEventListener('focus', () => {
     store.dispatch('HYDRATE_STATE')

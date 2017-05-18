@@ -12,8 +12,8 @@ import {
   viewDashboard
 } from '../../lib/helpers.js'
 
-const isDevMode = () => !('update_url' in chrome.runtime.getManifest())
-if (isDevMode && false) {
+const isDevMode = () => !('update_url' in chrome.runtime.getManifest() && false)
+if (isDevMode) {
   chrome.browserAction.setBadgeText({ text: 'dev' })
 }
 

@@ -7,10 +7,10 @@
       <date>
         {{ tabGroup.dateAdded | moment('ddd MM/D') }} at {{ tabGroup.dateAdded | moment('h:mm:ssa') }}
       </date>
-  
+
       <TabGroupActions :tabGroup="tabGroup"></TabGroupActions>
     </header>
-  
+
     <ul>
       <li v-for="tab in tabGroup.tabs">
         <Favicon :url="tab.url"></Favicon>
@@ -22,13 +22,13 @@
             {{ tab.url | host }}
           </span>
         </a>
-  
+
         <span class="tab-actions">
           <a @click="removeTab(tab)">remove</a>
         </span>
       </li>
     </ul>
-  
+
   </section>
 </template>
 
@@ -47,10 +47,7 @@ export default {
   ],
   methods: {
     removeTab(tab) {
-      store.dispatch('DELETE_TAB', {
-        tabGroup: this.tabGroup,
-        url: tab.url
-      })
+      store.dispatch('DELETE_TAB', tab)
     },
     openTab(event, tab) {
       event.preventDefault();
