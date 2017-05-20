@@ -1,6 +1,7 @@
 {
   "extends": "standard",
   "env": {
+    "node": true,
     "browser": true
   },
   "plugins": [

@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import DashboardStats from './dashboard-stats.vue';
+import DashboardStats from './dashboard-stats.vue'
 import Export from './export.vue'
 import Import from './import.vue'
 import Search from './search.vue'

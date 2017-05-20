@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import store from '../store/index.js';
-import { THEMES } from '../store/index.js';
-import { mapState } from 'vuex';
+import store from '../store/index.js'
+import { THEMES } from '../store/index.js'
+import { mapState } from 'vuex'
 
 export default {
   data: () => ({
@@ -16,14 +16,14 @@ export default {
   }),
 
   methods: {
-    onBehaviorSelect(e) {
-      store.commit('SET_POST_TIDY_BEHAVIOR', e.target.value);
-    },
+    onBehaviorSelect (e) {
+      store.commit('SET_POST_TIDY_BEHAVIOR', e.target.value)
+    }
   },
 
   computed: {
-    ...mapState([ 'postTidyBehavior' ]),
-  },
+    ...mapState([ 'postTidyBehavior' ])
+  }
 }
 </script>
 

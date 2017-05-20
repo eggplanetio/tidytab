@@ -5,11 +5,10 @@
 </template>
 
 <script>
-import store from '../store/index.js';
 export default {
   methods: {
-    launchSettings() {
-      chrome.runtime.openOptionsPage();
+    launchSettings () {
+      chrome.runtime.openOptionsPage()
     }
   }
 }

@@ -73,6 +73,7 @@ gulp.task('scripts', (cb) => {
         ]
       }
     }, null, (err, stats) => {
+      if (err) console.log(err)
       log(`Finished '${colors.cyan('scripts')}'`, stats.toString({
         chunks: false,
         colors: true,
