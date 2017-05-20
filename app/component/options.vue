@@ -71,21 +71,20 @@
 </template>
 
 <script>
-import ThemeSelector from './theme-selector.vue';
-import BookmarkSelector from './bookmark-selector.js';
-import BookmarkIndicator from './bookmark-indicator.vue';
-import OptionPostTidyBehavior from './option-post-tidy-behavior.vue';
+import ThemeSelector from './theme-selector.vue'
+import BookmarkIndicator from './bookmark-indicator.vue'
+import OptionPostTidyBehavior from './option-post-tidy-behavior.vue'
 
 export default {
   data: () => ({
-    enableTabSavingStrategy: false,
+    enableTabSavingStrategy: false
   }),
 
   components: {
     ThemeSelector,
     BookmarkIndicator,
-    OptionPostTidyBehavior,
-  },
+    OptionPostTidyBehavior
+  }
 }
 </script>
 

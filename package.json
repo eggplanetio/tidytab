@@ -12,7 +12,8 @@
     "dev": "npm run dev:chrome",
     "dev:chrome": "gulp --watch --vendor=chrome",
     "dev:firefox": "gulp --watch --vendor=firefox",
-    "dev:opera": "gulp --watch --vendor=opera"
+    "dev:opera": "gulp --watch --vendor=opera",
+    "lint": "eslint --ignore-path .gitignore ."
   },
   "devDependencies": {
     "babel-cli": "6.x.x",

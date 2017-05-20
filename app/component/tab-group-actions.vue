@@ -7,27 +7,27 @@
 </template>
 
 <script>
-import store from '../store/index.js';
+import store from '../store/index.js'
 export default {
   props: [
-    'tabGroup',
+    'tabGroup'
   ],
   methods: {
-    remove() {
-      store.dispatch('DELETE_TAB_GROUP', this.tabGroup.dateAdded);
+    remove () {
+      store.dispatch('DELETE_TAB_GROUP', this.tabGroup)
     },
-    restore() {
+    restore () {
       this.tabGroup.tabs.forEach(t => {
         chrome.tabs.create({
           url: t.url,
           selected: false
-        });
+        })
       })
     },
-    newWindow() {
-      let urls = this.tabGroup.tabs.map(t => t.url);
+    newWindow () {
+      let urls = this.tabGroup.tabs.map(t => t.url)
       chrome.windows.create({ url: urls })
-    },
+    }
   }
 
 }

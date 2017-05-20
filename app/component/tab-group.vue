@@ -33,9 +33,9 @@
 </template>
 
 <script>
-import store from '../store/index.js';
-import Favicon from './favicon.vue';
-import TabGroupActions from './tab-group-actions.vue';
+import store from '../store/index.js'
+import Favicon from './favicon.vue'
+import TabGroupActions from './tab-group-actions.vue'
 
 export default {
   components: {
@@ -46,14 +46,14 @@ export default {
     'tabGroup'
   ],
   methods: {
-    removeTab(tab) {
+    removeTab (tab) {
       store.dispatch('DELETE_TAB', tab)
     },
-    openTab(event, tab) {
-      event.preventDefault();
+    openTab (event, tab) {
+      event.preventDefault()
       chrome.tabs.create({ url: tab.url, selected: false })
     },
-    openAndRemoveTab(e, tab) {
+    openAndRemoveTab (e, tab) {
       e.preventDefault()
       this.openTab(tab)
       this.removeTab(tab)
@@ -61,7 +61,7 @@ export default {
   },
 
   computed: {
-    collapsed() {
+    collapsed () {
       return this.tabGroup.collapsed
     }
   }
