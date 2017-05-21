@@ -6,8 +6,7 @@
 </template>
 
 <script>
-import store from '../store/index.js'
-import { THEMES } from '../store/index.js'
+import store, { THEMES } from '../store/index.js'
 import { mapState } from 'vuex'
 
 export default {
