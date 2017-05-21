@@ -7,10 +7,18 @@ import { shouldTidy } from '../../lib/helpers.js'
 import ChromePromise from 'chrome-promise'
 import packageJson from '../../package.json'
 
+import {
+  filteredAndSorted,
+  groupByDate,
+  filteredUsingSearchQuery
+} from '../../lib/tab-group-helpers'
+
 Vue.use(Vuex)
 const chromep = new ChromePromise()
 
 export const THEMES = ['dark', 'light']
+export const POST_TIDY_BEHAVIORS = ['dashboard', 'new-tab']
+export const TAB_GROUP_VIEWS = ['default', 'group-by-date']
 
 const store = new Vuex.Store({
   state: {
@@ -22,7 +30,8 @@ const store = new Vuex.Store({
     searchQuery: '',
     theme: '',
     bookmarkFolderId: null,
-    postTidyBehavior: null
+    postTidyBehavior: null,
+    tabGroupView: null
   },
 
   actions: {
@@ -73,10 +82,16 @@ const store = new Vuex.Store({
       const tabGroups = await BookmarkManager.tabGroupsFromBookmarks()
       commit('SET_DATA', { tabGroups })
 
-      const items = await chromep.storage.local.get(['theme', 'bookmarkFolderId', 'postTidyBehavior'])
+      const items = await chromep.storage.local.get([
+        'theme',
+        'bookmarkFolderId',
+        'postTidyBehavior',
+        'tabGroupView'
+      ])
       commit('SET_THEME', items.theme || 'light')
       commit('SET_BOOKMARK_FOLDER_ID', items.bookmarkFolderId)
-      commit('SET_POST_TIDY_BEHAVIOR', items.postTidyBehavior || 'dashboard')
+      commit('SET_POST_TIDY_BEHAVIOR', items.postTidyBehavior || POST_TIDY_BEHAVIORS[0])
+      commit('SET_TAB_GROUP_VIEW', items.tabGroupView || TAB_GROUP_VIEWS[0])
     }
   },
 
@@ -100,6 +115,11 @@ const store = new Vuex.Store({
       chromep.storage.local.set({ postTidyBehavior: value })
     },
 
+    SET_TAB_GROUP_VIEW (state, value) {
+      state.tabGroupView = value
+      chromep.storage.local.set({ tabGroupView: value })
+    },
+
     SET_SEARCH_QUERY (state, query) {
       state.searchQuery = query
     }
@@ -107,34 +127,10 @@ const store = new Vuex.Store({
 
   getters: {
     sortedAndFilteredTabGroups: state => {
-      const q = state.searchQuery.toLowerCase()
-
-      const tabGroups = state.data.tabGroups
-        .filter(t => t.tabs.length > 0)
-        .filter(tabGroup => {
-          if (!q.length) return true
-
-          const hasQuery = tabGroup.tabs.find(
-            tab =>
-              tab.title.toLowerCase().includes(q) ||
-              tab.url.toLowerCase().includes(q)
-          )
-          return !!hasQuery
-        })
-        .sort((a, b) => b.dateAdded - a.dateAdded)
-        .map(tabGroup => {
-          if (!q) return tabGroup
-          tabGroup.tabs = tabGroup.tabs.filter(tab => {
-            const doesMatch =
-              tab.title.toLowerCase().includes(q) ||
-              tab.url.toLowerCase().includes(q)
-            return doesMatch
-          })
-
-          return tabGroup
-        })
-
-      return tabGroups || []
+      let groups = state.data.tabGroups
+      groups = filteredAndSorted(groups)
+      if (state.tabGroupView === 'group-by-date') groups = groupByDate(groups)
+      return filteredUsingSearchQuery(state.searchQuery, groups)
     }
   }
 })

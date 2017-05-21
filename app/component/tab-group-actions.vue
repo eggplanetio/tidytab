@@ -2,7 +2,7 @@
   <div class="button-group actions">
     <a @click="restore">Restore</a>
     <a @click="newWindow">Restore in new</a>
-    <a @click="remove" class="remove">Remove</a>
+    <a @click="remove" class="remove" v-if="tabGroup.id">Remove</a>
   </div>
 </template>
 

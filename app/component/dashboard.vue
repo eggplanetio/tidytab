@@ -4,12 +4,13 @@
       <h1>
         <img class="icon" src="/images/logo.png" alt="icon"> TidyTab
         <span class="sep">/</span>
-        <DashboardStats :tabGroups="tabGroups"></DashboardStats>
-        <span class="sep">/</span>
         <Search :query='searchQuery'/>
+        <DashboardStats :tabGroups="tabGroups" style="display:none"></DashboardStats>
       </h1>
 
       <span class="actions-and-stats">
+        <TabGroupViewToggler/>
+        <span class="sep">/</span>
         <Export/>
         <span class="sep">/</span>
         <Import/>
@@ -38,6 +39,7 @@ import DashboardStats from './dashboard-stats.vue'
 import Export from './export.vue'
 import Import from './import.vue'
 import Search from './search.vue'
+import TabGroupViewToggler from './tab-group-view-toggler.vue'
 import SettingsLauncher from './settings-launcher.vue'
 import TabGroup from './tab-group.vue'
 import { mapState } from 'vuex'
@@ -49,7 +51,8 @@ export default {
     Import,
     Search,
     SettingsLauncher,
-    TabGroup
+    TabGroup,
+    TabGroupViewToggler
   },
 
   props: [

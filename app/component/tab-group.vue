@@ -5,7 +5,7 @@
         {{ tabGroup.tabs.length }} {{ tabGroup.tabs.length | pluralize('tab') }}
       </h2>
       <date>
-        {{ tabGroup.dateAdded | moment('ddd MM/D') }} at {{ tabGroup.dateAdded | moment('h:mm:ssa') }}
+        {{ tabGroup.dateAdded | moment(momentFormat) }}
       </date>
 
       <TabGroupActions :tabGroup="tabGroup"></TabGroupActions>
@@ -36,6 +36,7 @@
 import store from '../store/index.js'
 import Favicon from './favicon.vue'
 import TabGroupActions from './tab-group-actions.vue'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -61,8 +62,9 @@ export default {
   },
 
   computed: {
-    collapsed () {
-      return this.tabGroup.collapsed
+    ...mapState(['tabGroupView']),
+    momentFormat () {
+      return this.tabGroupView === 'group-by-date' ? 'ddd MM/D @ h:mma' : 'dddd MM/D'
     }
   }
 }
@@ -97,7 +99,7 @@ header {
 h2 {
   display: inline;
   font-weight: 600;
-  margin-right: $size-unit;
+  margin-right: $size-unit/2;
 }
 
 date {

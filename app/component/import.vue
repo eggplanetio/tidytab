@@ -26,7 +26,7 @@ export default {
         }
       }
 
-      const blob = reader.readAsText(file)
+      reader.readAsText(file)
     }
   }
 }
