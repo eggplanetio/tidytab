@@ -5,7 +5,8 @@
     "browser": true
   },
   "plugins": [
-    "html"
+    "html",
+    "vue"
   ],
   "globals": {
     "chrome": true,

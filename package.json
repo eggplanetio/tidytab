@@ -13,7 +13,7 @@
     "dev:chrome": "gulp --watch --vendor=chrome",
     "dev:firefox": "gulp --watch --vendor=firefox",
     "dev:opera": "gulp --watch --vendor=opera",
-    "lint": "eslint --ignore-path .gitignore ."
+    "lint": "eslint --ext .html,.js,.vue --ignore-path .gitignore ."
   },
   "devDependencies": {
     "babel-cli": "6.x.x",
@@ -46,6 +46,7 @@
     "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-vue": "^2.0.1",
     "gulp": "3.x.x",
     "gulp-bump": "2.x.x",
     "gulp-cache": "0.x.x",
