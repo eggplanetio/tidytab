@@ -1,7 +1,7 @@
 {
   "name": "TidyTab",
   "private": true,
-  "version": "2.12.1",
+  "version": "2.13.0",
   "description": "Tidy those tabs!",
   "scripts": {
     "start": "npm run dev:chrome",
@@ -12,7 +12,8 @@
     "dev": "npm run dev:chrome",
     "dev:chrome": "gulp --watch --vendor=chrome",
     "dev:firefox": "gulp --watch --vendor=firefox",
-    "dev:opera": "gulp --watch --vendor=opera"
+    "dev:opera": "gulp --watch --vendor=opera",
+    "lint": "eslint --ext .html,.js,.vue --ignore-path .gitignore ."
   },
   "devDependencies": {
     "babel-cli": "6.x.x",
@@ -45,6 +46,7 @@
     "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-vue": "^2.0.1",
     "gulp": "3.x.x",
     "gulp-bump": "2.x.x",
     "gulp-cache": "0.x.x",

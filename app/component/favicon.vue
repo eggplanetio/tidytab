@@ -8,13 +8,13 @@
 export default {
   props: [
     'url',
-    'title',
+    'title'
   ],
   computed: {
     faviconUrl () {
-      const parser = document.createElement('a');
-      parser.href = this.url;
-      return `https://www.google.com/s2/favicons?domain=${parser.host}`;
+      const parser = document.createElement('a')
+      parser.href = this.url
+      return `https://www.google.com/s2/favicons?domain=${parser.host}`
     }
   }
 }

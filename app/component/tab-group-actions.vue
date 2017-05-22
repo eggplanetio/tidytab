@@ -2,32 +2,32 @@
   <div class="button-group actions">
     <a @click="restore">Restore</a>
     <a @click="newWindow">Restore in new</a>
-    <a @click="remove" class="remove">Remove</a>
+    <a @click="remove" class="remove" v-if="tabGroup.id">Remove</a>
   </div>
 </template>
 
 <script>
-import store from '../store/index.js';
+import store from '../store/index.js'
 export default {
   props: [
-    'tabGroup',
+    'tabGroup'
   ],
   methods: {
-    remove() {
-      store.dispatch('DELETE_TAB_GROUP', this.tabGroup.dateAdded);
+    remove () {
+      store.dispatch('DELETE_TAB_GROUP', this.tabGroup)
     },
-    restore() {
+    restore () {
       this.tabGroup.tabs.forEach(t => {
         chrome.tabs.create({
           url: t.url,
           selected: false
-        });
+        })
       })
     },
-    newWindow() {
-      let urls = this.tabGroup.tabs.map(t => t.url);
+    newWindow () {
+      let urls = this.tabGroup.tabs.map(t => t.url)
       chrome.windows.create({ url: urls })
-    },
+    }
   }
 
 }

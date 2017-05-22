@@ -21,37 +21,36 @@
 </template>
 
 <script>
-import store from '../store/index.js';
-import ChromePromise from 'chrome-promise';
-const chromep = new ChromePromise();
-import { shouldTidy } from '../../lib/helpers.js';
+import ChromePromise from 'chrome-promise'
+import { shouldTidy } from '../../lib/helpers.js'
+const chromep = new ChromePromise()
 
 export default {
 
   methods: {
 
-    tidy(which) {
+    tidy (which) {
       chrome.runtime.sendMessage({
         message: 'tidy',
         data: { which }
-      });
+      })
     },
 
-    clear() {
-      chrome.runtime.sendMessage({ message: 'clear' });
+    clear () {
+      chrome.runtime.sendMessage({ message: 'clear' })
     },
 
-    setMessage(msg) {
-      this.hoverMessage = msg;
+    setMessage (msg) {
+      this.hoverMessage = msg
     },
 
-    setDefaultMessage(msg) {
-      this.hoverMessage = 'View Dashboard';
+    setDefaultMessage (msg) {
+      this.hoverMessage = 'View Dashboard'
     },
 
     async viewDashboard () {
       chrome.runtime.sendMessage({ message: 'viewDashboard' })
-    },
+    }
   },
 
   data () {
@@ -62,10 +61,10 @@ export default {
 
   asyncComputed: {
     async tabCount () {
-      const currentWindow = await chromep.windows.getCurrent({});
-      let tabs = await chromep.tabs.getAllInWindow(currentWindow.id);
-      tabs = tabs.filter(tab => !shouldTidy(tab));
-      return tabs.length;
+      const currentWindow = await chromep.windows.getCurrent({})
+      let tabs = await chromep.tabs.getAllInWindow(currentWindow.id)
+      tabs = tabs.filter(tab => !shouldTidy(tab))
+      return tabs.length
     }
   }
 

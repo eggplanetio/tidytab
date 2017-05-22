@@ -3,32 +3,32 @@
 </template>
 
 <script>
-import store from '../store/index.js';
+import store from '../store/index.js'
 
 export default {
-  data() {
+  data () {
     return {
       query: ''
     }
   },
 
-  created() {
-    document.addEventListener('keydown', this.documentKeyDown);
+  created () {
+    document.addEventListener('keydown', this.documentKeyDown)
   },
 
-  beforeDestroy() {
-    document.removeKeyListener('keydown', this.documentKeyDown);
+  beforeDestroy () {
+    document.removeKeyListener('keydown', this.documentKeyDown)
   },
 
   methods: {
-    documentKeyDown(e) {
-      this.$el.focus();
+    documentKeyDown (e) {
+      this.$el.focus()
     },
-    setQuery(e) {
-      const isEsc = e.keyCode === 27;
-      if (isEsc) this.query = '';
-      store.commit('SET_SEARCH_QUERY', this.query);
-      store.dispatch('HYDRATE_STATE');
+    setQuery (e) {
+      const isEsc = e.keyCode === 27
+      if (isEsc) this.query = ''
+      store.commit('SET_SEARCH_QUERY', this.query)
+      store.dispatch('HYDRATE_STATE')
     }
   }
 }
