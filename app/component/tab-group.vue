@@ -64,7 +64,7 @@ export default {
   computed: {
     ...mapState(['tabGroupView']),
     momentFormat () {
-      return this.tabGroupView === 'group-by-date' ? 'ddd MM/D @ h:mma' : 'dddd MM/D'
+      return this.tabGroupView === 'group-by-date' ? 'dddd MM/D' : 'ddd MM/D @ h:mma'
     }
   }
 }
