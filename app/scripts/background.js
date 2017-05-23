@@ -12,9 +12,9 @@ import {
   viewDashboard
 } from '../../lib/helpers.js'
 
-const isDevMode = () => !('update_url' in chrome.runtime.getManifest() && false)
+const isDevMode = () => !('update_url' in chrome.runtime.getManifest())
 if (isDevMode) {
-  chrome.browserAction.setBadgeText({ text: 'dev' })
+  chrome.browserAction.setBadgeText({ text: '' })
 }
 
 chrome.runtime.onMessage.addListener(async ({ message = '', data = {} }) => {
