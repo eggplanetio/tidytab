@@ -71,7 +71,7 @@ export default {
 }
 </script>
 
-<style scoped="true" lang="sass">
+<style scoped="true" lang="scss">
 @import '../styles/colors';
 @import '../styles/settings';
 
