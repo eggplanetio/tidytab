@@ -11,6 +11,8 @@ import { mapState } from 'vuex'
 export default {
   asyncComputed: {
     async bookmarkFolder () {
+      /* eslint-disable no-unused-vars */
+      const id = this.bookmarkFolderId
       return BookmarkManager.getTidyFolder()
     }
   },

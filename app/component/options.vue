@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import './bookmark-selector.js'
 import ThemeSelector from './theme-selector.vue'
 import BookmarkIndicator from './bookmark-indicator.vue'
 import OptionPostTidyBehavior from './option-post-tidy-behavior.vue'
