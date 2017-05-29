@@ -34,7 +34,7 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
+<style scoped lang="scss">
 @import '../styles/colors';
 @import '../styles/settings';
 

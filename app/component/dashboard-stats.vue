@@ -12,6 +12,6 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped="true">
+<style lang="scss" scoped="true">
 @import "../styles/settings";
 </style>
