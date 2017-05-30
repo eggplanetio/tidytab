@@ -13,6 +13,7 @@
 
     <ul>
       <li v-for="tab in tabGroup.tabs">
+        {{ tab.faviconUrl }}
         <Favicon :url="tab.url"></Favicon>
         <a @click="openTab($event, tab)" @contextmenu="openAndRemoveTab($event, tab)" :title="tab.url" :href="tab.url">
           <span class="title">
