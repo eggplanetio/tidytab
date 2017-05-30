@@ -2,19 +2,31 @@
   <div class="button-group actions">
     <a @click="restore">Restore</a>
     <a @click="newWindow">Restore in new</a>
-    <a @click="remove" class="remove" v-if="tabGroup.id">Remove</a>
+    <a @click="remove" class="remove">Remove</a>
   </div>
 </template>
 
 <script>
 import store from '../store/index.js'
+import pluralize from 'pluralize'
+
 export default {
   props: [
     'tabGroup'
   ],
   methods: {
     remove () {
-      store.dispatch('DELETE_TAB_GROUP', this.tabGroup)
+      const tabString = pluralize('tab', this.tabGroup.tabs.length, true)
+      const shouldRemove = confirm(`
+        This tab group contains ${tabString} – are you sure you want to delete it?`)
+
+      if (!shouldRemove) return
+
+      if (this.tabGroup.id) {
+        store.dispatch('DELETE_TAB_GROUP', this.tabGroup)
+      } else {
+        this.tabGroup.tabs.forEach(tab => store.dispatch('DELETE_TAB', tab))
+      }
     },
     restore () {
       this.tabGroup.tabs.forEach(t => {
