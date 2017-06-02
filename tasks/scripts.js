@@ -8,8 +8,6 @@ import livereload from 'gulp-livereload'
 import args from './lib/args'
 import config from '../webpack.config.js'
 
-const ENV = args.production ? 'production' : 'development'
-
 gulp.task('scripts', (cb) => {
   return gulp.src(['app/scripts/*.js'])
     .pipe(plumber({
