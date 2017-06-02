@@ -4,9 +4,9 @@
       <h2>
         {{ tabGroup.tabs.length }} {{ tabGroup.tabs.length | pluralize('tab') }}
       </h2>
-      <date>
+      <time>
         {{ tabGroup.dateAdded | moment(momentFormat) }}
-      </date>
+      </time>
 
       <TabGroupActions :tabGroup="tabGroup"></TabGroupActions>
     </header>
@@ -102,7 +102,7 @@ h2 {
   margin-right: $size-unit/2;
 }
 
-date {
+time {
   font-size: $font-size-small;
   opacity: 0.5;
 }
