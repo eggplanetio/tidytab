@@ -85,7 +85,11 @@
     "vueify-insert-css": "^1.0.0",
     "vuex": "^2.2.1",
     "webpack": "^2.6.1",
+    "webpack-bundle-analyzer": "^2.8.2",
     "webpack-stream": "3.x.x",
     "yargs": "^8.0.1"
+  },
+  "dependencies": {
+    "url-parse": "^1.1.9"
   }
 }

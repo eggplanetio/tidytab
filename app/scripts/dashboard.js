@@ -9,12 +9,15 @@ import VueHead from 'vue-head'
 import store from '../store/index.js'
 import { mapGetters, mapState } from 'vuex'
 import Dashboard from '../component/dashboard.vue'
+import AsyncComputed from 'vue-async-computed'
 
 Vue.use(VueTruncate)
 Vue.use(require('vue-moment'))
+
 Vue.use(VueHead)
 Vue.use(HostFilter)
 Vue.use(Vue2Filters)
+Vue.use(AsyncComputed)
 
 export default new Vue({
   el: '#app',

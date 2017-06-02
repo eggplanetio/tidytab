@@ -13,8 +13,7 @@
 
     <ul>
       <li v-for="tab in tabGroup.tabs">
-        {{ tab.faviconUrl }}
-        <Favicon :url="tab.url"></Favicon>
+        <Favicon :url="tab.url"/>
         <a @click="openTab($event, tab)" @contextmenu="openAndRemoveTab($event, tab)" :title="tab.url" :href="tab.url">
           <span class="title">
             {{ tab.title | truncate(60) }}
@@ -76,7 +75,7 @@ export default {
 @import "../styles/settings";
 
 section {
-  opacity: 0.65;
+  opacity: 0.5;
   margin-bottom: $size-unit * 2.5;
 
   & { transition: all 250ms ease; }
@@ -119,7 +118,6 @@ ul {
     margin-bottom: $size-unit/2;
 
     a {
-
       .url {
         opacity: 0.5;
         font-size: $font-size-small;

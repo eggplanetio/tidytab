@@ -1,10 +1,12 @@
 <template>
   <span>
-    <img v-if="faviconUrl" :src="faviconUrl" :title="title">
+    <img :src="blobUrl" alt="">
   </span>
 </template>
 
 <script>
+import parse from 'url-parse'
+
 function loadImgAsDataUri (url) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest()
@@ -13,6 +15,8 @@ function loadImgAsDataUri (url) {
 
     xhr.onerror = () => resolve()
     xhr.onload = () => {
+      if (xhr.status >= 400) resolve()
+
       const arrayBufferView = new Uint8Array(xhr.response)
       const blob = new Blob([ arrayBufferView ], { type: 'image/jpeg' })
       const reader = new window.FileReader()
@@ -29,28 +33,40 @@ function loadImgAsDataUri (url) {
 
 export default {
   props: [
-    'url',
-    'title'
+    'url'
   ],
-  data () {
-    return { faviconUrl: false }
+
+  computed: {
+    host () {
+      const parser = parse(this.url)
+      return parser.host
+    },
+
+    protocol () {
+      const parser = parse(this.url)
+      return parser.protocol
+    }
   },
-  async created () {
-    const parser = document.createElement('a')
-    parser.href = this.url
 
-    const urls = [
-      `${parser.protocol}//${parser.host}/favicon.ico`,            // Favicon from site
-      `https://www.google.com/s2/favicons?domain=${parser.host}`,   // Favicon from Google
-      `generic-favicon`
-    ]
+  asyncComputed: {
+    async blobUrl () {
+      // Is it already a favicon?
+      if (this.url.startsWith('data:image/jpeg')) {
+        return this.url
+      }
 
-    let blobUrl = await loadImgAsDataUri(urls[0])
-    if (blobUrl) {
-      this.faviconUrl = blobUrl
-    } else {
-      blobUrl = await loadImgAsDataUri(urls[1])
-      this.faviconUrl = blobUrl
+      const faviconUrls = [
+        `https://www.google.com/s2/favicons?domain=${this.host}`,       // Favicon from Google
+        `${this.protocol}//${this.host}/favicon.png`,                   // Favicon from site (png)
+        `${this.protocol}//${this.host}/favicon.ico`                    // Favicon from site (ico)
+      ]
+
+      let blobUrl
+      for (let faviconUrl of faviconUrls) {
+        if (blobUrl) break
+        blobUrl = await loadImgAsDataUri(faviconUrl)
+        if (blobUrl) return blobUrl
+      }
     }
   }
 }
@@ -58,6 +74,11 @@ export default {
 
 <style lang="scss" scoped="true">
 @import "../styles/settings";
+
+span {
+  width: $size-unit;
+  display: inline-block;
+}
 
 img {
   height: $size-unit/1.5;
