@@ -3,13 +3,6 @@
     <ul>
 
       <li>
-        <h2>Key Board Shortcuts</h2>
-        <p>
-          Tidy: <kbd>Alt + t</kbd> <kbd>Alt + t</kbd> (double keypress)
-        </p>
-      </li>
-
-      <li>
         <h2>
           Dashboard Theme
         </h2>
@@ -38,6 +31,19 @@
 
       <li>
         <h2>
+          Silently Reject Duplicates
+        </h2>
+        <p>
+          When enabled, TidyTab will look through your bookmarks and check if you've already
+          saved the current tab. If so, it will be cleared but not saved.
+        </p>
+        <p>
+          <OptionSilentlyReject/>
+        </p>
+      </li
+
+      <li>
+        <h2>
           Post-Tidy Behavior
         </h2>
         <p>
@@ -49,23 +55,30 @@
         </p>
       </li>
 
-      <div v-if="enableTabSavingStrategy">
-        <li>
-          <h2>
-            Tab-Saving Behavior
-          </h2>
-          <p>
-            By default, TidyTab will create a unique group for each tidy. This can get cumbersome
-            when you often tidy one or two tabs. This will not affect already tidied tabs.
-            Pro-tip: if you'd like to move bookmarks around, you can simply open the
-            <a href="chrome://bookmarks/" target="_blank">Bookmark Manager</a> and move things around there.
+      <li>
+        <h2>
+          Tab-Saving Behavior
+        </h2>
+        <p>
+          By default, TidyTab will create a unique group for each tidy. This can get cumbersome
+          when you often tidy one or two tabs. This will not affect already tidied tabs.
+          Pro-tip: if you'd like to move bookmarks around, you can simply open the
+          <a href="chrome://bookmarks/" target="_blank">Bookmark Manager</a> and move things around there.
 
-          </p>
-          <input type="radio" name="save-strategy"> Group by date added <br>
-          <input type="radio" name="save-strategy" checked="checked"> Each tidy gets its own group (default)
-        </li>
-      </div>
+        </p>
+        <input type="radio" name="save-strategy"> Group by date added <br>
+        <input type="radio" name="save-strategy" checked="checked"> Each tidy gets its own group (default)
+      </li>
+
+      <li>
+        <h2>Key Board Shortcuts</h2>
+        <p>
+          Tidy: <kbd>Alt + t</kbd> <kbd>Alt + t</kbd> (double keypress)
+        </p>
+      </li>
+
     </ul>
+
 
   </form>
 </template>
@@ -75,16 +88,14 @@ import './bookmark-selector.js'
 import ThemeSelector from './theme-selector.vue'
 import BookmarkIndicator from './bookmark-indicator.vue'
 import OptionPostTidyBehavior from './option-post-tidy-behavior.vue'
+import OptionSilentlyReject from './option-silently-reject.vue'
 
 export default {
-  data: () => ({
-    enableTabSavingStrategy: false
-  }),
-
   components: {
     ThemeSelector,
     BookmarkIndicator,
-    OptionPostTidyBehavior
+    OptionPostTidyBehavior,
+    OptionSilentlyReject
   }
 }
 </script>
@@ -105,7 +116,7 @@ ul {
 }
 
 li {
-  margin-bottom: $size-unit;
+  margin-bottom: $size-unit * 2;
 }
 
 input[type="text"],
@@ -118,7 +129,7 @@ h2 {
   margin-top: 0;
   font-size: $font-size;
   display: block;
-  margin-bottom: $size-unit/2;
+  margin-bottom: $size-unit;
 
   strong {
     display: block;

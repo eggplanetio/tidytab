@@ -2,7 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import BookmarkManager from '../../lib/bookmark-manager.js'
-import { shouldTidy } from '../../lib/helpers.js'
+import {
+  alreadyTidiedTab,
+  shouldTidy
+} from '../../lib/helpers.js'
 
 import ChromePromise from 'chrome-promise'
 import packageJson from '../../package.json'
@@ -31,19 +34,31 @@ const store = new Vuex.Store({
     theme: '',
     bookmarkFolderId: null,
     postTidyBehavior: null,
+    silentlyRejectDuplicates: null,
     tabGroupView: null
   },
 
   actions: {
     async SAVE_TAB_GROUP (
-      { commit, dispatch },
+      { commit, dispatch, state },
       { filter } = { filter: () => true }
     ) {
       const currentWindow = await chromep.windows.getCurrent({})
-      let tabs = await chromep.tabs.getAllInWindow(currentWindow.id)
-      tabs = tabs.filter(tab => !shouldTidy(tab)).filter(filter)
 
-      if (tabs.length < 1) return tabs
+      let tabsToClear = await chromep.tabs.getAllInWindow(currentWindow.id)
+      tabsToClear = tabsToClear.filter(tab => !shouldTidy(tab)).filter(filter)
+
+      let tabsToSave = []
+      if (state.silentlyRejectDuplicates) {
+        for (let tab of tabsToClear) {
+          const tidied = await alreadyTidiedTab(tab)
+          if (!tidied) tabsToSave.push(tab)
+        }
+      } else {
+        tabsToSave = tabsToClear
+      }
+
+      if (tabsToClear.length < 1) return tabsToClear
 
       const tidyParent = await BookmarkManager.getTidyFolder()
       const newFolder = await chromep.bookmarks.create({
@@ -51,16 +66,16 @@ const store = new Vuex.Store({
         parentId: tidyParent.id
       })
 
-      tabs.forEach(async tab => {
+      for (let tab of tabsToSave) {
         await chromep.bookmarks.create({
           parentId: newFolder.id,
           title: tab.title,
           url: tab.url
         })
-      })
+      }
 
       dispatch('HYDRATE_STATE')
-      return tabs
+      return tabsToClear
     },
 
     async DELETE_TAB_GROUP ({ commit, dispatch }, group) {
@@ -86,11 +101,13 @@ const store = new Vuex.Store({
         'theme',
         'bookmarkFolderId',
         'postTidyBehavior',
+        'silentlyRejectDuplicates',
         'tabGroupView'
       ])
       commit('SET_THEME', items.theme || 'light')
       commit('SET_BOOKMARK_FOLDER_ID', items.bookmarkFolderId)
       commit('SET_POST_TIDY_BEHAVIOR', items.postTidyBehavior || POST_TIDY_BEHAVIORS[0])
+      commit('SET_SILENTLY_REJECT_DUPLICATES', items.silentlyRejectDuplicates)
       commit('SET_TAB_GROUP_VIEW', items.tabGroupView || TAB_GROUP_VIEWS[0])
     }
   },
@@ -120,9 +137,15 @@ const store = new Vuex.Store({
       chromep.storage.local.set({ tabGroupView: value })
     },
 
+    SET_SILENTLY_REJECT_DUPLICATES (state, value) {
+      state.silentlyRejectDuplicates = value
+      chromep.storage.local.set({ silentlyRejectDuplicates: value })
+    },
+
     SET_SEARCH_QUERY (state, query) {
       state.searchQuery = query
     }
+
   },
 
   getters: {

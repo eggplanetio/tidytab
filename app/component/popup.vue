@@ -6,10 +6,10 @@
     </button>
 
     <div class="button-group actions" @mouseleave="setDefaultMessage">
-      <a href="#" @mouseover="setMessage('Tidy to the left of current tab')" title="Tidy to the left of current tab" @click="tidy('left')">← ○</a>
-      <a href="#" @mouseover="setMessage('Tidy to the right of current tab')" title="Tidy to the right of current tab" @click="tidy('right')" >○ →</a>
-      <a href="#" @mouseover="setMessage('Tidy all but current tab')" title="Tidy all but current tab" @click="tidy('allButCurrent')">← ○ →</a>
-      <a href="#" @mouseover="setMessage('Tidy current tab')" title="Tidy current tab" @click="tidy('current')" >→ ○ ←</a>
+      <a href="#" @mouseover="setMessage('Tidy to the left of current tab')" title="Tidy to the left of current tab" @click="tidy('left')">←</a>
+      <a href="#" @mouseover="setMessage('Tidy to the right of current tab')" title="Tidy to the right of current tab" @click="tidy('right')" >→</a>
+      <a href="#" @mouseover="setMessage('Tidy all but current tab')" title="Tidy all but current tab" @click="tidy('allButCurrent')">←→</a>
+      <a href="#" @mouseover="setMessage('Tidy current tab')" title="Tidy current tab" @click="tidy('current')" >→←</a>
       <a href="#" @mouseover="setMessage(`Clear all tabs – don't tidy`)" @click="clear" class="remove">Clear</a>
     </div>
 
