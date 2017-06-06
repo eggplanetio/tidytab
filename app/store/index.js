@@ -50,10 +50,12 @@ const store = new Vuex.Store({
 
       let tabsToSave = []
       if (state.silentlyRejectDuplicates) {
+        let tabsToSaveHash = {}
         for (let tab of tabsToClear) {
           const tidied = await alreadyTidiedTab(tab)
-          if (!tidied) tabsToSave.push(tab)
+          if (!tidied) tabsToSaveHash[tab.url] = tab
         }
+        tabsToSave = Object.values(tabsToSaveHash)
       } else {
         tabsToSave = tabsToClear
       }
