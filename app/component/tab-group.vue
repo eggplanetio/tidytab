@@ -54,9 +54,9 @@ export default {
       event.preventDefault()
       chrome.tabs.create({ url: tab.url, selected: false })
     },
-    openAndRemoveTab (e, tab) {
-      e.preventDefault()
-      this.openTab(tab)
+    openAndRemoveTab (event, tab) {
+      event.preventDefault()
+      this.openTab(event, tab)
       this.removeTab(tab)
     }
   },
