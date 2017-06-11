@@ -73,7 +73,10 @@
       <li>
         <h2>Key Board Shortcuts</h2>
         <p>
-          Tidy: <kbd>Alt + t</kbd> <kbd>Alt + t</kbd> (double keypress)
+          <kbd>Alt + t</kbd> <kbd>Alt + t</kbd> – Tidy (double keypress)
+        </p>
+        <p>
+          <kbd>Alt + t</kbd> <kbd>Alt + y</kbd> – View Dashboard
         </p>
       </li>
 
