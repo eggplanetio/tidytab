@@ -60,7 +60,7 @@ const store = new Vuex.Store({
         tabsToSave = tabsToClear
       }
 
-      if (tabsToClear.length < 1) return tabsToClear
+      if (tabsToClear.length === 0) return tabsToClear
 
       const tidyParent = await BookmarkManager.getTidyFolder()
       const newFolder = await chromep.bookmarks.create({
