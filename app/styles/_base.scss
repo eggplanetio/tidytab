@@ -45,7 +45,7 @@ button {
   font-size: 80%;
   background: none;
   border: none;
-  padding: $size-unit/2 $size-unit;
+  padding: $size-unit * 0.75 $size-unit;
   border-radius: 3px;
   outline: none;
   cursor: pointer;
@@ -68,7 +68,7 @@ ul {
   margin: 0;
 }
 
-a, a:hover, a:active, a:visited {
+a, a:active, a:visited {
   text-decoration: none;
   font-weight: 300;
   cursor: pointer;
@@ -83,30 +83,19 @@ a, a:hover, a:active, a:visited {
 }
 
 .button-group {
-  letter-spacing: -1px;
-  transition: all 250ms ease;
 
   section:hover & {
     a.remove:hover { color: $color-danger; }
-
-    a, a:visited, a:active {
-      opacity: 0.5;
-    }
-
-    a:hover {
-      opacity: 1;
-    }
   }
 
-  a, a:hover, a:visited, a:active {
+  a, a:visited, a:active {
     background: none;
-    display: inline-block;
-    padding: $size-unit/4 $size-unit/2;
-    margin-left: -4px;
+    display: table-cell;
+    padding: $size-unit/2 $size-unit/2;
     font-size: $font-size-small;
     letter-spacing: 1px;
-    transition: all 250ms ease;
-    opacity: 0.2;
+    border: 1px solid;
+    border-width: 1px 1px 1px 0;
 
     [data-theme="dark"] & {
       color: $color-secondary-dark;
@@ -120,8 +109,8 @@ a, a:hover, a:active, a:visited {
   }
 
   a:first-child {
-    border-right: none;
     border-radius: 2px 0 0 2px;
+    border-left-width: 1px;
   }
 
   a:last-child  {

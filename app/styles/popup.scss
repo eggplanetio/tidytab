@@ -5,16 +5,3 @@
 body {
   padding: $size-unit $size-unit/2 $size-unit/3;
 }
-
-section,
-section:hover {
-  .button-group,
-  .button-group {
-    opacity: 1;
-
-    a, a:hover, a:active, a:visited {
-      opacity: 1;
-      border: 1px solid $color-primary-dark;
-    }
-  }
-}

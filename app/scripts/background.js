@@ -17,35 +17,35 @@ if (isDevMode) {
   chrome.browserAction.setBadgeText({ text: '' })
 }
 
-chrome.runtime.onMessage.addListener(async ({ message = '', data = {} }) => {
+chrome.runtime.onMessage.addListener(async ({ message, data }) => {
   console.log('Message received!', message, data)
 
   if (message === 'tidy' && data.which === 'right') {
-    await tidyRight()
+    await tidyRight(data)
     return
   }
 
   if (message === 'tidy' && data.which === 'left') {
-    await tidyLeft()
+    await tidyLeft(data)
     return
   }
 
   if (message === 'tidy' && data.which === 'allButCurrent') {
-    await tidyAllButCurrent()
+    await tidyAllButCurrent(data)
     return
   }
 
   if (message === 'tidy' && data.which === 'current') {
-    await tidyCurrent()
+    await tidyCurrent(data)
     return
   }
 
   if (message === 'tidy') {
-    await tidy()
+    await tidy(data)
     return
   }
 
   if (message === 'viewDashboard') {
-    await viewDashboard()
+    await viewDashboard(data)
   }
 })
