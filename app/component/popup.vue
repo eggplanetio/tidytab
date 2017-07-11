@@ -6,11 +6,10 @@
     </button>
 
     <div class="button-group actions" @mouseleave="setDefaultMessage">
-      <a href="#" @mouseover="setMessage('Tidy to the left of current tab')" title="Tidy to the left of current tab" @click="tidy('left')">←</a>
-      <a href="#" @mouseover="setMessage('Tidy to the right of current tab')" title="Tidy to the right of current tab" @click="tidy('right')" >→</a>
-      <a href="#" @mouseover="setMessage('Tidy all but current tab')" title="Tidy all but current tab" @click="tidy('allButCurrent')">←→</a>
-      <a href="#" @mouseover="setMessage('Tidy current tab')" title="Tidy current tab" @click="tidy('current')" >→←</a>
-      <a href="#" @mouseover="setMessage(`Clear all tabs – don't tidy`)" @click="clear" class="remove">Clear</a>
+      <a href="#" @mouseover="setMessage('Tidy to the left of current tab')" title="Tidy to the left of current tab" @click="tidy('left')">Left</a>
+      <a href="#" @mouseover="setMessage('Tidy to the right of current tab')" title="Tidy to the right of current tab" @click="tidy('right')" >Right</a>
+      <a href="#" @mouseover="setMessage('Tidy all but current tab')" title="Tidy all but current tab" @click="tidy('allButCurrent')">All else</a>
+      <a href="#" @mouseover="setMessage('Tidy current tab')" title="Tidy current tab" @click="tidy('current')" >Current</a>
     </div>
 
     <a @click='viewDashboard' class="dashboard">
@@ -29,15 +28,15 @@ export default {
 
   methods: {
 
-    tidy (which) {
+    async tidy (which) {
+      const window = await chromep.windows.getCurrent({})
       chrome.runtime.sendMessage({
         message: 'tidy',
-        data: { which }
+        data: {
+          which,
+          window
+        }
       })
-    },
-
-    clear () {
-      chrome.runtime.sendMessage({ message: 'clear' })
     },
 
     setMessage (msg) {
@@ -49,7 +48,11 @@ export default {
     },
 
     async viewDashboard () {
-      chrome.runtime.sendMessage({ message: 'viewDashboard' })
+      const window = await chromep.windows.getCurrent({})
+      chrome.runtime.sendMessage({
+        message: 'viewDashboard',
+        data: { window }
+      })
     }
   },
 
@@ -75,16 +78,18 @@ export default {
 @import '../styles/colors';
 @import '../styles/settings';
 
+$buttonwidth: 320px;
+
 section {
   text-align: center;
-  width: 280px;
+  width: $buttonwidth;
 }
 
 button {
   background: $color-primary-dark;
   margin-bottom: $size-unit/2;
   color: white;
-  width: 280px;
+  width: $buttonwidth;
 }
 
 a, a:visited, a:hover, a:active {
@@ -96,11 +101,9 @@ a, a:visited, a:hover, a:active {
 }
 
 .button-group {
-  a, a:visited, a:hover, a:active {
+  a, a:visited, a:active {
     color: $color-primary-dark;
-    border-color: $color-primary-dark;
-    outline: none;
-    width: 55px;
+    width: 80px;
   }
 }
 </style>

@@ -41,11 +41,9 @@ const store = new Vuex.Store({
   actions: {
     async SAVE_TAB_GROUP (
       { commit, dispatch, state },
-      { filter } = { filter: () => true }
+      { filter, window }
     ) {
-      const currentWindow = await chromep.windows.getCurrent({})
-
-      let tabsToClear = await chromep.tabs.getAllInWindow(currentWindow.id)
+      let tabsToClear = await chromep.tabs.getAllInWindow(window.id)
       tabsToClear = tabsToClear.filter(tab => !shouldTidy(tab)).filter(filter)
 
       let tabsToSave = []

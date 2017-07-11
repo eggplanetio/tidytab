@@ -50,6 +50,11 @@ export default {
 
 .actions {
   font-size: $font-size-small;
+
+  a {
+    border-width: 0;
+  }
+
 }
 
 </style>
