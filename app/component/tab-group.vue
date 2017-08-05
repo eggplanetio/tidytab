@@ -77,6 +77,16 @@ export default {
 section {
   opacity: 0.5;
   margin-bottom: $size-unit * 2.5;
+  padding: $size-unit * 2;
+  border-radius: 2px;
+
+  [data-theme="dark"] & {
+    background: $color-primary-dark + 20;
+  }
+
+  [data-theme="light"] & {
+    background: $color-light-gray + 13;
+  }
 
   & { transition: all 250ms ease; }
   &:hover { opacity: 1 }
