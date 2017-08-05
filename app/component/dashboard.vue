@@ -96,7 +96,6 @@ header {
 }
 
 .tab-groups {
-  padding-left: $size-unit/2;
   flex: 1;
 }
 
