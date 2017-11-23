@@ -13,7 +13,14 @@
 
     <ul>
       <li v-for="tab in tabGroup.tabs">
-        <Favicon :url="tab.url"/>
+
+        <span class="tab-actions">
+          <a href="#" class="remove" @click="removeTab(tab)" title="Remove tab">
+            ×
+          </a>
+          <Favicon :url="tab.url" class="favicon"/>
+        </span>
+
         <a @click="openTab($event, tab)" @contextmenu="openAndRemoveTab($event, tab)" :title="tab.url" :href="tab.url">
           <span class="title">
             {{ tab.title | truncate(60) }}
@@ -22,10 +29,6 @@
             {{ tab.url | host }}
           </span>
         </a>
-
-        <span class="tab-actions">
-          <a @click="removeTab(tab)">remove</a>
-        </span>
       </li>
     </ul>
 
@@ -135,19 +138,22 @@ ul {
     }
 
     .tab-actions {
-      opacity: 0;
-      a {
-        font-size: $font-size-small;
-        opacity: 0.5;
-        margin-left: $size-unit/2;
-        color: $color-danger;
+      width: $size-unit;
+      display: inline-block;
+      text-align: center;
+    }
 
-        &:hover { opacity: 1; }
-      }
+    .remove {
+      display: none;
+      color: $color-danger;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 0;
     }
 
     &:hover {
-      .tab-actions { opacity: 1; }
+      .favicon { display: none }
+      .remove { display: inline-block }
     }
   }
 }
