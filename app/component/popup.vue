@@ -48,7 +48,6 @@ export default {
     },
 
     async viewDashboard () {
-      console.log('Dashboard')
       const window = await chromep.windows.getCurrent({})
       chrome.runtime.sendMessage({
         message: 'viewDashboard',
