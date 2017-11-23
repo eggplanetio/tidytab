@@ -83,6 +83,5 @@ span {
 img {
   height: $size-unit/1.5;
   vertical-align: middle;
-  margin-right: $size-unit/3;
 }
 </style>
