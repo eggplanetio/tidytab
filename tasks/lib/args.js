@@ -9,8 +9,8 @@ const args = yargs
   })
 
   .option('watch', {
-    boolean: true,
-    default: false,
+    boolean: false,
+    default: true,
     describe: 'Watch all files and start a livereload server'
   })
 

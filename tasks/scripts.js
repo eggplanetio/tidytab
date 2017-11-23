@@ -29,3 +29,6 @@ gulp.task('scripts', (cb) => {
     .pipe(gulp.dest(`dist/${args.vendor}/scripts`))
     .pipe(gulpif(args.watch, livereload()))
 })
+
+gulp.watch('lib/**/*.js', [ 'scripts' ])
+gulp.watch('app/**/*.js', [ 'scripts' ])

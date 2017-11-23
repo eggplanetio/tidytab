@@ -151,9 +151,18 @@ const store = new Vuex.Store({
   getters: {
     sortedAndFilteredTabGroups: state => {
       let groups = state.data.tabGroups
-      groups = filteredAndSorted(groups)
-      if (state.tabGroupView === 'group-by-date') groups = groupByDate(groups)
-      return filteredUsingSearchQuery(state.searchQuery, groups)
+
+      if (state.tabGroupView === 'group-by-date') {
+        groups = groupByDate(groups)
+      } else {
+        groups = filteredAndSorted(groups)
+      }
+
+      if (state.searchQuery.trim()) {
+        return filteredUsingSearchQuery(state.searchQuery, groups)
+      } else {
+        return groups
+      }
     }
   }
 })
